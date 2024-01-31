@@ -48,15 +48,15 @@
           <h2 class="text-center lh-base fs-5 fw-light text-black-50">Model</h2>
         </div>
         <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="beam-button">Beam</button>
-        <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="support-button">Supports</button>
-        <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="section-button" >Section</button>
-        <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="settlement-button">Settlement</button>
+        <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="support-button" disabled>Supports</button>
+        <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="section-button" disabled>Section</button>
+        <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="settlement-button" disabled>Settlement</button>
         <div class="heading">
           <h2 class="text-center lh-base fs-5 fw-light text-black-50 mt-1">Loading</h2>
         </div>
-        <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="pl-button">Point Loads</button>
-        <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="dl-button">Distributed Loads</button>
-        <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="m-button">Moments</button>
+        <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="pl-button" disabled>Point Loads</button>
+        <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="dl-button" disabled>Distributed Loads</button>
+        <button type="button" class="btn btn-outline-dark my-1 mx-3 text-white-50" id="m-button" disabled>Moments</button>
       </div>
       <!-- menu input div that becomes visible when the buttons are clicked -->
       <div class="menu-inputs container d-none">
@@ -76,20 +76,20 @@
             </div>
           </div>
           <!-- support input-->
-          <div class="container element-input px-3 py-3 d-none" element-type="Support">
+          <div class="container element-input px-3 py-3 d-none" element-type="Support" id="support-input">
             <label class="input-heading pt-2">Support Type: </label>
-            <div class="d-flex justify-content-evenly px-3 py-3">
-              <button type="button" class="btn btn-primary btn-sm position-relative direction"
+            <div class="d-flex justify-content-evenly px-3 py-3" id="support-type">
+              <button type="button" class="btn btn-primary btn-sm position-relative direction" element-value="Roller" id="roller"
                 style="width:70px; height:30px;">
                 <img src="images/Roller.svg" alt="Fixed Support" width="50px" height="30px"
                   class="position-absolute top-50 start-50 translate-middle">
               </button>
-              <button type="button" class="btn btn-primary btn-sm position-relative direction"
+              <button type="button" class="btn btn-primary btn-sm position-relative direction" element-value="Hinge" id="hinge"
                 style="width:70px; height:30px;">
                 <img src="images/Hinge.svg" alt="Fixed Support" width="50px" height="30px"
                   class="position-absolute top-50 start-50 translate-middle">
               </button>
-              <button type="button" class="btn btn-primary btn-sm position-relative direction"
+              <button type="button" class="btn btn-primary btn-sm position-relative direction" element-value="Fixed" id="fixed"
                 style="width:70px; height:30px;">
                 <img src="images/Fixed.svg" alt="Fixed Support" width="50px" height="30px"
                   class="position-absolute top-50 start-50 translate-middle">
@@ -103,9 +103,9 @@
             </div>
             <div class="d-flex justify-content-center">
               <div class="btn-group" role="group" aria-label="Support Location">
-                <button type="button" class="btn btn-primary btn-sm border-dark">L</button>
-                <button type="button" class="btn btn-primary btn-sm border-dark">M</button>
-                <button type="button" class="btn btn-primary btn-sm border-dark">R</button>
+                <button type="button" class="btn btn-primary btn-sm border-dark" data-bs-toggle="button" id="l-support">L</button>
+                <button type="button" class="btn btn-primary btn-sm border-dark" data-bs-toggle="button" id="m-support">M</button>
+                <button type="button" class="btn btn-primary btn-sm border-dark" data-bs-toggle="button" id="r-support">R</button>
               </div>
             </div>
           </div>
@@ -266,11 +266,11 @@
               <span class="input-group-text" id="basic-addon2">kN/m</span>
             </div>
           </div>
-          <div class="add-on container px-3">
-            <button type="button" class="btn btn-primary btn-sm" id="add button">
-              Add
-            </button>
-          </div>
+        </div>
+        <div class="add-on container px-3 fs-7" id="addAndError">
+          <button type="button" class="btn btn-primary btn-sm" id="add-button">
+            Add
+          </button>
         </div>
       </div>
 
