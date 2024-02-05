@@ -11,6 +11,11 @@
   <!-- Custom CSS-->
   <link rel="stylesheet" href="css/styles.css">
   <title>The Slope Deflector</title>
+  <script src="https://cdn.jsdelivr.net/npm/nerdamer@0.8.1/nerdamer.core.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/nerdamer@0.8.1/Algebra.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/nerdamer@0.8.1/Calculus.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/nerdamer@0.8.1/Solve.js"></script>
+
 </head>
 
 <body>
@@ -36,7 +41,7 @@
     <!-- Display Section -->
     <section class="container display bg-dark">
       <div>
-        <button type="button" class="btn btn-success btn-sm" disabled>Solve</button>
+        <button type="button" class="btn btn-success btn-sm" id="solve">Solve</button>
       </div>
     </section>
 
@@ -77,6 +82,7 @@
           </div>
           <!-- support input-->
           <div class="container element-input px-3 py-3 d-none" element-type="Support" id="support-input">
+            <div class="text-center fw-bold">For Support: <span class="fs-3" id="supportSupportNo">1</span></div>
             <label class="input-heading pt-2">Support Type: </label>
             <div class="d-flex justify-content-evenly px-3 py-3" id="support-type">
               <button type="button" class="btn btn-primary btn-sm position-relative direction" element-value="Roller" id="roller"
@@ -98,11 +104,11 @@
             <label class="input-heading py-2">Support Position: </label>
             <div class="input-group input-group-sm mb-3 shadow">
               <input type="text" class="form-control" placeholder="Support Location" aria-label="Support Location"
-                aria-describedby="basic-addon2">
+                aria-describedby="basic-addon2" id="support-location-form">
               <span class="input-group-text" id="basic-addon2">m</span>
             </div>
             <div class="d-flex justify-content-center">
-              <div class="btn-group" role="group" aria-label="Support Location">
+              <div class="btn-group" role="group" aria-label="Support Location" id="support-lmr">
                 <button type="button" class="btn btn-primary btn-sm border-dark" data-bs-toggle="button" id="l-support">L</button>
                 <button type="button" class="btn btn-primary btn-sm border-dark" data-bs-toggle="button" id="m-support">M</button>
                 <button type="button" class="btn btn-primary btn-sm border-dark" data-bs-toggle="button" id="r-support">R</button>
@@ -111,157 +117,115 @@
           </div>
           <!-- section input-->
           <div class="container element-input px-3 py-3 d-none" element-type="Section">
+            <div class="text-center fw-bold">For Span: <span class="fs-3" id="spanNo">1</span></div>
             <label class="input-heading py-2">Moment of Inertia (Iz): </label>
             <div class="input-group input-group-sm mb-3 shadow">
-              <input type="text" class="form-control" placeholder="Moment of inertia" aria-label="Moment of inertia"
+              <input type="text" class="form-control" id="MoiInput" placeholder="Moment of inertia" aria-label="Moment of inertia"
                 aria-describedby="basic-addon2">
               <span class="input-group-text" id="basic-addon2">mm<sup>4</sup></span>
             </div>
             <label class="input-heading py-2">Young's Modulus (E): </label>
             <div class="input-group input-group-sm mb-3 shadow">
-              <input type="text" class="form-control" placeholder="Young's Modulus" aria-label="Young's Modulus"
+              <input type="text" class="form-control" id="YoungModInput" placeholder="Young's Modulus" aria-label="Young's Modulus"
                 aria-describedby="basic-addon2">
               <span class="input-group-text" id="basic-addon2">MPa</span>
+            </div>
+            <label class="input-heading py-2">Coefficient of EIz: </label>
+            <div class="input-group input-group-sm mb-3 shadow">
+              <input type="text" class="form-control" id="FlexRigInput" placeholder="Coefficient of EIz" aria-label="Coefficient of EI"
+                aria-describedby="basic-addon2">
             </div>
           </div>
           <!-- settlement input-->
           <div class="container element-input px-3 py-3 d-none" element-type="Settlement">
-            <div class="joints d-flex justify-content-evenly px-3 py-3">
+            <div class="text-center fw-bold">For Support: <span class="fs-3" id="supportNo">1</span></div>
+            <label class="input-heading py-2">Settlement: </label>
+            <div class="input-group input-group-sm mb-3 shadow">
+              <input type="text" class="form-control" id="settlementInput" placeholder="Settlement" aria-label="Settlement"
+                aria-describedby="basic-addon2">
+              <span class="input-group-text" id="basic-addon2">mm</span>
             </div>
           </div>
           <!-- point load input-->
-          <div class="container element-input px-3 py-3 d-none" element-type="Point Load">
-            <label class="input-heading pt-2">Direction: </label>
-            <div class="d-flex justify-content-evenly px-3 py-3">
-              <button type="button" class="btn btn-primary btn-sm position-relative direction"
-                style="width:70px; height:45px;">
-                <img src="images/force_up.jpg" alt="Force up" width="65px" height="40px"
-                  class="position-absolute top-50 start-50 translate-middle">
-              </button>
-              <button type="button" class="btn btn-primary btn-sm position-relative direction"
-                style="width:70px; height:45px;">
-                <img src="images/force_down.jpg" alt="Force down" width="65px" height="40px"
-                  class="position-absolute top-50 start-50 translate-middle">
-              </button>
-              <button type="button" class="btn btn-primary btn-sm position-relative direction"
-                style="width:70px; height:45px;">
-                <img src="images/force_angle.jpg" alt="Force angle" width="40px" height="40px"
-                  class="position-absolute top-50 start-50 translate-middle">
-              </button>
-            </div>
+          <div class="container element-input px-3 py-3 d-none" element-type="Point Load" id="pl-input">
+            <div class="text-center fw-bold">For Point Load: <span class="fs-3" id="plNo">1</span></div>
             <label class="input-heading py-2">Position: </label>
             <div class="d-flex justify-content-between align-items-center">
               <div class="input-group input-group-sm me-2 shadow">
-                <input type="text" class="form-control" placeholder="Position" aria-label="Position"
+                <input type="text" class="form-control" id="pl-location-form" placeholder="Position" aria-label="Position"
                   aria-describedby="basic-addon2">
                 <span class="input-group-text" id="basic-addon2">m</span>
               </div>
               <div class="d-flex justify-content-center">
                 <div class="btn-group" role="group" aria-label="Position">
-                  <button type="button" class="btn btn-primary btn-sm border-dark">L</button>
-                  <button type="button" class="btn btn-primary btn-sm border-dark">M</button>
-                  <button type="button" class="btn btn-primary btn-sm border-dark">R</button>
+                  <button type="button" class="btn btn-primary btn-sm border-dark" id="pl-l">L</button>
+                  <button type="button" class="btn btn-primary btn-sm border-dark" id="pl-m">M</button>
+                  <button type="button" class="btn btn-primary btn-sm border-dark" id="pl-r">R</button>
                 </div>
               </div>
             </div>
             <label class="input-heading py-2">Magnitude: </label>
             <div class="input-group input-group-sm shadow">
-              <input type="text" class="form-control" placeholder="Magnitude" aria-label="Magnitude"
+              <input type="text" class="form-control" id="pl-magnitude-form" placeholder="Magnitude" aria-label="Magnitude"
                 aria-describedby="basic-addon2">
               <span class="input-group-text" id="basic-addon2">kN</span>
-            </div>
-            <label class="input-heading py-2">Angle (&#x03B8;): </label>
-            <div class="input-group input-group-sm shadow">
-              <input type="text" class="form-control" placeholder="Angle" aria-label="Angle"
-                aria-describedby="basic-addon2">
-              <span class="input-group-text" id="basic-addon2">deg</span>
             </div>
           </div>
           <!-- distributed load input-->
           <div class="container element-input px-3 py-3 d-none" element-type="Distributed Load">
-            <label class="input-heading">Direction: </label>
-            <div class="d-flex justify-content-evenly px-3 py-3">
-              <button type="button" class="btn btn-primary btn-sm position-relative direction"
-                style="width:70px; height:40px;">
-                <img src="images/force_up.jpg" alt="Force up" width="65px" height="35px"
-                  class="position-absolute top-50 start-50 translate-middle">
-              </button>
-              <button type="button" class="btn btn-primary btn-sm position-relative direction"
-                style="width:70px; height:40px;">
-                <img src="images/force_down.jpg" alt="Force down" width="65px" height="35px"
-                  class="position-absolute top-50 start-50 translate-middle">
-              </button>
-            </div>
+            <div class="text-center fw-bold">For Distributed Load: <span class="fs-3" id="dlNo">1</span></div>
             <label class="input-heading pb-2">Start Pos: </label>
             <div class="d-flex justify-content-between align-items-center">
               <div class="input-group input-group-sm me-2 shadow">
-                <input type="text" class="form-control" placeholder="Position" aria-label="Start Position"
+                <input type="text" class="form-control" id="dlStart" placeholder="Position" aria-label="Start Position"
                   aria-describedby="basic-addon2">
                 <span class="input-group-text" id="basic-addon2">m</span>
               </div>
-              <button type="button" class="btn btn-primary btn-sm border-dark">L</button>
+              <button type="button" class="btn btn-primary btn-sm border-dark" id="dl-l">L</button>
             </div>
             <label class="input-heading py-2">End Pos: </label>
             <div class="d-flex justify-content-between align-items-center">
               <div class="input-group input-group-sm me-2 shadow">
-                <input type="text" class="form-control" placeholder="Position" aria-label="End Position"
+                <input type="text" class="form-control" id="dlEnd" placeholder="Position" aria-label="End Position"
                   aria-describedby="basic-addon2">
                 <span class="input-group-text" id="basic-addon2">m</span>
               </div>
-              <button type="button" class="btn btn-primary btn-sm border-dark">R</button>
+              <button type="button" class="btn btn-primary btn-sm border-dark" id="dl-r">R</button>
             </div>
             <label class="input-heading py-2">Start Mag: </label>
-            <div class="d-flex justify-content-between align-items-center">
               <div class="input-group input-group-sm me-2 shadow">
-                <input type="text" class="form-control" placeholder="Magnitude" aria-label="Start Magnitude"
+                <input type="text" class="form-control" id="dlStartMag" placeholder="Magnitude" aria-label="Start Magnitude"
                   aria-describedby="basic-addon2">
                 <span class="input-group-text" id="basic-addon2">kN/m</span>
               </div>
-              <button type="button" class="btn btn-primary btn-sm border-dark">R</button>
-            </div>
             <label class="input-heading py-2">End Mag: </label>
-            <div class="d-flex justify-content-between align-items-center">
               <div class="input-group input-group-sm me-2 shadow">
-                <input type="text" class="form-control" placeholder="Magnitude" aria-label="End Magnitude"
+                <input type="text" class="form-control" id="dlEndMag" placeholder="Magnitude" aria-label="End Magnitude"
                   aria-describedby="basic-addon2">
                 <span class="input-group-text" id="basic-addon2">kN/m</span>
               </div>
-              <button type="button" class="btn btn-primary btn-sm border-dark">R</button>
-            </div>
           </div>
           <!-- moment input-->
           <div class="container element-input px-3 py-3 d-none" element-type="Moments">
-            <label class="input-heading pt-2">Direction: </label>
-            <div class="d-flex justify-content-evenly px-3 py-3">
-              <button type="button" class="btn btn-primary btn-sm position-relative direction"
-                style="width:70px; height:45px;">
-                <img src="images/moment_neg.jpg" alt="negative moment" width="50px" height="40px"
-                  class="position-absolute top-50 start-50 translate-middle">
-              </button>
-              <button type="button" class="btn btn-primary btn-sm position-relative direction"
-                style="width:70px; height:45px;">
-                <img src="images/moment_pos.jpg" alt="positive moment" width="50px" height="40px"
-                  class="position-absolute top-50 start-50 translate-middle">
-              </button>
-            </div>
+            <div class="text-center fw-bold">For Moment: <span class="fs-3" id="mNo">1</span></div>
             <label class="input-heading py-2">Position: </label>
             <div class="d-flex justify-content-between align-items-center">
               <div class="input-group input-group-sm me-2 shadow">
-                <input type="text" class="form-control" placeholder="Position" aria-label="Position"
+                <input type="text" class="form-control" id="m-position-form" placeholder="Position" aria-label="Position"
                   aria-describedby="basic-addon2">
                 <span class="input-group-text" id="basic-addon2">m</span>
               </div>
               <div class="d-flex justify-content-center">
                 <div class="btn-group" role="group" aria-label="Position">
-                  <button type="button" class="btn btn-primary btn-sm border-dark">L</button>
-                  <button type="button" class="btn btn-primary btn-sm border-dark">M</button>
-                  <button type="button" class="btn btn-primary btn-sm border-dark">R</button>
+                  <button type="button" class="btn btn-primary btn-sm border-dark" id="m-l">L</button>
+                  <button type="button" class="btn btn-primary btn-sm border-dark" id="m-m">M</button>
+                  <button type="button" class="btn btn-primary btn-sm border-dark" id="m-r">R</button>
                 </div>
               </div>
             </div>
             <label class="input-heading pt-4 pb-2">Magnitude: </label>
             <div class="input-group input-group-sm shadow">
-              <input type="text" class="form-control" placeholder="Magnitude" aria-label="Magnitude"
+              <input type="text" class="form-control" id="m-magnitude-form" placeholder="Magnitude" aria-label="Magnitude"
                 aria-describedby="basic-addon2">
               <span class="input-group-text" id="basic-addon2">kN/m</span>
             </div>
@@ -281,9 +245,10 @@
   <!-- Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>  
   <!-- Custom JS -->
-  <script src="js/main.js"></script>
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/calculations.js"></script>
 </body>
 
 </html>

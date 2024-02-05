@@ -1,28 +1,32 @@
 // AUTHOR: KADIRI VICTOR
 
+// import the calculations module
+import * as calculationsModule from './calculations.js';
+
 // Global variables
 let beamLength;
-let supports; // array of objects
-let section; // object 
-let settlements;
-let pointLoads;
-let distributedLoads;
-let moments;
+let supports = []; // array of objects
+let sections = []; // array of objects
+let settlements = []; // array of numbers
+let pointLoads = []; // array of objects
+let distributedLoads = []; // array of objects
+let moments = []; // array of objects
+let noOfSpans; // integer
 
 // Getting the menu buttons
 
 // menu buttons
-beamButton = document.getElementById("beam-button");
-supportButton = document.getElementById("support-button");
-sectionButton = document.getElementById("section-button");
-settlementButton = document.getElementById("settlement-button");
-plButton = document.getElementById("pl-button");
-dlButton = document.getElementById("dl-button");
-mButton = document.getElementById("m-button");
+const beamButton = document.getElementById("beam-button");
+const supportButton = document.getElementById("support-button");
+const sectionButton = document.getElementById("section-button");
+const settlementButton = document.getElementById("settlement-button");
+const plButton = document.getElementById("pl-button");
+const dlButton = document.getElementById("dl-button");
+const mButton = document.getElementById("m-button");
 // back button
-backButton = document.getElementById("back-button");
+const backButton = document.getElementById("back-button");
 // add button
-addButton = document.getElementById("add-button");
+const addButton = document.getElementById("add-button");
 
 
 // E V E N T   L I S T E N E R S
@@ -31,43 +35,43 @@ addButton = document.getElementById("add-button");
 // menu buttons
 beamButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
-    document.querySelector(".menu-inputs").classList.remove("d-none"); 
+    document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Beam']").classList.remove("d-none");
 });
 
 supportButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
-    document.querySelector(".menu-inputs").classList.remove("d-none"); 
+    document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Support']").classList.remove("d-none");
 });
 
 sectionButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
-    document.querySelector(".menu-inputs").classList.remove("d-none"); 
+    document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Section']").classList.remove("d-none");
 });
 
 settlementButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
-    document.querySelector(".menu-inputs").classList.remove("d-none"); 
+    document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Settlement']").classList.remove("d-none");
 });
 
 plButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
-    document.querySelector(".menu-inputs").classList.remove("d-none"); 
+    document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Point Load']").classList.remove("d-none");
 });
 
 dlButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
-    document.querySelector(".menu-inputs").classList.remove("d-none"); 
+    document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Distributed Load']").classList.remove("d-none");
 });
 
 mButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
-    document.querySelector(".menu-inputs").classList.remove("d-none"); 
+    document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Moments']").classList.remove("d-none");
 });
 
@@ -75,14 +79,14 @@ mButton.addEventListener("click", function () {
 // add an event listener to the back button that will add the d-none class to either of the element-type classes without the d-none class and remove the d-none class from the menu-buttons class
 backButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.remove("d-none");
-    document.querySelector(".menu-inputs").classList.add("d-none"); 
+    document.querySelector(".menu-inputs").classList.add("d-none");
     document.querySelector(".menu-input-inputs > div:not(.d-none)").classList.add("d-none");
 });
 
 // add event listeners to the buttons with ids roller hinge and fixed, when clicked the class active is added to the button clicked and removed from the other buttons
-rollerButton = document.getElementById("roller");
-hingeButton = document.getElementById("hinge");
-fixedButton = document.getElementById("fixed");
+const rollerButton = document.getElementById("roller");
+const hingeButton = document.getElementById("hinge");
+const fixedButton = document.getElementById("fixed");
 
 rollerButton.addEventListener("click", function () {
     rollerButton.classList.add("active");
@@ -118,28 +122,131 @@ fixedButton.addEventListener("click", function () {
 );
 
 // add event listeners to the buttons with ids l-support, m-support and r-support, when clicked the class active is added to the button clicked and removed from the other buttons
-lSupportButton = document.getElementById("l-support");
-mSupportButton = document.getElementById("m-support");
-rSupportButton = document.getElementById("r-support");
+const lSupportButton = document.getElementById("l-support");
+const mSupportButton = document.getElementById("m-support");
+const rSupportButton = document.getElementById("r-support");
 
 lSupportButton.addEventListener("click", function () {
     lSupportButton.classList.add("active");
     mSupportButton.classList.remove("active");
     rSupportButton.classList.remove("active");
+    // get the element with id support-location-form and change the value of the input field with id support-location-input to 0
+    document.getElementById("support-location-form").value = 0;
+
+    // remove the error element added in the collectSupportData function, but only if the p element is the last child of the div with the id support-input
+    if (document.querySelector("#support-input > p:last-child") != null) {
+        document.querySelector("#support-input > p:last-child").remove();
+    }
+
 });
 
 mSupportButton.addEventListener("click", function () {
     lSupportButton.classList.remove("active");
     mSupportButton.classList.add("active");
     rSupportButton.classList.remove("active");
+
+    // get the element with id support-location-form and change the value of the input field with id support-location-input to beamLength/2
+    document.getElementById("support-location-form").value = beamLength / 2;
+
+    if (document.querySelector("#support-input > p:last-child") != null) {
+        document.querySelector("#support-input > p:last-child").remove();
+    }
 });
 
 rSupportButton.addEventListener("click", function () {
     lSupportButton.classList.remove("active");
     mSupportButton.classList.remove("active");
     rSupportButton.classList.add("active");
+
+    // get the element with id support-location-form and change the value of the input field with id support-location-input to beamLength
+    document.getElementById("support-location-form").value = beamLength;
+
+    if (document.querySelector("#support-input > p:last-child") != null) {
+        document.querySelector("#support-input > p:last-child").remove();
+    }
 });
 
+// add event listeners to the buttons with ids pl-l, pl-m and pl-r, when clicked the class active is added to the button clicked and removed from the other buttons
+const plLButton = document.getElementById("pl-l");
+const plMButton = document.getElementById("pl-m");
+const plRButton = document.getElementById("pl-r");
+
+plLButton.addEventListener("click", function () {
+    plLButton.classList.add("active");
+    plMButton.classList.remove("active");
+    plRButton.classList.remove("active");
+    // get the element with id pl-location-form and change the value of the input field with id pl-location-input to 0
+    document.getElementById("pl-location-form").value = 0;
+});
+
+plMButton.addEventListener("click", function () {
+    plLButton.classList.remove("active");
+    plMButton.classList.add("active");
+    plRButton.classList.remove("active");
+
+    // get the element with id pl-location-form and change the value of the input field with id pl-location-input to beamLength/2
+    document.getElementById("pl-location-form").value = beamLength / 2;
+});
+
+plRButton.addEventListener("click", function () {
+    plLButton.classList.remove("active");
+    plMButton.classList.remove("active");
+    plRButton.classList.add("active");
+
+    // get the element with id pl-location-form and change the value of the input field with id pl-location-input to beamLength
+    document.getElementById("pl-location-form").value = beamLength;
+});
+
+// add event listeners to the buttons with ids dl-l and dl-r, when the button dl-l is clicked, fill the input field with id dlStart with 0 and when the button dl-r is clicked, fill the input field with id dlEnd with the value of the input field with id beamLength
+const dlLButton = document.getElementById("dl-l");
+const dlRButton = document.getElementById("dl-r");
+
+
+dlLButton.addEventListener("click", function () {
+    document.getElementById("dlStart").value = 0;
+});
+
+dlRButton.addEventListener("click", function () {
+    document.getElementById("dlEnd").value = beamLength;
+});
+
+// add event listeners to the buttons with ids m-l, m-m and m-r, when clicked the class active is added to the button clicked and removed from the other buttons
+const mLButton = document.getElementById("m-l");
+const mMButton = document.getElementById("m-m");
+const mRButton = document.getElementById("m-r");
+
+mLButton.addEventListener("click", function () {
+    mLButton.classList.add("active");
+    mMButton.classList.remove("active");
+    mRButton.classList.remove("active");
+    // get the element with id m-position-form and change the value of the input field with id m-location-input to 0
+    document.getElementById("m-position-form").value = 0;
+});
+
+mMButton.addEventListener("click", function () {
+    mLButton.classList.remove("active");
+    mMButton.classList.add("active");
+
+    mRButton.classList.remove("active");
+    // get the element with id m-position-form and change the value of the input field with id m-location-input to beamLength/2
+    document.getElementById("m-position-form").value = beamLength / 2;
+});
+
+mRButton.addEventListener("click", function () {
+    mLButton.classList.remove("active");
+    mMButton.classList.remove("active");
+    mRButton.classList.add("active");
+
+    // get the element with id m-position-form and change the value of the input field with id m-location-input to beamLength
+    document.getElementById("m-position-form").value = beamLength;
+});
+
+// add event listeners to the solve button id solve, when clicked, call the exportParameters function 
+const solveButton = document.getElementById("solve");
+
+solveButton.addEventListener("click", function () {
+    exportParameters();
+});
 
 // Adding event listeners to the add button and the enter key check the element-type class without the d-none class and call the collectData function for the element-type class without the d-none class
 addButton.addEventListener("click", function () {
@@ -148,7 +255,61 @@ addButton.addEventListener("click", function () {
             beamLength = collectBeamData();
         }
         if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Support") {
-            supports = collectSupportData();
+            const support = collectSupportData();
+            // check the supports array if a support exists with the same location and if it does, add an error element similar to the one in the collectData function but with text "a support already exists at this location!" and it should be added as the last child of the div with the id support-input else add the support to the supports array
+            if (support == -1) {
+                return;
+            }
+            if (supports != null) {
+                for (let i = 0; i < supports.length; i++) {
+                    if (supports[i].location == support.location) {
+                        if (document.querySelector("#support-input > p:last-child") == null) {
+                            const error = document.createElement("p");
+                            error.innerHTML = "a support already exists at this location!";
+                            // add class inline-block to the error element
+                            error.classList.add("error-text");
+                            const addDiv = document.querySelector("#support-input");
+                            addDiv.appendChild(error);
+                        }
+                        return;
+                    }
+                }
+            }
+            supports[supports.length] = support;
+            // change the value of the innerHTML of the span with id supportSupportNo to the length of the supports array + 1
+            document.getElementById("supportSupportNo").innerHTML = supports.length + 1;
+            // clear the input field with the id support-location-form
+            document.getElementById("support-location-form").value = "";  
+            // check if the no of supports is greater than 2 and if it is, check if at least one support is a fixed support if there is, remove the disabled attribute from the section and settlement buttons
+            if (supports.length > 2) {
+                for (let i = 0; i < supports.length; i++) {
+                    if (supports[i].type == "Fixed") {
+                        document.getElementById("section-button").removeAttribute("disabled");
+                        document.getElementById("settlement-button").removeAttribute("disabled");
+                        break;
+                    }
+                }
+                noOfSpans = calculateNoOfSpans();
+            }
+            console.log(settlements);
+            console.log(supports);
+            console.log(supports.length);
+        }
+
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Section") {
+            collectSectionData();
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Settlement") {
+            collectSettlementData();
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Point Load") {
+            collectPointLoadData();
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Distributed Load") {
+            collectDistributedLoadData();
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Moments") {
+            collectMomentData();
         }
     }
 });
@@ -161,7 +322,60 @@ document.addEventListener("keydown", function (event) {
                 beamLength = collectBeamData();
             }
             if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Support") {
-                supports = collectSupportData();
+                const support = collectSupportData();
+                // check the supports array if a support exists with the same location and if it does, add an error element similar to the one in the collectData function but with text "a support already exists at this location!" and it should be added as the last child of the div with the id support-input else add the support to the supports array
+                if (support == -1) {
+                    return;
+                }
+                if (supports != null) {
+                    for (let i = 0; i < supports.length; i++) {
+                        if (supports[i].location == support.location) {
+                            if (document.querySelector("#support-input > p:last-child") == null) {
+                                const error = document.createElement("p");
+                                error.innerHTML = "a support already exists at this location!";
+                                // add class inline-block to the error element
+                                error.classList.add("error-text");
+                                const addDiv = document.querySelector("#support-input");
+                                addDiv.appendChild(error);
+                            }
+                            return;
+                        }
+                    }
+                }
+                supports[supports.length] = support;
+                // change the value of the innerHTML of the span with id supportSupportNo to the length of the supports array + 1
+                document.getElementById("supportSupportNo").innerHTML = supports.length + 1;
+                // clear the input field with the id support-location-form
+                document.getElementById("support-location-form").value = "";
+                // check if the no of supports is greater than 2 and if it is, check if at least one support is a fixed support if there is, remove the disabled attribute from the section and settlement buttons
+                if (supports.length > 2) {
+                    for (let i = 0; i < supports.length; i++) {
+                        if (supports[i].type == "Fixed") {
+                            document.getElementById("section-button").removeAttribute("disabled");
+                            document.getElementById("settlement-button").removeAttribute("disabled");
+                            break;
+                        }
+                    }
+                    noOfSpans = calculateNoOfSpans();
+                }
+                console.log(settlements);
+                console.log(supports);
+                console.log(supports.length);
+            }
+            if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Section") {
+                collectSectionData();
+            }
+            if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Settlement") {
+                collectSettlementData();
+            }
+            if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Point Load") {
+                collectPointLoadData();
+            }
+            if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Distributed Load") {
+                collectDistributedLoadData();
+            }
+            if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Moments") {
+                collectMomentData();
             }
         }
     }
@@ -174,9 +388,9 @@ document.addEventListener("keydown", function (event) {
 // beam data collection and validation
 function collectBeamData() {
     // getting the value from the input field with id beamLengthInput and removing the white spaces
-    beamLength = document.getElementById("beamLengthInput").value.trim();
+    const beamLen = document.getElementById("beamLengthInput").value.trim();
     // validate if it's an integer or float and if it's greater than 0
-    if (beamLength == "" || isNaN(beamLength) || beamLength <= 0) {
+    if (beamLen == "" || isNaN(beamLen) || beamLen <= 0) {
         // make the input field red
         document.getElementById("beamLengthInput").classList.add("is-invalid");
         // create a p element containing the text "verify the highlighted input fields!" and add it to the div with the class 'add-on' as first child
@@ -191,40 +405,370 @@ function collectBeamData() {
         if (document.querySelector(".add-on > p") != null) {
             document.querySelector(".add-on > p").remove();
         }
-        console.log(parseFloat(beamLength));
+        console.log(parseFloat(beamLen));
         unDisableButtons('beam');
-        return parseFloat(beamLength);
+        return parseFloat(beamLen);
     }
 }
 
 // support data collection and validation
 function collectSupportData() {
+    let supportType = null;
+    let supportLocation = null;
     // check the button in the div with id support-type with the class active and get the value of the button from the element-value attribute and if no button is active, add an error element similar to the one in the collectBeamData function but with text "select a support type!" and it should be added as the third child of the div with the id support-input
     if (document.querySelector("#support-type > button.active") != null) {
         supportType = document.querySelector("#support-type > button.active").getAttribute("element-value");
         console.log(supportType);
     } else {
         if (document.querySelector("#support-input > p") == null) {
-            error = document.createElement("p");
+            const error = document.createElement("p");
             error.innerHTML = "select a support type!";
             // add class inline-block to the error element
             error.classList.add("error-text");
-            addDiv = document.querySelector("#support-input");
+            const addDiv = document.querySelector("#support-input");
             addDiv.insertBefore(error, addDiv.childNodes[2]);
         }
+    }
+    // check the element with id support-location-form for it's value, trim it and if its not a number or greater than the beam Length, add an error element similar to the one in the collectBeamData function but with text "select a valid support position!" and it should be added as the last child of the div with the id support-input, note that the error should be added even if the error element with the text "select a support type!" is present
+    if (document.getElementById("support-location-form").value.trim() != "" && !isNaN(document.getElementById("support-location-form").value.trim()) && document.getElementById("support-location-form").value.trim() <= beamLength) {
+        supportLocation = document.getElementById("support-location-form").value.trim();
+        // remove the error element added in the collectSupportData function
+        if (document.querySelector("#support-input > p:last-child") != null) {
+            document.querySelector("#support-input > p:last-child").remove();
+        }
+    } else {
+        if (document.querySelector("#support-input > p:last-child") == null) {
+            const error = document.createElement("p");
+            error.innerHTML = "select a valid support position!";
+            // add class inline-block to the error element
+            error.classList.add("error-text");
+            const addDiv = document.querySelector("#support-input");
+            addDiv.appendChild(error);
+        }
+    }
+    // if the support type and support location are valid, create an object with the properties type and location and return the object
+    if (supportType != null && supportLocation != null) {
+        const support = {
+            supportNo: supports.length + 1,
+            type: supportType,
+            location: parseFloat(supportLocation)
+        }
+        return support;
+    } else {
         return -1;
     }
-
 }
 
+// section data collection and validation
+function collectSectionData() {
+    let section;
+    if (sections.length < noOfSpans) {
+        console.log('debug');
+        // get the value from the input field with id MoiInput, if it is not a number or less than 0, call the addErrorElement function and return -1. if the input field is empty it is valid
+        const Moi = document.getElementById("MoiInput").value.trim();
+        if (Moi != "" && (isNaN(Moi) || Moi < 0)) {
+            document.getElementById("MoiInput").classList.add("is-invalid");
+            addErrorElement();
+            return -1;
+        } else {
+            document.getElementById("MoiInput").classList.remove("is-invalid");
+            document.getElementById("MoiInput").classList.add("is-valid");
+            // remove the error element
+            if (document.querySelector(".add-on > p") != null) {
+                document.querySelector(".add-on > p").remove();
+            }
+        }
+        //  get the value from the input field with id YoungModInput, if it is not a number or less than 0, call the addErrorElement function and return -1. if the input field is empty it is valid
+        const YoungMod = document.getElementById("YoungModInput").value.trim();
+        if (YoungMod != "" && (isNaN(YoungMod) || YoungMod < 0)) {
+            document.getElementById("YoungModInput").classList.add("is-invalid");
+            addErrorElement();
+            return -1;
+        } else {
+            document.getElementById("YoungModInput").classList.remove("is-invalid");
+            document.getElementById("YoungModInput").classList.add("is-valid");
+            // remove the error element
+            if (document.querySelector(".add-on > p") != null) {
+                document.querySelector(".add-on > p").remove();
+            }
+        }
+        //  get the value from the input field with id FlexRigInput, if it is empty or it is not a number or less than 0, call the addErrorElement function and return -1. it must not be empty
+        const FlexRig = document.getElementById("FlexRigInput").value.trim();
+        if (FlexRig == "" || isNaN(FlexRig) || FlexRig < 0) {
+            document.getElementById("FlexRigInput").classList.add("is-invalid");
+            addErrorElement();
+            return -1;
+        } else {
+            document.getElementById("FlexRigInput").classList.remove("is-invalid");
+            document.getElementById("FlexRigInput").classList.add("is-valid");
+            // remove the error element
+            if (document.querySelector(".add-on > p") != null) {
+                document.querySelector(".add-on > p").remove();
+            }
+        }
+        // first check if the sections array is empty and if it isn't, the current section will inherit the Moi and YoungMod values of the last section in the sections array
+        // if the input fields are valid, create an object with the properties Moi, YoungMod and FlexRig and add it to the sections array. if either the Moi or YoungMod input fields are empty, add the value 0 to the sections array
+        if (sections.length == 0) {
+            section = {
+                Moi: Moi == "" ? null : parseFloat(Moi),
+                YoungMod: YoungMod == "" ? null : parseFloat(YoungMod),
+                Coefficient: parseFloat(FlexRig)
+            }
+            // add the disabled attribute the Moi and YoungMod input fields
+            document.getElementById("MoiInput").setAttribute("disabled", "");
+            document.getElementById("YoungModInput").setAttribute("disabled", "");
+        } else {
+            section = {
+                Moi: sections[sections.length - 1].Moi,
+                YoungMod: sections[sections.length - 1].YoungMod,
+                Coefficient: parseFloat(FlexRig)
+            }
+        }
+        sections[sections.length] = section;
+        // change the value of the innerHTML of the span with id spanNo to the length of the sections array + 1 only if sections.length is less than noOfSpans
+        if (sections.length < noOfSpans) {
+            document.getElementById("spanNo").innerHTML = sections.length + 1;
+            // clear the input field with the id FlexRigInput
+            document.getElementById("FlexRigInput").value = "";
+            // remove the valid class from the input field with the id FlexRigInput
+            document.getElementById("FlexRigInput").classList.remove("is-valid");
+        }
+        console.log(sections);
 
+    }
+}
+
+// settlement data collection and validation
+function collectSettlementData() {
+    if (settlements.length < supports.length) {
+        console.log('debug');
+        // get the value from the input field with id settlementInput, if it is either empty or not a number or less than zero, call the addErrorElement function and return -1
+        const settlement = document.getElementById("settlementInput").value.trim();
+        if (settlement == "" || isNaN(settlement) || parseFloat(settlement) < 0) {
+            document.getElementById("settlementInput").classList.add("is-invalid");
+            addErrorElement();
+            return -1;
+        } else {
+            document.getElementById("settlementInput").classList.remove("is-invalid");
+            document.getElementById("settlementInput").classList.add("is-valid");
+            // remove the error element
+            if (document.querySelector(".add-on > p") != null) {
+                document.querySelector(".add-on > p").remove();
+            }
+        }
+        // if the input field is valid, add the value to the settlements array
+        settlements[settlements.length] = parseFloat(settlement);
+        // change the value of the innerHTML of the span with id supportNo to the length of the settlements array + 1
+        if (settlements.length < supports.length) {
+            document.getElementById("supportNo").innerHTML = settlements.length + 1;
+            // clear the input field with the id settlementInput
+            document.getElementById("settlementInput").value = "";
+            // remove the valid class from the input field with the id settlementInput
+            document.getElementById("settlementInput").classList.remove("is-valid");
+        }
+        console.log(settlements);
+    }
+}
+
+// function to collect the point load data
+function collectPointLoadData() {
+    // get the value from the input field with id pl-location-form, if it is not a number or less than 0 or greater than the beam length, call the addErrorElement function and return -1
+    const plLocation = document.getElementById("pl-location-form").value.trim();
+    if (plLocation == "" || isNaN(plLocation) || parseFloat(plLocation) < 0 || parseFloat(plLocation) > beamLength) {
+        document.getElementById("pl-location-form").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("pl-location-form").classList.remove("is-invalid");
+        document.getElementById("pl-location-form").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+    // get the value from the input field with id pl-magnitude-form, if it is not a number, call the addErrorElement function and return -1
+    const plMagnitude = document.getElementById("pl-magnitude-form").value.trim();
+    if (plMagnitude == "" || isNaN(plMagnitude) || parseFloat(plMagnitude) < 0) {
+        document.getElementById("pl-magnitude-form").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("pl-magnitude-form").classList.remove("is-invalid");
+        document.getElementById("pl-magnitude-form").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+    // if the input fields are valid, create an object with the properties location and magnitude and add it to the pointLoads array
+    const pointLoad = {
+        location: parseFloat(plLocation),
+        magnitude: parseFloat(plMagnitude)
+    }
+    pointLoads[pointLoads.length] = pointLoad;
+    // change the value of the innerHTML of the span with id plNo to the length of the pointLoads array + 1
+    document.getElementById("plNo").innerHTML = pointLoads.length + 1;
+    // clear the input fields with the id pl-location-form and pl-magnitude-form
+
+    document.getElementById("pl-location-form").value = "";
+    document.getElementById("pl-magnitude-form").value = "";
+    // remove the valid class from the input fields with the id pl-location-form and pl-magnitude-form
+    document.getElementById("pl-location-form").classList.remove("is-valid");
+    document.getElementById("pl-magnitude-form").classList.remove("is-valid");
+    console.log(pointLoads);
+}
+
+// function to collect the distributed load data
+function collectDistributedLoadData() {
+    // get the value from the input fields with dlStart, dlEnd, dlStartMag and dlEndMag, if any of the input fields are empty or not a number, call the addErrorElement function and return -1. For the input fields with ids dlStart and dlEnd, if the value is less than 0 or greater than the beam length, call the addErrorElement function and return -1
+    const dlStart = document.getElementById("dlStart").value.trim();
+    const dlEnd = document.getElementById("dlEnd").value.trim();
+    const dlStartMag = document.getElementById("dlStartMag").value.trim();
+    const dlEndMag = document.getElementById("dlEndMag").value.trim();
+
+    // check if dlStart is less than dlEnd and if it is not, call the addErrorElement function and return -1. compare the values as numbers
+    if (parseFloat(dlStart) > parseFloat(dlEnd)) {
+        document.getElementById("dlStart").classList.add("is-invalid");
+        document.getElementById("dlEnd").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("dlStart").classList.remove("is-invalid");
+        document.getElementById("dlStart").classList.add("is-valid");
+        document.getElementById("dlEnd").classList.remove("is-invalid");
+        document.getElementById("dlEnd").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+
+    if (dlStart == "" || isNaN(dlStart) || parseFloat(dlStart) < 0 || parseFloat(dlStart) > beamLength) {
+        document.getElementById("dlStart").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("dlStart").classList.remove("is-invalid");
+        document.getElementById("dlStart").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+
+    if (dlEnd == "" || isNaN(dlEnd) || parseFloat(dlEnd) < 0 || parseFloat(dlEnd) > beamLength) {
+        document.getElementById("dlEnd").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("dlEnd").classList.remove("is-invalid");
+        document.getElementById("dlEnd").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+
+    if (dlStartMag == "" || isNaN(dlStartMag) || parseFloat(dlStartMag) < 0) {
+        document.getElementById("dlStartMag").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("dlStartMag").classList.remove("is-invalid");
+        document.getElementById("dlStartMag").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+
+    if (dlEndMag == "" || isNaN(dlEndMag) || parseFloat(dlEndMag) < 0) {
+        document.getElementById("dlEndMag").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("dlEndMag").classList.remove("is-invalid");
+        document.getElementById("dlEndMag").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+    // if the input fields are valid, create an object with the properties start, end, startMag and endMag and add it to the distributedLoads array
+    const distributedLoad = {
+        start: parseFloat(dlStart),
+        end: parseFloat(dlEnd),
+        startMag: parseFloat(dlStartMag),
+        endMag: parseFloat(dlEndMag)
+    }
+    distributedLoads[distributedLoads.length] = distributedLoad;
+    // change the value of the innerHTML of the span with id dlNo to the length of the distributedLoads array + 1
+    document.getElementById("dlNo").innerHTML = distributedLoads.length + 1;
+    // clear the input fields with the id dlStart, dlEnd, dlStartMag and dlEndMag
+    document.getElementById("dlStart").value = "";
+    document.getElementById("dlEnd").value = "";
+    document.getElementById("dlStartMag").value = "";
+    document.getElementById("dlEndMag").value = "";
+    // remove the valid class from the input fields with the id dlStart, dlEnd, dlStartMag and dlEndMag
+    document.getElementById("dlStart").classList.remove("is-valid");
+    document.getElementById("dlEnd").classList.remove("is-valid");
+    document.getElementById("dlStartMag").classList.remove("is-valid");
+    document.getElementById("dlEndMag").classList.remove("is-valid");
+    console.log(distributedLoads);
+}
+
+// function to collect the moment data
+function collectMomentData() {
+    // get the value from the input field with id m-position-form, if it is not a number or less than 0 or greater than the beam length, call the addErrorElement function and return -1
+    const mPosition = document.getElementById("m-position-form").value.trim();
+    if (mPosition == "" || isNaN(mPosition) || parseFloat(mPosition) < 0 || parseFloat(mPosition) > beamLength) {
+        document.getElementById("m-position-form").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("m-position-form").classList.remove("is-invalid");
+        document.getElementById("m-position-form").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+    // get the value from the input field with id m-magnitude-form, if it is not a number, call the addErrorElement function and return -1
+    const mMagnitude = document.getElementById("m-magnitude-form").value.trim();
+    if (mMagnitude == "" || isNaN(mMagnitude)) {
+        document.getElementById("m-magnitude-form").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("m-magnitude-form").classList.remove("is-invalid");
+        document.getElementById("m-magnitude-form").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+    // if the input fields are valid, create an object with the properties position and magnitude and add it to the moments array
+    const moment = {
+        position: parseFloat(mPosition),
+        magnitude: parseFloat(mMagnitude)
+    }
+    moments[moments.length] = moment;
+    // change the value of the innerHTML of the span with id mNo to the length of the moments array + 1
+    document.getElementById("mNo").innerHTML = moments.length + 1;
+    // clear the input fields with the id m-position-form and m-magnitude-form
+    document.getElementById("m-position-form").value = "";
+    document.getElementById("m-magnitude-form").value = "";
+    // remove the valid class from the input fields with the id m-position-form and m-magnitude-form
+    document.getElementById("m-position-form").classList.remove("is-valid");
+    document.getElementById("m-magnitude-form").classList.remove("is-valid");
+    console.log(moments);
+}
 // M I S C E L L A N E O U S  F U N C T I O N S
 
 // function to remove the disabled attribute from the buttons
 function unDisableButtons(elementType) {
     if (elementType == 'beam') {
         document.getElementById("support-button").removeAttribute("disabled");
-        document.getElementById("section-button").removeAttribute("disabled");
         document.getElementById("pl-button").removeAttribute("disabled");
         document.getElementById("dl-button").removeAttribute("disabled");
         document.getElementById("m-button").removeAttribute("disabled");
@@ -235,7 +779,6 @@ function unDisableButtons(elementType) {
 function disableButtons(elementType) {
     if (elementType == 'beam') {
         document.getElementById("support-button").setAttribute("disabled", "");
-        document.getElementById("section-button").setAttribute("disabled", "");
         document.getElementById("pl-button").setAttribute("disabled", "");
         document.getElementById("dl-button").setAttribute("disabled", "");
         document.getElementById("m-button").setAttribute("disabled", "");
@@ -245,12 +788,41 @@ function disableButtons(elementType) {
 // function to add the error element to the div with the class 'add-on' as done in the collectData function
 function addErrorElement() {
     if (document.querySelector(".add-on > p") == null) {
-        error = document.createElement("p");
+        const error = document.createElement("p");
         error.innerHTML = "verify the highlighted input fields!";
         // add class inline-block to the error element
         error.classList.add("d-inline-block");
         error.classList.add("error-text");
-        addDiv = document.querySelector(".add-on");
+        const addDiv = document.querySelector(".add-on");
         addDiv.insertBefore(error, addDiv.firstChild);
     }
+}
+
+// function to calculate the no of spans, accounting for the fact that a span might have only one support if there are no supports at the ends of the beam
+function calculateNoOfSpans() {
+    let noOfSpans = 0;
+    // sort the supports array in ascending order of location
+    supports.sort(function (a, b) {
+        return a.location - b.location;
+    });
+    // calculate the no of spans and store in the variable noOfSpans
+    noOfSpans = supports[0].location == 0 ? noOfSpans : noOfSpans + 1;
+    noOfSpans = supports[supports.length - 1].location == beamLength ? noOfSpans : noOfSpans + 1;
+    noOfSpans = noOfSpans + supports.length - 1;
+    console.log(noOfSpans);
+    return noOfSpans;
+}
+
+// function to export the global variables to another file
+function exportParameters() {
+    calculationsModule.setParameters({
+      beamLength,
+      supports,
+      sections,
+      settlements,
+      pointLoads,
+      distributedLoads,
+      moments,
+      noOfSpans,
+    });
 }
