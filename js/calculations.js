@@ -38,6 +38,15 @@ export function setParameters(params) {
   recalibrateSupports();
   const spans = splitBeamIntoSpans();
   const FixedEndMoments = calculateFixedEndMoments(spans);
+  let expressionsArray = generateMemberEndMomentExpressions(spans, FixedEndMoments);
+  const expressionsWithEliminatedknowns = eliminateKnownVariables(expressionsArray, spans);
+  const Equations = createEquations(expressionsWithEliminatedknowns, spans, FixedEndMoments);
+  const solution = solveEquations(Equations);
+  const expressionsWithSolutions = addSolutionsToExpressions(solution, expressionsWithEliminatedknowns);
+  const expressionsSimplified = simplifyExpressions(expressionsWithSolutions);
+  const expressionsWithFreeEndSpan = addMemberEndMomentEquationsForFreeEndSpans(expressionsSimplified, FixedEndMoments, spans);
+  const expressionsFinal = addSpanNumbersToMemberEndMomentEquations(expressionsWithFreeEndSpan);
+  displayMemberEndMomentEquations(expressionsFinal);
 }
 
 // function to add free end supports to the supports array
@@ -295,7 +304,7 @@ function calculateFixedEndMoments(spans) {
 // The function returns an object with the fixed end moments for the span
 // The object has the following properties which differs from the other fixed end moments objects, by the fact that the span has a free end support at the left end and at that end, the fixed end moment is zero
 // 1.) spanNo {int} - the span number
-// 2.) M+"{span.supports[1].supportNo}"+"span.{supports[0].supportNo} {float} - the fixed end moment at the right end of the span
+// 2.) FEM+"{span.supports[1].supportNo}"+"span.{supports[0].supportNo} {float} - the fixed end moment at the right end of the span
 // It is found for the following loading conditions for every load in the span
 // 1.) point loads - the fixed end moment is equal to the magnitude of the point load multiplied by the distance from the point load to the right end of the span
 // 2.) distributed loads - the fixed end moment is equal to the area of the distributed load diagram multiplied by the distance from the centroid of the distributed load diagram to the right end of the span
@@ -303,16 +312,16 @@ function calculateFixedEndMoments(spans) {
 function calculateFixedEndMomentsForLeftFreeEndSpans(span) {
   let fem = {};
   fem.spanNo = span.spanNo;
-  fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] = 0;
+  fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] = 0;
   span.pointLoads.forEach((load) => {
-    fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += load.magnitude * (span.end - load.location);
+    fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -(load.magnitude * (span.end - load.location));
   });
   span.distributedLoads.forEach((load) => {
     if (load) {
       if (load.startMag === load.endMag) {
         const midLoadpoint = (load.start + load.end) / 2;
         const midLoadToEnd = span.end - midLoadpoint;
-        fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += load.startMag * midLoadToEnd * (load.end - load.start);
+        fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -(load.startMag * midLoadToEnd * (load.end - load.start));
       } else {
         if (load.startMag < load.endMag) {
           if (load.startMag === 0) {
@@ -320,7 +329,7 @@ function calculateFixedEndMomentsForLeftFreeEndSpans(span) {
             const height = load.endMag;
             const area = (base * height) / 2;
             const centroid = (1 / 3 * base) + (span.end - load.end);
-            fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += (area * centroid);
+            fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -(area * centroid);
           } else {
             const base = load.end - load.start;
             const triheight = load.endMag - load.startMag;
@@ -329,7 +338,7 @@ function calculateFixedEndMomentsForLeftFreeEndSpans(span) {
             const recarea = base * recheight;
             const tricentroid = (1 / 3 * base) + (span.end - load.end);
             const reccentroid = (1 / 2 * base) + (span.end - load.end);
-            fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += (triarea * tricentroid) + (recarea * reccentroid);
+            fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -((triarea * tricentroid) + (recarea * reccentroid));
           }
 
         }
@@ -339,7 +348,7 @@ function calculateFixedEndMomentsForLeftFreeEndSpans(span) {
             const height = load.startMag;
             const area = (base * height) / 2;
             const centroid = (2 / 3 * base) + (span.end - load.end);
-            fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += (area * centroid);
+            fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -(area * centroid);
           } else {
             const base = load.end - load.start;
             const triheight = load.startMag - load.endMag;
@@ -348,7 +357,7 @@ function calculateFixedEndMomentsForLeftFreeEndSpans(span) {
             const recarea = base * recheight;
             const tricentroid = (2 / 3 * base) + (span.end - load.end);
             const reccentroid = (1 / 2 * base) + (span.end - load.end);
-            fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += (triarea * tricentroid) + (recarea * reccentroid);
+            fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -((triarea * tricentroid) + (recarea * reccentroid));
           }
         }
       }
@@ -356,7 +365,7 @@ function calculateFixedEndMomentsForLeftFreeEndSpans(span) {
 
   });
   span.moments.forEach((moment) => {
-    fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += moment.magnitude;
+    fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += moment.magnitude;
   });
   return fem;
 }
@@ -374,16 +383,16 @@ function calculateFixedEndMomentsForLeftFreeEndSpans(span) {
 function calculateFixedEndMomentsForRightFreeEndSpans(span) {
   let fem = {};
   fem.spanNo = span.spanNo;
-  fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] = 0;
+  fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] = 0;
   span.pointLoads.forEach((load) => {
-    fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += -(load.magnitude * (load.location - span.start));
+    fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (load.magnitude * (load.location - span.start));
   });
   span.distributedLoads.forEach((load) => {
     if (load) {
       if (load.startMag === load.endMag) {
         const midLoadpoint = (load.start + load.end) / 2;
         const midLoadToEnd = midLoadpoint - span.start;
-        fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += -(load.startMag * midLoadToEnd * (load.end - load.start));
+        fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (load.startMag * midLoadToEnd * (load.end - load.start));
       } else {
         if (load.startMag < load.endMag) {
           if (load.startMag === 0) {
@@ -391,7 +400,7 @@ function calculateFixedEndMomentsForRightFreeEndSpans(span) {
             const height = load.endMag;
             const area = (base * height) / 2;
             const centroid = (2 / 3 * base) + (load.start - span.start);
-            fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += -(area * centroid);
+            fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (area * centroid);
           } else {
             const base = load.end - load.start;
             const triheight = load.endMag - load.startMag;
@@ -400,7 +409,7 @@ function calculateFixedEndMomentsForRightFreeEndSpans(span) {
             const recarea = base * recheight;
             const tricentroid = (2 / 3 * base) + (load.start - span.start);
             const reccentroid = (1 / 2 * base) + (load.start - span.start);
-            fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += -(triarea * tricentroid) - (recarea * reccentroid);
+            fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += ((triarea * tricentroid) + (recarea * reccentroid));
           }
 
         }
@@ -411,7 +420,7 @@ function calculateFixedEndMomentsForRightFreeEndSpans(span) {
             const area = (base * height) / 2;
             const centroid = (1 / 3 * base) + (load.start - span.start);
             console.log(area, centroid); // remove later
-            fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += -(area * centroid);
+            fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (area * centroid);
           }
           else {
             const base = load.end - load.start;
@@ -421,7 +430,7 @@ function calculateFixedEndMomentsForRightFreeEndSpans(span) {
             const recarea = base * recheight;
             const tricentroid = (1 / 3 * base) + (load.start - span.start);
             const reccentroid = (1 / 2 * base) + (load.start - span.start);
-            fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += -(triarea * tricentroid) - (recarea * reccentroid);
+            fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += ((triarea * tricentroid) + (recarea * reccentroid));
           }
         }
       }
@@ -429,7 +438,7 @@ function calculateFixedEndMomentsForRightFreeEndSpans(span) {
   }
   );
   span.moments.forEach((moment) => {
-    fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += moment.magnitude;
+    fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += moment.magnitude;
   });
   return fem;
 }
@@ -442,8 +451,8 @@ function calculateFixedEndMomentsForRightFreeEndSpans(span) {
 function calculateFixedEndMomentsForFixedEndSpans(span) {
   let fem = {};
   fem.spanNo = span.spanNo;
-  fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] = 0;
-  fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] = 0;
+  fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] = 0;
+  fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] = 0;
   span.pointLoads.forEach((load) => {
     // each point load has a fixed end moment at both ends of the span,
     // for the left end (i.e M12) the formula is given by the following formula, M12 = +((P * a * b^2)/l^2)
@@ -453,8 +462,8 @@ function calculateFixedEndMomentsForFixedEndSpans(span) {
     const b = span.end - load.location;
     const l = span.length;
     const p = load.magnitude;
-    fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += ((p * a * b * b) / (l * l));
-    fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -((p * b * a * a) / (l * l));
+    fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += ((p * a * b * b) / (l * l));
+    fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -((p * b * a * a) / (l * l));
   });
   span.distributedLoads.forEach((load) => {
     if (load) {
@@ -473,10 +482,10 @@ function calculateFixedEndMomentsForFixedEndSpans(span) {
         const expressionLeft = `(${p} * x * (${l} - x)^2)/${l}^2`;
         console.log(expressionLeft);
         const integralforleftFEM = parseFloat(nerdamer(`defint(${expressionLeft}, ${a}, ${b})`).text());
-        fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+        fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
         const expressionRight = `(${p} * (${l} - x) * x^2)/${l}^2`;
         const integralforrightFEM = parseFloat(nerdamer(`defint(${expressionRight}, ${a}, ${b})`).text());
-        fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+        fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
       }
       if (load.startMag < load.endMag) {
         if (load.startMag === 0) {
@@ -493,9 +502,9 @@ function calculateFixedEndMomentsForFixedEndSpans(span) {
           const expression = `(${p} * (x - ${a})) / (${b} - ${a})`;
           console.log(expression);
           const integralforleftFEM = parseFloat(nerdamer(`defint((${expression} * x * (${l} - x)^2)/${l}^2, ${a}, ${b})`).text());
-          fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+          fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
           const integralforrightFEM = parseFloat(nerdamer(`defint((${expression} * (${l} - x) * x^2)/${l}^2, ${a}, ${b})`).text());
-          fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+          fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
 
           // const simplifiedExpression = math.simplify(expression);
           // const integralforleftFEM = math.integral(`((${simplifiedExpression} * x * (${l} - x)^2)/${l}^2)`, 'x', a, b);
@@ -512,9 +521,9 @@ function calculateFixedEndMomentsForFixedEndSpans(span) {
           const expression = `((${p2} - ${p1})*(x - ${a})/(${b} - ${a})) + ${p1}`;
           console.log(expression);
           const integralforleftFEM = parseFloat(nerdamer(`defint((${expression} * x * (${l} - x)^2)/${l}^2, ${a}, ${b})`).text());
-          fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+          fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
           const integralforrightFEM = parseFloat(nerdamer(`defint((${expression} * (${l} - x) * x^2)/${l}^2, ${a}, ${b})`).text());
-          fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+          fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
 
           // const simplifiedExpression = math.simplify(expression);
           // const integralforleftFEM = math.integral(`((${simplifiedExpression} * x * (${l} - x)^2)/${l}^2)`, 'x', a, b);
@@ -533,9 +542,9 @@ function calculateFixedEndMomentsForFixedEndSpans(span) {
           const expression = `(${p} * (${b} - x)/(${b}-${a}))`;
           console.log(expression);
           const integralforleftFEM = parseFloat(nerdamer(`defint((${expression} * x * (${l} - x)^2)/${l}^2, ${a}, ${b})`).text());
-          fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+          fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
           const integralforrightFEM = parseFloat(nerdamer(`defint((${expression} * (${l} - x) * x^2)/${l}^2, ${a}, ${b})`).text());
-          fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+          fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
 
           // const simplifiedExpression = math.simplify(expression);
           // const integralforleftFEM = math.integral(`((${simplifiedExpression} * x * (${l} - x)^2)/${l}^2)`, 'x', a, b);
@@ -553,9 +562,9 @@ function calculateFixedEndMomentsForFixedEndSpans(span) {
           const expression = `((${p2} - ${p1})*(${b}-x)/(${b}-${a})) + ${p1}`;
           console.log(expression);
           const integralforleftFEM = parseFloat(nerdamer(`defint((${expression} * x * (${l} - x)^2)/${l}^2, ${a}, ${b})`).text());
-          fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+          fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
           const integralforrightFEM = parseFloat(nerdamer(`defint((${expression} * (${l} - x) * x^2)/${l}^2, ${a}, ${b})`).text());
-          fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+          fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
 
           // const simplifiedExpression = math.simplify(expression);
           // const integralforleftFEM = math.integral(`((${simplifiedExpression} * x * (${l} - x)^2)/${l}^2)`, 'x', a, b);
@@ -575,8 +584,241 @@ span.moments.forEach((moment) => {
   const b = span.end - moment.position;
   const l = span.length;
   const M = moment.magnitude;
-  fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (M * b * (2 * a - b)) / (l * l);
-  fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += (M * a * (2 * b - a)) / (l * l);
+  fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (M * b * (2 * a - b)) / (l * l);
+  fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += (M * a * (2 * b - a)) / (l * l);
 });
 return fem;
 }
+
+
+// M E M B E R   E N D  M O M E N T  E Q U A T I O N S  G E N E R A T I O N
+
+// The function generates the member end moment equations for each span in the beam
+// The member end moment equations for one end is given by the following general EXPRESSIONS,
+// Mab = FEMab + 2EI/L * (2θa + θb - 3δ/L)
+// Mba = FEMba + 2EI/L * (2θb + θa - 3δ/L)
+// where Mab is the member end moment equation, FEMab is the fixed end moment of current side(i.e M12 = FEM12 and FEMba = M21), E is the modulus of elasticity, I is the moment of inertia, L is the length of the span, θa is the rotation at the left end of the span, θb is the rotation at the right end of the span, and δ is the differential settlement between the left and right end of the span
+// δ is given by the following formula, δ = δ2 - δ1, where δ1 is the settlement at the left end of the span, and δ2 is the settlement at the right end of the span(settlement is given in span object as a property, if it undefined then δ = 0)
+// θa, θb are the unknowns in the member end moment equations, and they are found by solving the simultaneous equations of equilibrium of the span
+// θa or θb at a fixed end is zero
+// No moment equation is found at a free end support
+// if for a span, there exists a free end support at one end, then the member end moment equation for that end is not generated and the moment equation for the other end is unneccessary as the moment there is equal to Fixed end moment at that end
+// the equilibrium conditions occurs at the joints in the beam(at joint, M21 + M23 = 0, M32+M34 = 0, M43 + M45 = 0, etc)
+
+// The following steps are to be done in the order below
+
+// 1.) Generate the expressions then convert them to simplified STRINGS for every span, except for spans with a free end.(Mind the differential settlement) return as an array of object strings [M12: 'expression', M21: 'expression'..., Mn(n-1): 'expression' e.t.c]
+
+// 2.) ELIMINATE the known variables in the expression
+// For ends fixed(for fixed end as first or last support) set θ1 and θn to be ZERO (i.e for the first and last expression in the array of expressions
+
+// 3.) CREATION OF EQUATIONS (by equilibrium and exterior roller)
+// MOMENT EQUATION FOR EXTERNAL ROLLER
+// 1.) This is For the one end fixed continuous beam(i.e has one fixed end and one end that is not fixed),
+// 2.) If has an external roller or hinge support  set M12 to zero (if the roller or hinge is the first support) or M(n-1)n to zero (if the roller or hinge is the last support)
+// 3.) If has a free end as the last or first support, then set the 2nd to the last or 2nd support Moment (M(n-1)(n-2) or M21 to the negative of the FEM of the free end span) developing an equation M(n-1)(n-2) = -FEM(n-1)n or M21 = -FEM21.
+ 
+// Return the equations in string format, simplify then add them to the equations array).
+
+// MOMENT EQUATIONS FOR INTERNAL JOINT MEMBERS
+// For all the inner joints, add the expressions in the array of expressions equating them to zero (e.g M21+M23 =0, M32+M34=0..., M(n-1)n + M(n-2)(n-1)= 0 e.t.c)
+
+// then convert the equations to string format and simplifying them then adding them into the the equations array
+
+// 4.) Solve the linear equations in the equations array with nerdamer 
+
+// 5.) Return the solution as an array of objects, each object contains the span number and the member end moment equations for the span
+// e.g [{spanNo: 1, M12: 'expression', M21: 'expression'}, {spanNo: 2, M12: 'expression', M21: 'expression'}]
+
+
+function generateMemberEndMomentExpressions(spans, fixedEndMoments) {
+  let expressionsArray = [];
+  spans.forEach((span) => {
+    // if any support is free, then the member end moment expression for the span is not generated
+    // The FEMs in the expression are gotten from the fixed end moments array
+    // The differential settlement is gotten from the span object: if the settlements are undefined, then the differential settlement is zero
+    // The modulus of elasticity and the moment of inertia are gotten from the section property of the span object, section: {Moi: ignore, YoungMod: ignore, Coefficient: int}. If the section property is undefined, then the modulus of elasticity and the moment of inertia are set to 1 and 1 respectively, else if the section property is defined, then the modulus of elasticity and the moment of inertia are set to the coefficient value of the section property(i.e E*I = section.Coefficient)
+    // The differential settlement is gotten from the span object: if the settlements are undefined, then the differential settlement is zero else δ = δ2 - δ1
+    // To simplify the expression θ{span.supports[0].supportNo} and θ{span.supports[1].supportNo} are to be set to solvable variables, keeping reference that θ{span.supports[0].supportNo} and θ{span.supports[1].supportNo} correspond to those variables in the equations array
+
+    if (span.supports[0].type === 'Free end' || span.supports[1].type === 'Free end') {
+      return;
+    }
+    let differentialSettlement;
+    // for settlement in span.settlements, if undefined, then set that settlement to zero, and find the differential settlement. span.settlements can be like [0.5, 0.5] or [undefined, 0.5] or [0.5, undefined] or [undefined, undefined] but not undefined
+    // settlement is in mm 
+    if (span.settlements[0] === undefined && span.settlements[1] === undefined) {
+      differentialSettlement = 0;
+    } else if (span.settlements[0] === undefined) {
+      differentialSettlement = span.settlements[1] / 1000;
+    } else if (span.settlements[1] === undefined) {
+      differentialSettlement = -span.settlements[0] / 1000;
+    } else {
+      differentialSettlement = (span.settlements[1] - span.settlements[0]) / 1000;
+    }
+
+    let E, I; // modulus of elasticity and moment of inertia
+    if (span.section === undefined) {
+      E = 1;
+      I = 1;
+    } else {
+      if (span.section.YoungMod === null || span.section.Moi === null) {
+        E = span.section.Coefficient;
+        I = 1;
+      } else {
+        E = span.section.YoungMod * 1000;
+        I = span.section.Moi * Math.pow(10, -2);;
+      }
+    }
+    const L = span.length;
+    const FEMab = fixedEndMoments.find((fem) => fem.spanNo === span.spanNo)[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`];
+    const FEMba = fixedEndMoments.find((fem) => fem.spanNo === span.spanNo)[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`];
+    const expressionMab = `${FEMab} + 2*${E}*${I}/${L} * (2*θ${span.supports[0].supportNo} + θ${span.supports[1].supportNo} - 3*${differentialSettlement}/${L})`;
+    const expressionMba = `${FEMba} + 2*${E}*${I}/${L} * (2*θ${span.supports[1].supportNo} + θ${span.supports[0].supportNo} - 3*${differentialSettlement}/${L})`;
+    expressionsArray.push({ spanNo: span.spanNo, Mab: expressionMab, Mba: expressionMba });
+  });
+  console.log("Member end moment expressions:", expressionsArray);
+  return expressionsArray;
+} 
+
+
+function eliminateKnownVariables(expressionsArray, spans) {
+  // For ends fixed(for fixed end as first or last support) set θ1 and θn to be ZERO (i.e sfor the first and last expression in the array of expressions
+  // if the first support is fixed, then set θ1 to zero, if the last support is fixed, then set θn to zero
+  if (spans[0].supports[0].type === 'Fixed') {
+    console.log(spans[0].supports[0].supportNo);
+    expressionsArray[0].Mab = expressionsArray[0].Mab.replace(`θ${spans[0].supports[0].supportNo}`, '0');
+    expressionsArray[0].Mba = expressionsArray[0].Mba.replace(`θ${spans[0].supports[0].supportNo}`, '0');
+  }
+  if (spans[spans.length - 1].supports[1].type === 'Fixed') {
+    console.log(spans[spans.length - 1].supports[1].supportNo);
+    expressionsArray[spans.length - 1].Mba = expressionsArray[spans.length - 1].Mba.replace(`θ${spans[spans.length - 1].supports[1].supportNo}`, '0');
+    expressionsArray[spans.length - 1].Mab = expressionsArray[spans.length - 1].Mab.replace(`θ${spans[spans.length - 1].supports[1].supportNo}`, '0');
+  }
+  console.log("Eliminated known variables:", expressionsArray);
+  return expressionsArray;
+}
+
+
+function createEquations(expressionsArray, spans, fixedEndMoments) {
+  let equationsArray = [];
+  // MOMENT EQUATION FOR EXTERNAL ROLLER
+  // 1.) This is For the one end fixed continuous beam(i.e has one fixed end and one end that is not fixed),
+  // 2.) If has an external roller or hinge support  set M12 to zero (if the roller or hinge is the first support) or M(n-1)n to zero (if the roller or hinge is the last support)
+  // 3.) If has a free end as the last or first support, then set the 2nd to the last or 2nd support Moment (M(n-1)(n-2) or M21 to the negative of the FEM of the free end span) developing an equation M(n-1)(n-2) = -FEM(n-1)n or M23 = -FEM21.
+  if (spans[0].supports[0].type === 'Roller' || spans[0].supports[0].type === 'Hinge') {
+    equationsArray.push(expressionsArray[0].Mab + " = 0");
+  }
+  if (spans[spans.length - 1].supports[1].type === 'Roller' || spans[spans.length - 1].supports[1].type === 'Hinge') {
+    equationsArray.push(expressionsArray[spans.length - 1].Mba + " = 0");
+  }
+  if (spans[0].supports[0].type === 'Free end') {
+    equationsArray.push(expressionsArray[0].Mab + " = " + -fixedEndMoments.find((fem) => fem.spanNo === spans[0].spanNo)[`FEM${spans[0].supports[1].supportNo}${spans[0].supports[0].supportNo}`]);
+  }
+  if (spans[spans.length - 1].supports[1].type === 'Free end') {
+    equationsArray.push(expressionsArray[expressionsArray.length - 1].Mba + " = " + -fixedEndMoments.find((fem) => fem.spanNo === spans[spans.length - 1].spanNo)[`FEM${spans[spans.length - 1].supports[0].supportNo}${spans[spans.length - 1].supports[1].supportNo}`]);
+  }
+
+  // MOMENT EQUATIONS FOR INTERNAL JOINT MEMBERS
+
+  for (let i = 0; i < expressionsArray.length - 1; i++) {
+    equationsArray.push(expressionsArray[i].Mba + " + " + expressionsArray[i + 1].Mab + " = 0");
+  }
+  console.log("Equations:", equationsArray);
+  return equationsArray;
+}
+
+// To solve the linear equations in the equations array with nerdamer
+// e.g nerdamer.solveEquations(['-67.5 + 2*1*1/9 * (2*θ3 + θ2 - 3*0/9) = -120', '0 + 2*1*1/6 * (2*θ2 + 0 - 3*0/6) + 67.5 + 2*1*1/9 * (2*θ2 + θ3 - 3*0/9) = 0']);
+// returns [['θ2', '-41.25`] ['θ3', '-97.5']]
+
+function solveEquations(equationsArray) {
+  let solutions = nerdamer.solveEquations(equationsArray);
+  console.log("Solutions:", solutions);
+  return solutions;
+}
+
+// For each result in the solutions array, the result is an array with two elements, the first element is the variable and the second element is the value of the variable
+// for each expression in each span in the expressions array, the expressions are solved by replacing the variable with the value of the variable and then solving using nerdamer({replaced expression}).evaluate().toString()
+// the solved expressions are then added to the member end moment equations array for the span
+
+function addSolutionsToExpressions(solutions, expressionsArray) {
+  solutions.forEach((solution) => {
+    for (let i = 0; i < expressionsArray.length; i++) {
+      expressionsArray[i].Mab = expressionsArray[i].Mab.replace(solution[0], solution[1]);
+      expressionsArray[i].Mba = expressionsArray[i].Mba.replace(solution[0], solution[1]);
+    }
+  });
+  console.log("Member end moment equations with solutions:", expressionsArray);
+  return expressionsArray;
+}
+
+// for each expression in the expressions array, the expressions are converted to simplified strings using nerdamer({expression}).evaluate().toString()
+// the simplified expressions are then added to the member end moment equations array for the span
+
+function simplifyExpressions(expressionsArray) {
+  expressionsArray.forEach((expression) => {
+    expression.Mab = nerdamer(expression.Mab).evaluate().toString();
+    expression.Mba = nerdamer(expression.Mba).evaluate().toString();
+  });
+  console.log("Simplified member end moment equations:", expressionsArray);
+  return expressionsArray;
+}
+
+// Simplified member end moment equations: 
+// [{spanNo: 1, Mab: '-55/4', Mba: '-55/2'}, {spanNo: 2, Mab: '55/2', Mba: '-120'}]
+// This is the final result of the member end moment equations generation, but the free end spans are not included in the result. The free end spans are not included in the result because the member end moment equations for the free end spans are not generated
+// to add the member end moment equations for the free end spans, the fixed end moments for the free end spans are added to the result, if and only if the free end spans are the first or last spans in the beam
+
+function addMemberEndMomentEquationsForFreeEndSpans(expressionsArray, fixedEndMoments, spans) {
+  if (spans[0].supports[0].type === 'Free end') {
+    expressionsArray.unshift({ spanNo: spans[0].spanNo, Mab: `0`, Mba: `${fixedEndMoments.find((fem) => fem.spanNo === spans[0].spanNo)[`FEM${spans[0].supports[1].supportNo}${spans[0].supports[0].supportNo}`]}` });
+  }
+  if (spans[spans.length - 1].supports[1].type === 'Free end') {
+    expressionsArray.push({ spanNo: spans[spans.length - 1].spanNo, Mab: `${fixedEndMoments.find((fem) => fem.spanNo === spans[spans.length - 1].spanNo)[`FEM${spans[spans.length - 1].supports[0].supportNo}${spans[spans.length - 1].supports[1].supportNo}`]}`, Mba: `0` });
+  }
+  console.log("Member end moment equations with free end spans:", expressionsArray);
+  return expressionsArray;
+}
+
+// Member end moment equations with free end spans:
+// [{spanNo: 1, Mab: '-55/4', Mba: '-55/2'}, {spanNo: 2, Mab: '55/2', Mba: '-120'}, {spanNo: 3, Mab: '120', Mba: '0'}]
+// This is the final result of the member end moment equations generation, the member end moment equations for the free end spans are included in the result
+// But I will add the span numbers to the member end moment equations for easy identification as such
+// [{spanNo: 1, M12: '-55/4', M21: '-55/2'}, {spanNo: 2, M23: '55/2', M32: '-120'}, {spanNo: 3, M34: '120', M43: '0'}]
+
+function addSpanNumbersToMemberEndMomentEquations(expressionsArray) {
+  expressionsArray.forEach((expression) => {
+    expression[`M${expression.spanNo}${expression.spanNo + 1}`] = expression.Mab;
+    expression[`M${expression.spanNo + 1}${expression.spanNo}`] = expression.Mba;
+    delete expression.Mab;
+    delete expression.Mba;
+  });
+  console.log("Member end moment equations with span numbers:", expressionsArray);
+  return expressionsArray;
+}
+
+
+// a function to convert the member end moments expressionsFinal to a string to be inserted into a p element in the html,
+// it will be added to the element with the id of top-display
+
+function displayMemberEndMomentEquations(expressionsArray) {
+  let displayString = '';
+  expressionsArray.forEach((expression) => {
+    displayString += `<br>${expression.spanNo}: M${expression.spanNo}${expression.spanNo + 1} = ${expression[`M${expression.spanNo}${expression.spanNo + 1}`]}, M${expression.spanNo + 1}${expression.spanNo} = ${expression[`M${expression.spanNo + 1}${expression.spanNo}`]}`;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  // add class fw-bold and fs-4 to the p element
+  p.classList.add('fw-bold');
+  p.classList.add('fs-4');
+  // add id member-end-moment-equations to the p element
+  p.id = 'member-end-moment-equations';
+  // append it to element with id of top-display
+  document.getElementById('top-display').appendChild(p);  
+  console.log(displayString);
+  return displayString;
+}
+

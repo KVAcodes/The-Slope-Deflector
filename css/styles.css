@@ -94,3 +94,9 @@ body {
     color: rgb(255, 105, 105);
     font-size: 12px;
 }
+
+/* display */
+
+#top-display > p {
+    color: #ecf0f1;
+}
