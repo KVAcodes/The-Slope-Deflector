@@ -666,8 +666,8 @@ function generateMemberEndMomentExpressions(spans, fixedEndMoments) {
         E = span.section.Coefficient;
         I = 1;
       } else {
-        E = span.section.YoungMod * 1000;
-        I = span.section.Moi * Math.pow(10, -2);;
+        E = span.section.YoungMod * 1000 * span.section.Coefficient;
+        I = span.section.Moi * Math.pow(10, -12);;
       }
     }
     const L = span.length;
@@ -821,4 +821,3 @@ function displayMemberEndMomentEquations(expressionsArray) {
   console.log(displayString);
   return displayString;
 }
-
