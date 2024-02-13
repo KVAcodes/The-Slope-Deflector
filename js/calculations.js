@@ -650,11 +650,11 @@ function generateMemberEndMomentExpressions(spans, fixedEndMoments) {
     if (span.settlements[0] === undefined && span.settlements[1] === undefined) {
       differentialSettlement = 0;
     } else if (span.settlements[0] === undefined) {
-      differentialSettlement = span.settlements[1] / 1000;
+      differentialSettlement = -span.settlements[1] / 1000;
     } else if (span.settlements[1] === undefined) {
-      differentialSettlement = -span.settlements[0] / 1000;
+      differentialSettlement = span.settlements[0] / 1000;
     } else {
-      differentialSettlement = (span.settlements[1] - span.settlements[0]) / 1000;
+      differentialSettlement = -(span.settlements[1] - span.settlements[0]) / 1000;
     }
 
     let E, I; // modulus of elasticity and moment of inertia
@@ -667,7 +667,7 @@ function generateMemberEndMomentExpressions(spans, fixedEndMoments) {
         I = 1;
       } else {
         E = span.section.YoungMod * 1000 * span.section.Coefficient;
-        I = span.section.Moi * Math.pow(10, -12);;
+        I = span.section.Moi * Math.pow(10, -12);
       }
     }
     const L = span.length;
@@ -685,18 +685,17 @@ function generateMemberEndMomentExpressions(spans, fixedEndMoments) {
 function eliminateKnownVariables(expressionsArray, spans) {
   // For ends fixed(for fixed end as first or last support) set θ1 and θn to be ZERO (i.e sfor the first and last expression in the array of expressions
   // if the first support is fixed, then set θ1 to zero, if the last support is fixed, then set θn to zero
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
   if (spans[0].supports[0].type === 'Fixed') {
-    console.log(spans[0].supports[0].supportNo);
-    expressionsArray[0].Mab = expressionsArray[0].Mab.replace(`θ${spans[0].supports[0].supportNo}`, '0');
-    expressionsArray[0].Mba = expressionsArray[0].Mba.replace(`θ${spans[0].supports[0].supportNo}`, '0');
+    newExpressionsArray[0].Mab = newExpressionsArray[0].Mab.replace(`θ${spans[0].supports[0].supportNo}`, '0');
+    newExpressionsArray[0].Mba = newExpressionsArray[0].Mba.replace(`θ${spans[0].supports[0].supportNo}`, '0');
   }
   if (spans[spans.length - 1].supports[1].type === 'Fixed') {
-    console.log(spans[spans.length - 1].supports[1].supportNo);
-    expressionsArray[spans.length - 1].Mba = expressionsArray[spans.length - 1].Mba.replace(`θ${spans[spans.length - 1].supports[1].supportNo}`, '0');
-    expressionsArray[spans.length - 1].Mab = expressionsArray[spans.length - 1].Mab.replace(`θ${spans[spans.length - 1].supports[1].supportNo}`, '0');
+    newExpressionsArray[newExpressionsArray.length - 1].Mba = newExpressionsArray[newExpressionsArray.length - 1].Mba.replace(`θ${spans[spans.length - 1].supports[1].supportNo}`, '0');
+    newExpressionsArray[newExpressionsArray.length - 1].Mab = newExpressionsArray[newExpressionsArray.length - 1].Mab.replace(`θ${spans[spans.length - 1].supports[1].supportNo}`, '0');
   }
-  console.log("Eliminated known variables:", expressionsArray);
-  return expressionsArray;
+  console.log("Eliminated known variables:", newExpressionsArray);
+  return newExpressionsArray;
 }
 
 
@@ -743,26 +742,28 @@ function solveEquations(equationsArray) {
 // the solved expressions are then added to the member end moment equations array for the span
 
 function addSolutionsToExpressions(solutions, expressionsArray) {
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
   solutions.forEach((solution) => {
-    for (let i = 0; i < expressionsArray.length; i++) {
-      expressionsArray[i].Mab = expressionsArray[i].Mab.replace(solution[0], solution[1]);
-      expressionsArray[i].Mba = expressionsArray[i].Mba.replace(solution[0], solution[1]);
+    for (let i = 0; i < newExpressionsArray.length; i++) {
+      newExpressionsArray[i].Mab = newExpressionsArray[i].Mab.replace(solution[0], solution[1]);
+      newExpressionsArray[i].Mba = newExpressionsArray[i].Mba.replace(solution[0], solution[1]);
     }
   });
-  console.log("Member end moment equations with solutions:", expressionsArray);
-  return expressionsArray;
+  console.log("Member end moment equations with solutions:", newExpressionsArray);
+  return newExpressionsArray;
 }
 
 // for each expression in the expressions array, the expressions are converted to simplified strings using nerdamer({expression}).evaluate().toString()
 // the simplified expressions are then added to the member end moment equations array for the span
 
 function simplifyExpressions(expressionsArray) {
-  expressionsArray.forEach((expression) => {
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
+  newExpressionsArray.forEach((expression) => {
     expression.Mab = nerdamer(expression.Mab).evaluate().toString();
     expression.Mba = nerdamer(expression.Mba).evaluate().toString();
   });
-  console.log("Simplified member end moment equations:", expressionsArray);
-  return expressionsArray;
+  console.log("Simplified member end moment equations:", newExpressionsArray);
+  return newExpressionsArray;
 }
 
 // Simplified member end moment equations: 
@@ -771,14 +772,15 @@ function simplifyExpressions(expressionsArray) {
 // to add the member end moment equations for the free end spans, the fixed end moments for the free end spans are added to the result, if and only if the free end spans are the first or last spans in the beam
 
 function addMemberEndMomentEquationsForFreeEndSpans(expressionsArray, fixedEndMoments, spans) {
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
   if (spans[0].supports[0].type === 'Free end') {
-    expressionsArray.unshift({ spanNo: spans[0].spanNo, Mab: `0`, Mba: `${fixedEndMoments.find((fem) => fem.spanNo === spans[0].spanNo)[`FEM${spans[0].supports[1].supportNo}${spans[0].supports[0].supportNo}`]}` });
+    newExpressionsArray.unshift({ spanNo: spans[0].spanNo, Mab: `0`, Mba: `${fixedEndMoments.find((fem) => fem.spanNo === spans[0].spanNo)[`FEM${spans[0].supports[1].supportNo}${spans[0].supports[0].supportNo}`]}` });
   }
   if (spans[spans.length - 1].supports[1].type === 'Free end') {
-    expressionsArray.push({ spanNo: spans[spans.length - 1].spanNo, Mab: `${fixedEndMoments.find((fem) => fem.spanNo === spans[spans.length - 1].spanNo)[`FEM${spans[spans.length - 1].supports[0].supportNo}${spans[spans.length - 1].supports[1].supportNo}`]}`, Mba: `0` });
+    newExpressionsArray.push({ spanNo: spans[spans.length - 1].spanNo, Mab: `${fixedEndMoments.find((fem) => fem.spanNo === spans[spans.length - 1].spanNo)[`FEM${spans[spans.length - 1].supports[0].supportNo}${spans[spans.length - 1].supports[1].supportNo}`]}`, Mba: `0` });
   }
-  console.log("Member end moment equations with free end spans:", expressionsArray);
-  return expressionsArray;
+  console.log("Member end moment equations with free end spans:", newExpressionsArray);
+  return newExpressionsArray;
 }
 
 // Member end moment equations with free end spans:
@@ -788,14 +790,15 @@ function addMemberEndMomentEquationsForFreeEndSpans(expressionsArray, fixedEndMo
 // [{spanNo: 1, M12: '-55/4', M21: '-55/2'}, {spanNo: 2, M23: '55/2', M32: '-120'}, {spanNo: 3, M34: '120', M43: '0'}]
 
 function addSpanNumbersToMemberEndMomentEquations(expressionsArray) {
-  expressionsArray.forEach((expression) => {
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
+  newExpressionsArray.forEach((expression) => {
     expression[`M${expression.spanNo}${expression.spanNo + 1}`] = expression.Mab;
     expression[`M${expression.spanNo + 1}${expression.spanNo}`] = expression.Mba;
     delete expression.Mab;
     delete expression.Mba;
   });
-  console.log("Member end moment equations with span numbers:", expressionsArray);
-  return expressionsArray;
+  console.log("Member end moment equations with span numbers:", newExpressionsArray);
+  return newExpressionsArray;
 }
 
 
@@ -813,11 +816,10 @@ function displayMemberEndMomentEquations(expressionsArray) {
   p.innerHTML = displayString;
   // add class fw-bold and fs-4 to the p element
   p.classList.add('fw-bold');
-  p.classList.add('fs-4');
+  p.classList.add('fs-5');
   // add id member-end-moment-equations to the p element
   p.id = 'member-end-moment-equations';
   // append it to element with id of top-display
   document.getElementById('top-display').appendChild(p);  
-  console.log(displayString);
   return displayString;
 }
