@@ -134,7 +134,7 @@ body {
 
 .menu-input-inputs {
     width: 100%;
-    height: 80%;
+    height: 70%;
 }
 
 .menu-inputs .btn {
@@ -236,6 +236,25 @@ body {
 
 /* For Large screens, I want to display the input and display floated side by side with the display on the left and the input on the right */
 @media (min-width: 992px) {
+    .display {
+        float: left;
+        width: 60%;
+        height: 550px;
+        /* round left corners */
+        border-radius: 10px 0 0 10px;
+    }
+
+    .input {
+        float: right;
+        width: 40%;
+        height: 550px;
+        /* round right corners, top and bottom */
+        border-radius: 0 10px 10px 0;
+    }
+}
+
+/* For Medium screens, I want to display the input and display floated side by side with the display on the left and the input on the right */
+@media (min-width: 768px) and (max-width: 991px) {
     .display {
         float: left;
         width: 60%;
