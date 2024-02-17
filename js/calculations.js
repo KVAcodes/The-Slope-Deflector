@@ -46,7 +46,12 @@ export function setParameters(params) {
   const expressionsSimplified = simplifyExpressions(expressionsWithSolutions);
   const expressionsWithFreeEndSpan = addMemberEndMomentEquationsForFreeEndSpans(expressionsSimplified, FixedEndMoments, spans);
   const expressionsFinal = addSpanNumbersToMemberEndMomentEquations(expressionsWithFreeEndSpan);
-  displayMemberEndMomentEquations(expressionsFinal);
+  displayMemberEndMoments(expressionsFinal);
+  displayFixedEndMoments(FixedEndMoments);
+  displayMemberEndMomentExpressions(expressionsArray);
+  displayMemberEndMomentExpressionsWithEliminatedKnowns(expressionsWithEliminatedknowns);
+  displayEquations(Equations);
+  displaySolutions(solution);
 }
 
 // function to add free end supports to the supports array
@@ -732,7 +737,8 @@ function createEquations(expressionsArray, spans, fixedEndMoments) {
 // returns [['θ2', '-41.25`] ['θ3', '-97.5']]
 
 function solveEquations(equationsArray) {
-  let solutions = nerdamer.solveEquations(equationsArray);
+  const newEquationsArray = JSON.parse(JSON.stringify(equationsArray));
+  let solutions = nerdamer.solveEquations(newEquationsArray);
   console.log("Solutions:", solutions);
   return solutions;
 }
@@ -803,12 +809,10 @@ function addSpanNumbersToMemberEndMomentEquations(expressionsArray) {
 
 
 // a function to convert the member end moments expressionsFinal to a string to be inserted into a p element in the html,
-// it will be added to the element with the id of top-display
-
-function displayMemberEndMomentEquations(expressionsArray) {
-  let displayString = '';
+function displayMemberEndMoments(expressionsArray) {
+  let displayString = '<b>MEMBER END MOMENTS:</b>';
   expressionsArray.forEach((expression) => {
-    displayString += `<br>${expression.spanNo}: M${expression.spanNo}${expression.spanNo + 1} = ${expression[`M${expression.spanNo}${expression.spanNo + 1}`]}, M${expression.spanNo + 1}${expression.spanNo} = ${expression[`M${expression.spanNo + 1}${expression.spanNo}`]}`;
+    displayString += `<br><b>${expression.spanNo}:</b> M${expression.spanNo}${expression.spanNo + 1} = ${expression[`M${expression.spanNo}${expression.spanNo + 1}`]}, M${expression.spanNo + 1}${expression.spanNo} = ${expression[`M${expression.spanNo + 1}${expression.spanNo}`]}`;
   });
   // create a p element
   // set the innerHTML of the p element to the displayString
@@ -817,9 +821,109 @@ function displayMemberEndMomentEquations(expressionsArray) {
   // add class fw-bold and fs-4 to the p element
   p.classList.add('fw-bold');
   p.classList.add('fs-5');
-  // add id member-end-moment-equations to the p element
-  p.id = 'member-end-moment-equations';
-  // append it to element with id of top-display
-  document.getElementById('top-display').appendChild(p);  
+  // append the p element to the div with class member-end-moments in the html
+  document.querySelector('.member-end-moments').appendChild(p);
+  // remove the d-none class from the div with class member-end-moments in the html
+  document.querySelector('.member-end-moments').classList.remove('d-none');
+  return displayString;
+}
+
+// a function to convert the fixed end moments to a string to be inserted into a p element in the html,
+function displayFixedEndMoments(fixedEndMoments) {
+  let displayString = '<b>FIXED END MOMENTS:</b>';
+  fixedEndMoments.forEach((fem) => {
+    displayString += `<br><b>${fem.spanNo}:</b> FEM${fem.spanNo}${fem.spanNo + 1} = ${fem[`FEM${fem.spanNo}${fem.spanNo + 1}`]}, FEM${fem.spanNo + 1}${fem.spanNo} = ${fem[`FEM${fem.spanNo + 1}${fem.spanNo}`]}`;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  // add class fw-bold and fs-4 to the p element
+  p.classList.add('fw-bold');
+  p.classList.add('fs-5');
+  // append the p element to the div with class fixed-end-moments in the html
+  document.querySelector('.fixed-end-moments').appendChild(p);
+  // remove the d-none class from the div with class fixed-end-moments in the html
+  document.querySelector('.fixed-end-moments').classList.remove('d-none');
+  return displayString;
+}
+
+// a function to convert the member end moment expressions to a string to be inserted into a p element in the html,
+function displayMemberEndMomentExpressions(expressionsArray) {
+  let displayString = '<b>MEMBER END MOMENT EXPRESSIONS:</b>';
+  expressionsArray.forEach((expression) => {
+    displayString += `<br><b>${expression.spanNo}:</b> M${expression.spanNo}${expression.spanNo + 1} = ${expression.Mab}, M${expression.spanNo + 1}${expression.spanNo} = ${expression.Mba}`;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  // add class fw-bold and fs-4 to the p element
+  p.classList.add('fw-bold');
+  p.classList.add('fs-5');
+  // append the p element to the div with class member-end-moment-equations in the html
+  document.querySelector('.member-end-moment-equations').appendChild(p);
+  // remove the d-none class from the div with class member-end-moment-equations in the html
+  document.querySelector('.member-end-moment-equations').classList.remove('d-none');
+  return displayString;
+}
+
+// A function to convert the Eliminated known variables expressions to a string to be inserted into a p element in the html,
+function displayMemberEndMomentExpressionsWithEliminatedKnowns(expressionsArray) {
+  let displayString = '<b>ELIMINATED KNOWN VARIABLES:</b>';
+  expressionsArray.forEach((expression) => {
+    displayString += `<br><b>${expression.spanNo}:</b> M${expression.spanNo}${expression.spanNo + 1} = ${expression.Mab}, M${expression.spanNo + 1}${expression.spanNo} = ${expression.Mba}`;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  // add class fw-bold and fs-4 to the p element
+  p.classList.add('fw-bold');
+  p.classList.add('fs-5');
+  // append the p element to the div with class eliminated-known-variables in the html
+  document.querySelector('.eliminated-known-variables').appendChild(p);
+  // remove the d-none class from the div with class eliminated-known-variables in the html
+  document.querySelector('.eliminated-known-variables').classList.remove('d-none');
+  return displayString;
+}
+
+// A function to convert the equations to a string to be inserted into a p element in the html,
+function displayEquations(equationsArray) {
+  let displayString = '<b>EQUATIONS:</b>';
+  equationsArray.forEach((equation) => {
+    displayString += `<br>` + equation;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  // add class fw-bold and fs-4 to the p element
+  p.classList.add('fw-bold');
+  p.classList.add('fs-5');
+  // append the p element to the div with class equations in the html
+  document.querySelector('.equations').appendChild(p);
+  // remove the d-none class from the div with class equations in the html
+  document.querySelector('.equations').classList.remove('d-none');
+  return displayString;
+}
+
+// A function to convert the solutions to a string to be inserted into a p element in the html,
+function displaySolutions(solutions) {
+  let displayString = '<b>ROTATIONS:</b>';
+  solutions.forEach((solution) => {
+    displayString += `<br><b>${solution[0]} = ${solution[1]}</b>`;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  // add class fw-bold and fs-4 to the p element
+  p.classList.add('fw-bold');
+  p.classList.add('fs-5');
+  // append the p element to the div with class solutions in the html
+  document.querySelector('.rotations').appendChild(p);
+  // remove the d-none class from the div with class solutions in the html
+  document.querySelector('.rotations').classList.remove('d-none');
   return displayString;
 }

@@ -245,7 +245,71 @@ mRButton.addEventListener("click", function () {
 const solveButton = document.getElementById("solve");
 
 solveButton.addEventListener("click", function () {
-    exportParameters();
+    document.querySelector(".visualizer").classList.add("d-none");
+
+    
+
+    // disable the solve button
+    solveButton.setAttribute("disabled", "");
+    // remove the disabled attribute from the buttons with ids move-left and move-right
+    document.getElementById("move-left").removeAttribute("disabled");
+    // change the innerhtml of the span with id mode to "Mode: solutions"
+    document.getElementById("mode").innerHTML = "Mode: solutions";
+
+    // call and catch an errors that may occur in the exportParameters function, by adding a p element with the text "an Error Occurred! Please try again" as the last child of the div with the class display
+    try {
+        exportParameters();
+    } catch (error) {
+        const errorElement = document.createElement("p");
+        errorElement.innerHTML = "an Error Occurred! Please try again";
+        errorElement.classList.add('fw-bold');
+        errorElement.classList.add('fs-5');
+        errorElement.classList.add('mt-3');
+        document.querySelector(".display").appendChild(errorElement);
+    }
+});
+
+// add event listeners to the buttons with ids move-left and move-right,
+// when the button move-left is clicked, remove the disabled attribute from the move-right button and add the disabled attribute to the move-left button. add the d-none class to the divs with the classes fixed-end-moments, member-end-moment-equations, eliminated-known-variables, equations, rotations, member-end-moments
+const moveLeftButton = document.getElementById("move-left");
+const moveRightButton = document.getElementById("move-right");
+
+moveLeftButton.addEventListener("click", function () {
+    moveRightButton.removeAttribute("disabled");
+    moveLeftButton.setAttribute("disabled", "");
+    document.querySelector(".fixed-end-moments").classList.add("d-none");
+    document.querySelector(".member-end-moment-equations").classList.add("d-none");
+    document.querySelector(".eliminated-known-variables").classList.add("d-none");
+    document.querySelector(".equations").classList.add("d-none");
+    document.querySelector(".rotations").classList.add("d-none");
+    document.querySelector(".member-end-moments").classList.add("d-none");
+    // remove the d-none class from the div with the class visualizer
+    document.querySelector(".visualizer").classList.remove("d-none");
+
+    document.getElementById("mode").innerHTML = "Mode: parameters";
+});
+
+// when the button move-right is clicked, remove the disabled attribute from the move-left button and add the disabled attribute to the move-right button. remove the d-none class from the divs with the classes fixed-end-moments, member-end-moment-equations, eliminated-known-variables, equations, rotations, member-end-moments
+moveRightButton.addEventListener("click", function () {
+    moveLeftButton.removeAttribute("disabled");
+    moveRightButton.setAttribute("disabled", "");
+    document.querySelector(".fixed-end-moments").classList.remove("d-none");
+    document.querySelector(".member-end-moment-equations").classList.remove("d-none");
+    document.querySelector(".eliminated-known-variables").classList.remove("d-none");
+    document.querySelector(".equations").classList.remove("d-none");
+    document.querySelector(".rotations").classList.remove("d-none");
+    document.querySelector(".member-end-moments").classList.remove("d-none");
+    // add the d-none class to the div with the class visualizer
+    document.querySelector(".visualizer").classList.add("d-none");
+
+    document.getElementById("mode").innerHTML = "Mode: solutions";
+});
+
+// add event listeners to the button with id reset, when clicked, refresh the page
+const resetButton = document.getElementById("reset");
+
+resetButton.addEventListener("click", function () {
+    location.reload();
 });
 
 // Adding event listeners to the add button and the enter key check the element-type class without the d-none class and call the collectData function for the element-type class without the d-none class
@@ -253,6 +317,7 @@ addButton.addEventListener("click", function () {
     if (document.querySelector(".menu-input-inputs > div:not(.d-none)") != null) {
         if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Beam") {
             beamLength = collectBeamData();
+            visualizeParameters();
         }
         if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Support") {
             const support = collectSupportData();
@@ -276,6 +341,7 @@ addButton.addEventListener("click", function () {
                 }
             }
             supports[supports.length] = support;
+            visualizeParameters();
             // change the value of the innerHTML of the span with id supportSupportNo to the length of the supports array + 1
             document.getElementById("supportSupportNo").innerHTML = supports.length + 1;
             // clear the input field with the id support-location-form
@@ -298,18 +364,23 @@ addButton.addEventListener("click", function () {
 
         if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Section") {
             collectSectionData();
+            visualizeParameters();
         }
         if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Settlement") {
             collectSettlementData();
+            visualizeParameters();
         }
         if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Point Load") {
             collectPointLoadData();
+            visualizeParameters();
         }
         if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Distributed Load") {
             collectDistributedLoadData();
+            visualizeParameters();
         }
         if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Moments") {
             collectMomentData();
+            visualizeParameters();
         }
     }
 });
@@ -320,6 +391,7 @@ document.addEventListener("keydown", function (event) {
         if (document.querySelector(".menu-input-inputs > div:not(.d-none)") != null) {
             if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Beam") {
                 beamLength = collectBeamData();
+                visualizeParameters();
             }
             if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Support") {
                 const support = collectSupportData();
@@ -343,6 +415,7 @@ document.addEventListener("keydown", function (event) {
                     }
                 }
                 supports[supports.length] = support;
+                visualizeParameters();
                 // change the value of the innerHTML of the span with id supportSupportNo to the length of the supports array + 1
                 document.getElementById("supportSupportNo").innerHTML = supports.length + 1;
                 // clear the input field with the id support-location-form
@@ -364,18 +437,23 @@ document.addEventListener("keydown", function (event) {
             }
             if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Section") {
                 collectSectionData();
+                visualizeParameters();
             }
             if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Settlement") {
                 collectSettlementData();
+                visualizeParameters();
             }
             if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Point Load") {
                 collectPointLoadData();
+                visualizeParameters();
             }
             if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Distributed Load") {
                 collectDistributedLoadData();
+                visualizeParameters();
             }
             if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Moments") {
                 collectMomentData();
+                visualizeParameters();
             }
         }
     }
@@ -825,4 +903,55 @@ function exportParameters() {
       moments,
       noOfSpans,
     });
+}
+
+// V I S U A L I Z A T I O N   F U N C T I O N S
+
+// function to converts the global variables to a string to be inserted into a p element and added to the div with the class visualizer, first remove all the children of the div with the class visualizer if any, then create a p element and add the string to the p element and add the p element to the div with the class visualizer
+function visualizeParameters() {
+    const visualizer = document.querySelector(".visualizer");
+    while (visualizer.firstChild) {
+        visualizer.removeChild(visualizer.firstChild);
+    }
+    let parameters = `>> Beam Length: ${beamLength}m`;
+    parameters += "<br>";
+    parameters += "<br>>> Supports: ";
+    parameters += "<br>";
+    for (let i = 0; i < supports.length; i++) {
+        parameters += `Support ${i + 1}: ${supports[i].type} at ${supports[i].location}m`;
+        parameters += "<br>";
+    }
+    parameters += "<br>>> Sections: ";
+    parameters += "<br>";
+    for (let i = 0; i < sections.length; i++) {
+        parameters += `Section ${i + 1}: Moi: ${sections[i].Moi}mm<sup>4</sup>, Young Modulus: ${sections[i].YoungMod}MPa, Coefficient: ${sections[i].Coefficient}`;
+        parameters += "<br>";   
+    }
+    parameters += "<br>>> Settlements: ";
+    parameters += "<br>";
+    for (let i = 0; i < settlements.length; i++) {
+        parameters += `Settlement ${i + 1}: ${settlements[i]}mm`;
+        parameters += "<br>";
+    }
+    parameters += "<br>>> Point Loads: ";
+    parameters += "<br>";
+    for (let i = 0; i < pointLoads.length; i++) {
+        parameters += `Point Load ${i + 1}: ${pointLoads[i].magnitude}KN at ${pointLoads[i].location}m`;
+        parameters += "<br>";
+    }
+    parameters += "<br>>> Distributed Loads: ";
+    parameters += "<br>";
+    for (let i = 0; i < distributedLoads.length; i++) {
+        parameters += `Distributed Load ${i + 1}: ${distributedLoads[i].startMag}KN to ${distributedLoads[i].endMag}KN from ${distributedLoads[i].start}m to ${distributedLoads[i].end}m`;
+        parameters += "<br>";
+    }
+    parameters += "<br>>> Moments: ";
+    parameters += "<br>";
+    for (let i = 0; i < moments.length; i++) {
+        parameters += `Moment ${i + 1}: ${moments[i].magnitude}KNm at ${moments[i].position}m`;
+        parameters += "<br>";
+    } 
+    const p = document.createElement("p");
+    p.innerHTML = parameters;
+    visualizer.appendChild(p);
 }
