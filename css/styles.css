@@ -231,3 +231,20 @@ body {
     /* set top margin to 10px */
     margin-top: 20px;
 }
+
+/* Media Queries */
+
+/* For Large screens, I want to display the input and display floated side by side with the display on the left and the input on the right */
+@media (min-width: 992px) {
+    .display {
+        float: left;
+        width: 60%;
+        height: 550px;
+    }
+
+    .input {
+        float: right;
+        width: 40%;
+        height: 550px;
+    }
+}
