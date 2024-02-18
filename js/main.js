@@ -1,5 +1,7 @@
 // AUTHOR: KADIRI VICTOR
 
+// This module contains the functions that will be used to collect and validate the data from the input fields
+
 // import the calculations module
 import * as calculationsModule from './calculations.js';
 
@@ -261,9 +263,9 @@ solveButton.addEventListener("click", function () {
         exportParameters();
     } catch (error) {
         const errorElement = document.createElement("p");
-        errorElement.innerHTML = "an Error Occurred! Please try again";
+        errorElement.innerHTML = "an Error Occurred! Please Hit reset and try again";
         errorElement.classList.add('fw-bold');
-        errorElement.classList.add('fs-5');
+        errorElement.classList.add('fs-6');
         errorElement.classList.add('mt-3');
         document.querySelector(".display").appendChild(errorElement);
     }
@@ -331,7 +333,6 @@ addButton.addEventListener("click", function () {
                         if (document.querySelector("#support-input > p:last-child") == null) {
                             const error = document.createElement("p");
                             error.innerHTML = "a support already exists at this location!";
-                            // add class inline-block to the error element
                             error.classList.add("error-text");
                             const addDiv = document.querySelector("#support-input");
                             addDiv.appendChild(error);
