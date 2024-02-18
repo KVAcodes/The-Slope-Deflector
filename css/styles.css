@@ -232,6 +232,11 @@ body {
     margin-top: 20px;
 }
 
+/* Modal Button */
+#modal-btn {
+    border-radius: 10px;
+}
+
 /* Media Queries */
 
 /* For Large screens, I want to display the input and display floated side by side with the display on the left and the input on the right */
