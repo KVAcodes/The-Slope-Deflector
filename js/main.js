@@ -29,6 +29,8 @@ const mButton = document.getElementById("m-button");
 const backButton = document.getElementById("back-button");
 // add button
 const addButton = document.getElementById("add-button");
+// takeback button
+const takebackButton = document.getElementById("takeback-button");
 
 
 // E V E N T   L I S T E N E R S
@@ -39,42 +41,56 @@ beamButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
     document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Beam']").classList.remove("d-none");
+    // add d-none to the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.add("d-none");
 });
 
 supportButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
     document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Support']").classList.remove("d-none");
+    // add d-none to the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.add("d-none");
 });
 
 sectionButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
     document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Section']").classList.remove("d-none");
+    // remove d-none from the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.remove("d-none");
 });
 
 settlementButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
     document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Settlement']").classList.remove("d-none");
+    // remove d-none from the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.remove("d-none");
 });
 
 plButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
     document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Point Load']").classList.remove("d-none");
+    // remove d-none from the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.remove("d-none");
 });
 
 dlButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
     document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Distributed Load']").classList.remove("d-none");
+    // remove d-none from the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.remove("d-none");
 });
 
 mButton.addEventListener("click", function () {
     document.querySelector(".menu-buttons").classList.add("d-none");
     document.querySelector(".menu-inputs").classList.remove("d-none");
     document.querySelector("[element-type='Moments']").classList.remove("d-none");
+    // remove d-none from the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.remove("d-none");
 });
 
 // back button
@@ -139,7 +155,6 @@ lSupportButton.addEventListener("click", function () {
     if (document.querySelector("#support-input > p:last-child") != null) {
         document.querySelector("#support-input > p:last-child").remove();
     }
-
 });
 
 mSupportButton.addEventListener("click", function () {
@@ -153,6 +168,7 @@ mSupportButton.addEventListener("click", function () {
     if (document.querySelector("#support-input > p:last-child") != null) {
         document.querySelector("#support-input > p:last-child").remove();
     }
+
 });
 
 rSupportButton.addEventListener("click", function () {
@@ -166,6 +182,7 @@ rSupportButton.addEventListener("click", function () {
     if (document.querySelector("#support-input > p:last-child") != null) {
         document.querySelector("#support-input > p:last-child").remove();
     }
+
 });
 
 // add event listeners to the buttons with ids pl-l, pl-m and pl-r, when clicked the class active is added to the button clicked and removed from the other buttons
@@ -249,7 +266,7 @@ const solveButton = document.getElementById("solve");
 solveButton.addEventListener("click", function () {
     document.querySelector(".visualizer").classList.add("d-none");
 
-    
+
 
     // disable the solve button
     solveButton.setAttribute("disabled", "");
@@ -307,11 +324,62 @@ moveRightButton.addEventListener("click", function () {
     document.getElementById("mode").innerHTML = "Mode: solutions";
 });
 
-// add event listeners to the button with id reset, when clicked, refresh the page
+// add event listeners to the button with id reset, when clicked, reload the page
 const resetButton = document.getElementById("reset");
 
 resetButton.addEventListener("click", function () {
     location.reload();
+});
+
+// button "takeback" to take back any action done by the add button or the enter key
+// the takeback button functions similarly to the add button and the enter key, but instead of adding the data to the arrays, it removes the last element added to the arrays and updates the visualizer with the new data
+// for the section, it removes the last section and updates the visualizer. also changes the value of the innerHTML of the span with id spanNo to the length of the sections array + 1
+// for the settlement, it removes the last settlement and updates the visualizer. also changes the value of the innerHTML of the span with id supportNo to the length of the settlements array + 1
+// for the point load, it removes the last point load and updates the visualizer. also changes the value of the innerHTML of the span with id plNo to the length of the pointLoads array + 1
+// for the distributed load, it removes the last distributed load and updates the visualizer. also changes the value of the innerHTML of the span with id dlNo to the length of the distributedLoads array + 1
+// for the moments, it removes the last moment and updates the visualizer. also changes the value of the innerHTML of the span with id mNo to the length of the moments array + 1
+
+takebackButton.addEventListener("click", function () {
+    if (document.querySelector(".menu-input-inputs > div:not(.d-none)") != null) {
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Section") {
+            sections.pop();
+            visualizeParameters();
+            document.getElementById("spanNo").innerHTML = sections.length + 1;
+            // remove the disabled attribute and the is-valid class of the Moi and YoungMod input field if the value of the innerHTML of the span with id spanNo equals 1
+            if (sections.length < 1) {
+                document.getElementById("MoiInput").removeAttribute("disabled");
+                document.getElementById("YoungModInput").removeAttribute("disabled");
+                document.getElementById("MoiInput").classList.remove("is-valid");
+                document.getElementById("YoungModInput").classList.remove("is-valid");
+            }
+            // also remove the is-valid class of the FlexRig input field if it has it
+            document.getElementById("FlexRigInput").classList.remove("is-valid");
+            // remove the value of the input field with the id FlexRigInput
+            document.getElementById("FlexRigInput").value = "";
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Settlement") {
+            settlements.pop();
+            visualizeParameters();
+            document.getElementById("supportNo").innerHTML = settlements.length + 1;
+            // remove the is-valid class of the settlement input field
+            document.getElementById("settlementInput").classList.remove("is-valid");
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Point Load") {
+            pointLoads.pop();
+            visualizeParameters();
+            document.getElementById("plNo").innerHTML = pointLoads.length + 1;
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Distributed Load") {
+            distributedLoads.pop();
+            visualizeParameters();
+            document.getElementById("dlNo").innerHTML = distributedLoads.length + 1;
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Moments") {
+            moments.pop();
+            visualizeParameters();
+            document.getElementById("mNo").innerHTML = moments.length + 1;
+        }
+    }
 });
 
 // Adding event listeners to the add button and the enter key check the element-type class without the d-none class and call the collectData function for the element-type class without the d-none class
@@ -345,8 +413,18 @@ addButton.addEventListener("click", function () {
             visualizeParameters();
             // change the value of the innerHTML of the span with id supportSupportNo to the length of the supports array + 1
             document.getElementById("supportSupportNo").innerHTML = supports.length + 1;
+            // check if the lsupport, msupport and rsupport buttons have the class active and if any is, remove the class active from the button
+            if (document.getElementById("l-support").classList.contains("active")) {
+                document.getElementById("l-support").classList.remove("active");
+            }
+            if (document.getElementById("m-support").classList.contains("active")) {
+                document.getElementById("m-support").classList.remove("active");
+            }
+            if (document.getElementById("r-support").classList.contains("active")) {
+                document.getElementById("r-support").classList.remove("active");
+            }
             // clear the input field with the id support-location-form
-            document.getElementById("support-location-form").value = "";  
+            document.getElementById("support-location-form").value = "";
             // check if the no of supports is greater than 2 and if it is, check if at least one support is a fixed support if there is, remove the disabled attribute from the section and settlement buttons
             if (supports.length > 2) {
                 for (let i = 0; i < supports.length; i++) {
@@ -406,7 +484,6 @@ document.addEventListener("keydown", function (event) {
                             if (document.querySelector("#support-input > p:last-child") == null) {
                                 const error = document.createElement("p");
                                 error.innerHTML = "a support already exists at this location!";
-                                // add class inline-block to the error element
                                 error.classList.add("error-text");
                                 const addDiv = document.querySelector("#support-input");
                                 addDiv.appendChild(error);
@@ -419,6 +496,16 @@ document.addEventListener("keydown", function (event) {
                 visualizeParameters();
                 // change the value of the innerHTML of the span with id supportSupportNo to the length of the supports array + 1
                 document.getElementById("supportSupportNo").innerHTML = supports.length + 1;
+                // check if the lsupport, msupport and rsupport buttons have the class active and if any is, remove the class active from the button
+                if (document.getElementById("l-support").classList.contains("active")) {
+                    document.getElementById("l-support").classList.remove("active");
+                }
+                if (document.getElementById("m-support").classList.contains("active")) {
+                    document.getElementById("m-support").classList.remove("active");
+                }
+                if (document.getElementById("r-support").classList.contains("active")) {
+                    document.getElementById("r-support").classList.remove("active");
+                }
                 // clear the input field with the id support-location-form
                 document.getElementById("support-location-form").value = "";
                 // check if the no of supports is greater than 2 and if it is, check if at least one support is a fixed support if there is, remove the disabled attribute from the section and settlement buttons
@@ -436,6 +523,7 @@ document.addEventListener("keydown", function (event) {
                 console.log(supports);
                 console.log(supports.length);
             }
+
             if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Section") {
                 collectSectionData();
                 visualizeParameters();
@@ -480,6 +568,8 @@ function collectBeamData() {
         // make the input field green
         document.getElementById("beamLengthInput").classList.remove("is-invalid");
         document.getElementById("beamLengthInput").classList.add("is-valid");
+        // disable the input field
+        document.getElementById("beamLengthInput").setAttribute("disabled", "");
         // remove the error element
         if (document.querySelector(".add-on > p") != null) {
             document.querySelector(".add-on > p").remove();
@@ -895,14 +985,14 @@ function calculateNoOfSpans() {
 // function to export the global variables to another file
 function exportParameters() {
     calculationsModule.setParameters({
-      beamLength,
-      supports,
-      sections,
-      settlements,
-      pointLoads,
-      distributedLoads,
-      moments,
-      noOfSpans,
+        beamLength,
+        supports,
+        sections,
+        settlements,
+        pointLoads,
+        distributedLoads,
+        moments,
+        noOfSpans,
     });
 }
 
@@ -926,7 +1016,7 @@ function visualizeParameters() {
     parameters += "<br>";
     for (let i = 0; i < sections.length; i++) {
         parameters += `Section ${i + 1}: Moi: ${sections[i].Moi}mm<sup>4</sup>, Young Modulus: ${sections[i].YoungMod}MPa, Coefficient: ${sections[i].Coefficient}`;
-        parameters += "<br>";   
+        parameters += "<br>";
     }
     parameters += `<br>>> <b class="fs-4">Settlements:</b> `;
     parameters += "<br>";
@@ -951,7 +1041,7 @@ function visualizeParameters() {
     for (let i = 0; i < moments.length; i++) {
         parameters += `Moment ${i + 1}: ${moments[i].magnitude}KNm at ${moments[i].position}m`;
         parameters += "<br>";
-    } 
+    }
     const p = document.createElement("p");
     p.innerHTML = parameters;
     visualizer.appendChild(p);
