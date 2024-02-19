@@ -580,19 +580,19 @@ function calculateFixedEndMomentsForFixedEndSpans(span) {
       }
     }
   });
-span.moments.forEach((moment) => {
-  // each moment has a fixed end moment at both ends of the span,
-  // for the left end (i.e M12) the formula is given by the following formula, M12 = (M*b*(2a - b))/(l^2)
-  // for the right end (i.e M21) the formula is given by the following formula, M21 = (M*a*(2b - a))/(l^2)
-  // where M is the magnitude of the moment, a is the distance from the moment to the left end of the span, b is the distance from the moment to the right end of the span, and l is the length of the span
-  const a = moment.position - span.start;
-  const b = span.end - moment.position;
-  const l = span.length;
-  const M = moment.magnitude;
-  fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (M * b * (2 * a - b)) / (l * l);
-  fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += (M * a * (2 * b - a)) / (l * l);
-});
-return fem;
+  span.moments.forEach((moment) => {
+    // each moment has a fixed end moment at both ends of the span,
+    // for the left end (i.e M12) the formula is given by the following formula, M12 = (M*b*(2a - b))/(l^2)
+    // for the right end (i.e M21) the formula is given by the following formula, M21 = (M*a*(2b - a))/(l^2)
+    // where M is the magnitude of the moment, a is the distance from the moment to the left end of the span, b is the distance from the moment to the right end of the span, and l is the length of the span
+    const a = moment.position - span.start;
+    const b = span.end - moment.position;
+    const l = span.length;
+    const M = moment.magnitude;
+    fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (M * b * (2 * a - b)) / (l * l);
+    fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += (M * a * (2 * b - a)) / (l * l);
+  });
+  return fem;
 }
 
 
@@ -622,7 +622,7 @@ return fem;
 // 1.) This is For the one end fixed continuous beam(i.e has one fixed end and one end that is not fixed),
 // 2.) If has an external roller or hinge support  set M12 to zero (if the roller or hinge is the first support) or M(n-1)n to zero (if the roller or hinge is the last support)
 // 3.) If has a free end as the last or first support, then set the 2nd to the last or 2nd support Moment (M(n-1)(n-2) or M21 to the negative of the FEM of the free end span) developing an equation M(n-1)(n-2) = -FEM(n-1)n or M21 = -FEM21.
- 
+
 // Return the equations in string format, simplify then add them to the equations array).
 
 // MOMENT EQUATIONS FOR INTERNAL JOINT MEMBERS
@@ -684,7 +684,7 @@ function generateMemberEndMomentExpressions(spans, fixedEndMoments) {
   });
   console.log("Member end moment expressions:", expressionsArray);
   return expressionsArray;
-} 
+}
 
 
 function eliminateKnownVariables(expressionsArray, spans) {
@@ -766,7 +766,22 @@ function simplifyExpressions(expressionsArray) {
   const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
   newExpressionsArray.forEach((expression) => {
     expression.Mab = nerdamer(expression.Mab).evaluate().toString();
+    const fraction = expression.Mab;
+    expression.Mab = nerdamer(expression.Mab);
+    if (expression.Mab.denominator().toString() === '1') {
+      expression.Mab = fraction + "kNm";
+    } else {
+      expression.Mab = fraction + " or " + parseFloat(parseFloat(expression.Mab.numerator().toString()) / parseFloat(expression.Mab.denominator().toString())).toFixed(2).toString() + "kNm";
+    }
+
     expression.Mba = nerdamer(expression.Mba).evaluate().toString();
+    const fraction2 = expression.Mba;
+    expression.Mba = nerdamer(expression.Mba);
+    if (expression.Mba.denominator().toString() === '1') {
+      expression.Mba = fraction2 + "kNm";
+    } else {
+      expression.Mba = fraction2 + " or " + parseFloat(parseFloat(expression.Mba.numerator().toString()) / parseFloat(expression.Mba.denominator().toString())).toFixed(2).toString() + "kNm";
+    }
   });
   console.log("Simplified member end moment equations:", newExpressionsArray);
   return newExpressionsArray;
@@ -780,10 +795,10 @@ function simplifyExpressions(expressionsArray) {
 function addMemberEndMomentEquationsForFreeEndSpans(expressionsArray, fixedEndMoments, spans) {
   const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
   if (spans[0].supports[0].type === 'Free end') {
-    newExpressionsArray.unshift({ spanNo: spans[0].spanNo, Mab: `0`, Mba: `${fixedEndMoments.find((fem) => fem.spanNo === spans[0].spanNo)[`FEM${spans[0].supports[1].supportNo}${spans[0].supports[0].supportNo}`]}` });
+    newExpressionsArray.unshift({ spanNo: spans[0].spanNo, Mab: `0`, Mba: `${fixedEndMoments.find((fem) => fem.spanNo === spans[0].spanNo)[`FEM${spans[0].supports[1].supportNo}${spans[0].supports[0].supportNo}`]}` + 'kNm' });
   }
   if (spans[spans.length - 1].supports[1].type === 'Free end') {
-    newExpressionsArray.push({ spanNo: spans[spans.length - 1].spanNo, Mab: `${fixedEndMoments.find((fem) => fem.spanNo === spans[spans.length - 1].spanNo)[`FEM${spans[spans.length - 1].supports[0].supportNo}${spans[spans.length - 1].supports[1].supportNo}`]}`, Mba: `0` });
+    newExpressionsArray.push({ spanNo: spans[spans.length - 1].spanNo, Mab: `${fixedEndMoments.find((fem) => fem.spanNo === spans[spans.length - 1].spanNo)[`FEM${spans[spans.length - 1].supports[0].supportNo}${spans[spans.length - 1].supports[1].supportNo}`]}` + 'kNm', Mba: `0` });
   }
   console.log("Member end moment equations with free end spans:", newExpressionsArray);
   return newExpressionsArray;
@@ -807,38 +822,16 @@ function addSpanNumbersToMemberEndMomentEquations(expressionsArray) {
   return newExpressionsArray;
 }
 
-
-// a function to convert the member end moments expressionsFinal to a string to be inserted into a p element in the html,
-function displayMemberEndMoments(expressionsArray) {
-  let displayString = '<b>MEMBER END MOMENTS:</b>';
-  expressionsArray.forEach((expression) => {
-    displayString += `<br><b>${expression.spanNo}:</b> M${expression.spanNo}${expression.spanNo + 1} = ${expression[`M${expression.spanNo}${expression.spanNo + 1}`]}, M${expression.spanNo + 1}${expression.spanNo} = ${expression[`M${expression.spanNo + 1}${expression.spanNo}`]}`;
-  });
-  // create a p element
-  // set the innerHTML of the p element to the displayString
-  const p = document.createElement('p');
-  p.innerHTML = displayString;
-  // add class fw-bold and fs-4 to the p element
-  p.classList.add('fw-bold');
-  p.classList.add('fs-5');
-  // append the p element to the div with class member-end-moments in the html
-  document.querySelector('.member-end-moments').appendChild(p);
-  // remove the d-none class from the div with class member-end-moments in the html
-  document.querySelector('.member-end-moments').classList.remove('d-none');
-  return displayString;
-}
-
 // a function to convert the fixed end moments to a string to be inserted into a p element in the html,
 function displayFixedEndMoments(fixedEndMoments) {
-  let displayString = '<b>FIXED END MOMENTS:</b>';
+  let displayString = '<b class="fs-4">FIXED END MOMENTS:</b>';
   fixedEndMoments.forEach((fem) => {
-    displayString += `<br><b>${fem.spanNo}:</b> FEM${fem.spanNo}${fem.spanNo + 1} = ${fem[`FEM${fem.spanNo}${fem.spanNo + 1}`]}, FEM${fem.spanNo + 1}${fem.spanNo} = ${fem[`FEM${fem.spanNo + 1}${fem.spanNo}`]}`;
+    displayString += `<br><b>${fem.spanNo}:</b> FEM${fem.spanNo}${fem.spanNo + 1} = ${fem[`FEM${fem.spanNo}${fem.spanNo + 1}`]}kNm, FEM${fem.spanNo + 1}${fem.spanNo} = ${fem[`FEM${fem.spanNo + 1}${fem.spanNo}`]}kNm`;
   });
   // create a p element
   // set the innerHTML of the p element to the displayString
   const p = document.createElement('p');
   p.innerHTML = displayString;
-  // add class fw-bold and fs-4 to the p element
   p.classList.add('fw-bold');
   p.classList.add('fs-5');
   // append the p element to the div with class fixed-end-moments in the html
@@ -850,15 +843,18 @@ function displayFixedEndMoments(fixedEndMoments) {
 
 // a function to convert the member end moment expressions to a string to be inserted into a p element in the html,
 function displayMemberEndMomentExpressions(expressionsArray) {
-  let displayString = '<b>MEMBER END MOMENT EXPRESSIONS:</b>';
-  expressionsArray.forEach((expression) => {
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
+  let displayString = '<b class="fs-4">MEMBER END MOMENT EXPRESSIONS:</b>';
+  newExpressionsArray.forEach((expression) => {
+    // in each expression, there exist θ1, θ2, e.t.c, change the numbers to subscripts
+    expression.Mab = expression.Mab.replace(/θ(\d+)/g, 'θ<sub>$1</sub>');
+    expression.Mba = expression.Mba.replace(/θ(\d+)/g, 'θ<sub>$1</sub>');
     displayString += `<br><b>${expression.spanNo}:</b> M${expression.spanNo}${expression.spanNo + 1} = ${expression.Mab}, M${expression.spanNo + 1}${expression.spanNo} = ${expression.Mba}`;
   });
   // create a p element
   // set the innerHTML of the p element to the displayString
   const p = document.createElement('p');
   p.innerHTML = displayString;
-  // add class fw-bold and fs-4 to the p element
   p.classList.add('fw-bold');
   p.classList.add('fs-5');
   // append the p element to the div with class member-end-moment-equations in the html
@@ -870,8 +866,12 @@ function displayMemberEndMomentExpressions(expressionsArray) {
 
 // A function to convert the Eliminated known variables expressions to a string to be inserted into a p element in the html,
 function displayMemberEndMomentExpressionsWithEliminatedKnowns(expressionsArray) {
-  let displayString = '<b>ELIMINATED KNOWN VARIABLES:</b>';
-  expressionsArray.forEach((expression) => {
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
+  let displayString = '<b class="fs-4">ELIMINATED KNOWN VARIABLES:</b>';
+  newExpressionsArray.forEach((expression) => {
+    // in each expression, there exist θ1, θ2, e.t.c, change the numbers to subscripts
+    expression.Mab = expression.Mab.replace(/θ(\d+)/g, 'θ<sub>$1</sub>');
+    expression.Mba = expression.Mba.replace(/θ(\d+)/g, 'θ<sub>$1</sub>');
     displayString += `<br><b>${expression.spanNo}:</b> M${expression.spanNo}${expression.spanNo + 1} = ${expression.Mab}, M${expression.spanNo + 1}${expression.spanNo} = ${expression.Mba}`;
   });
   // create a p element
@@ -890,15 +890,17 @@ function displayMemberEndMomentExpressionsWithEliminatedKnowns(expressionsArray)
 
 // A function to convert the equations to a string to be inserted into a p element in the html,
 function displayEquations(equationsArray) {
-  let displayString = '<b>EQUATIONS:</b>';
-  equationsArray.forEach((equation) => {
+  const newEquationsArray = JSON.parse(JSON.stringify(equationsArray));
+  let displayString = '<b class="fs-4">EQUATIONS:</b>';
+  newEquationsArray.forEach((equation) => {
+    // in each equation, there exist θ1, θ2, e.t.c, change the numbers to subscripts
+    equation = equation.replace(/θ(\d+)/g, 'θ<sub>$1</sub>');
     displayString += `<br>` + equation;
   });
   // create a p element
   // set the innerHTML of the p element to the displayString
   const p = document.createElement('p');
   p.innerHTML = displayString;
-  // add class fw-bold and fs-4 to the p element
   p.classList.add('fw-bold');
   p.classList.add('fs-5');
   // append the p element to the div with class equations in the html
@@ -910,20 +912,38 @@ function displayEquations(equationsArray) {
 
 // A function to convert the solutions to a string to be inserted into a p element in the html,
 function displaySolutions(solutions) {
-  let displayString = '<b>ROTATIONS:</b>';
+  let displayString = '<b class="fs-4">ROTATIONS:</b>';
   solutions.forEach((solution) => {
+    // change the numbers to subscripts
+    solution[0] = solution[0].replace(/θ(\d+)/g, 'θ<sub>$1</sub>');
     displayString += `<br><b>${solution[0]} = ${solution[1]}</b>`;
   });
   // create a p element
   // set the innerHTML of the p element to the displayString
   const p = document.createElement('p');
   p.innerHTML = displayString;
-  // add class fw-bold and fs-4 to the p element
-  p.classList.add('fw-bold');
   p.classList.add('fs-5');
   // append the p element to the div with class solutions in the html
   document.querySelector('.rotations').appendChild(p);
   // remove the d-none class from the div with class solutions in the html
   document.querySelector('.rotations').classList.remove('d-none');
+  return displayString;
+}
+
+// a function to convert the member end moments expressionsFinal to a string to be inserted into a p element in the html,
+function displayMemberEndMoments(expressionsArray) {
+  let displayString = '<b class="fs-4">MEMBER END MOMENTS:</b>';
+  expressionsArray.forEach((expression) => {
+    displayString += `<br><b>${expression.spanNo}:</b> M${expression.spanNo}${expression.spanNo + 1} = ${expression[`M${expression.spanNo}${expression.spanNo + 1}`]}, M${expression.spanNo + 1}${expression.spanNo} = ${expression[`M${expression.spanNo + 1}${expression.spanNo}`]}`;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  p.classList.add('fs-5');
+  // append the p element to the div with class member-end-moments in the html
+  document.querySelector('.member-end-moments').appendChild(p);
+  // remove the d-none class from the div with class member-end-moments in the html
+  document.querySelector('.member-end-moments').classList.remove('d-none');
   return displayString;
 }

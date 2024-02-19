@@ -914,39 +914,39 @@ function visualizeParameters() {
     while (visualizer.firstChild) {
         visualizer.removeChild(visualizer.firstChild);
     }
-    let parameters = `>> Beam Length: ${beamLength}m`;
+    let parameters = `>> <b class="fs-4">Beam Length:</b> ${beamLength}m`;
     parameters += "<br>";
-    parameters += "<br>>> Supports: ";
+    parameters += `<br>>> <b class="fs-4">Supports:</b> `;
     parameters += "<br>";
     for (let i = 0; i < supports.length; i++) {
         parameters += `Support ${i + 1}: ${supports[i].type} at ${supports[i].location}m`;
         parameters += "<br>";
     }
-    parameters += "<br>>> Sections: ";
+    parameters += `<br>>> <b class="fs-4">Sections:</b> `;
     parameters += "<br>";
     for (let i = 0; i < sections.length; i++) {
         parameters += `Section ${i + 1}: Moi: ${sections[i].Moi}mm<sup>4</sup>, Young Modulus: ${sections[i].YoungMod}MPa, Coefficient: ${sections[i].Coefficient}`;
         parameters += "<br>";   
     }
-    parameters += "<br>>> Settlements: ";
+    parameters += `<br>>> <b class="fs-4">Settlements:</b> `;
     parameters += "<br>";
     for (let i = 0; i < settlements.length; i++) {
-        parameters += `Settlement ${i + 1}: ${settlements[i]}mm`;
+        parameters += `Settlement at Support${i + 1}: ${settlements[i]}mm`;
         parameters += "<br>";
     }
-    parameters += "<br>>> Point Loads: ";
+    parameters += `<br>>> <b class="fs-4">Point Loads:</b> `;
     parameters += "<br>";
     for (let i = 0; i < pointLoads.length; i++) {
         parameters += `Point Load ${i + 1}: ${pointLoads[i].magnitude}KN at ${pointLoads[i].location}m`;
         parameters += "<br>";
     }
-    parameters += "<br>>> Distributed Loads: ";
+    parameters += `<br>>> <b class="fs-4">Distributed Loads:</b> `;
     parameters += "<br>";
     for (let i = 0; i < distributedLoads.length; i++) {
         parameters += `Distributed Load ${i + 1}: ${distributedLoads[i].startMag}KN to ${distributedLoads[i].endMag}KN from ${distributedLoads[i].start}m to ${distributedLoads[i].end}m`;
         parameters += "<br>";
     }
-    parameters += "<br>>> Moments: ";
+    parameters += `<br>>> <b class="fs-4">Moments:</b> `;
     parameters += "<br>";
     for (let i = 0; i < moments.length; i++) {
         parameters += `Moment ${i + 1}: ${moments[i].magnitude}KNm at ${moments[i].position}m`;
