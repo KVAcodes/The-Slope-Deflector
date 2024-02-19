@@ -125,6 +125,14 @@ body {
     height: 10%;
 }
 
+#takeback-button {
+    background-color: #e74c3c;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 5%;
+}
+
 .menu-input-toolbar .btn {
     /* align vertical */
     position: relative;
