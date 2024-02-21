@@ -427,13 +427,8 @@ addButton.addEventListener("click", function () {
             document.getElementById("support-location-form").value = "";
             // check if the no of supports is greater than 2 and if it is, check if at least one support is a fixed support if there is, remove the disabled attribute from the section and settlement buttons
             if (supports.length > 2) {
-                for (let i = 0; i < supports.length; i++) {
-                    if (supports[i].type == "Fixed") {
-                        document.getElementById("section-button").removeAttribute("disabled");
-                        document.getElementById("settlement-button").removeAttribute("disabled");
-                        break;
-                    }
-                }
+                document.getElementById("section-button").removeAttribute("disabled");
+                document.getElementById("settlement-button").removeAttribute("disabled");
                 noOfSpans = calculateNoOfSpans();
             }
             console.log(settlements);
@@ -510,13 +505,8 @@ document.addEventListener("keydown", function (event) {
                 document.getElementById("support-location-form").value = "";
                 // check if the no of supports is greater than 2 and if it is, check if at least one support is a fixed support if there is, remove the disabled attribute from the section and settlement buttons
                 if (supports.length > 2) {
-                    for (let i = 0; i < supports.length; i++) {
-                        if (supports[i].type == "Fixed") {
-                            document.getElementById("section-button").removeAttribute("disabled");
-                            document.getElementById("settlement-button").removeAttribute("disabled");
-                            break;
-                        }
-                    }
+                    document.getElementById("section-button").removeAttribute("disabled");
+                    document.getElementById("settlement-button").removeAttribute("disabled");
                     noOfSpans = calculateNoOfSpans();
                 }
                 console.log(settlements);
@@ -1008,10 +998,15 @@ function visualizeParameters() {
     parameters += "<br>";
     parameters += `<br>>> <b class="fs-4">Supports:</b> `;
     parameters += "<br>";
+    // sort the supports array in ascending order of location
+    supports.sort(function (a, b) {
+        return a.location - b.location;
+    });
     for (let i = 0; i < supports.length; i++) {
         parameters += `Support ${i + 1}: ${supports[i].type} at ${supports[i].location}m`;
         parameters += "<br>";
     }
+    
     parameters += `<br>>> <b class="fs-4">Sections:</b> `;
     parameters += "<br>";
     for (let i = 0; i < sections.length; i++) {
