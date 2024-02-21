@@ -2,15 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RDY5BK2R6W"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-RDY5BK2R6W');
-  </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
@@ -65,25 +56,18 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p class="fs-6">The Slope Deflection Calculator analyzes continuous beams via slope deflection, calculating
-            member end moments and displaying solutions step-by-step.</p>
+          <p class="fs-6">The Slope Deflection Calculator analyzes continuous beams via slope deflection, calculating member end moments and displaying solutions step-by-step.</p>
           <p class="fs-6">To use the calculator, follow these Instructions:</p>
           <ol class="fs-6">
-            <li><strong>Sign Convention for Moments & Joint Rotations:</strong> Moments are considered positive when
-              they rotate counterclockwise. Same convention applies to the joint rotations.</li>
-            <li><strong>Adherence to Units:</strong> Ensure that all input units match the specified units. Incorrect
-              units will lead to inaccurate results.</li>
-            <li><strong>Beam Input Criteria:</strong> Beam length must be entered before other inputs. Buttons for other
-              elements remain disabled until the beam length is provided.</li>
-            <li><strong>Support Input Criteria:</strong> Three supports minimum required, one fixed at either end of
-              beam length; if not met, section and settlement buttons stay disabled.</li>
-            <li><strong>Section Input Criteria:</strong> The I and E values should be left blank if not specified, The
-              coefficient of EI for unspecified spans should be set to 1.</li>
+            <li><strong>Sign Convention for Moments & Joint Rotations:</strong> Moments are considered positive when they rotate counterclockwise. Same convention applies to the joint rotations.</li>
+            <li><strong>Adherence to Units:</strong> Ensure that all input units match the specified units. Incorrect units will lead to inaccurate results.</li>
+            <li><strong>Beam Input Criteria:</strong> Beam length must be entered before other inputs. Buttons for other elements remain disabled until the beam length is provided.</li>
+            <li><strong>Support Input Criteria:</strong> Three supports minimum required; if not met, section and settlement buttons stay disabled.</li>
+            <li><strong>Section Input Criteria:</strong> The I and E values should be left blank if not specified, The coefficient of EI for unspecified spans should be set to 1.</li>
             <li><strong>Settlement Input Criteria:</strong> No support settlement is inputted as 0mm.</li>
-            <li><strong>Moment Input Guidelines:</strong> To input clockwise moments, prefix the value with a '-' sign.
-              Example: '-15kNm'. Neglecting to do so will generate a wrong solution.</li>
+            <li><strong>Moment Input Guidelines:</strong> To input clockwise moments, prefix the value with a '-' sign. Example: '-15kNm'. Neglecting to do so will generate a wrong solution.</li>
           </ol>
-        </div>
+        </div>        
       </div>
     </div>
   </div>
@@ -125,12 +109,11 @@
         <!-- add a left button(that has a leftarrow), it is disabled by default and transparent -->
         <button type="button" class="btn btn-primary btn-sm" id="move-left" disabled>
           < </button>
-            <!-- Button trigger modal -->
-            <button id="modal-btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
-              data-bs-target="#exampleModal">i</button>
-            <!-- add a right button(that has a rightarrow), it is disabled by default and transparent -->
-            <button type="button" class="btn btn-primary btn-sm" id="move-right" disabled> > </button>
-            <button type="button" class="btn btn-success btn-sm" id="solve">Solve</button>
+        <!-- Button trigger modal -->
+        <button id="modal-btn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">i</button>
+        <!-- add a right button(that has a rightarrow), it is disabled by default and transparent -->
+        <button type="button" class="btn btn-primary btn-sm" id="move-right" disabled> > </button>
+        <button type="button" class="btn btn-success btn-sm" id="solve">Solve</button>
       </section>
       <!-- menu buttons -->
       <div class="menu-buttons d-flex flex-column pt-3">
@@ -346,5 +329,4 @@
   <script type="module" src="js/main.js"></script>
   <script type="module" src="js/calculations.js"></script>
 </body>
-
 </html>
