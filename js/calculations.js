@@ -1,1 +1,950 @@
-(function(_0x55a1e5,_0x27f272){const _0x54a51e=_0x41bb,_0x539e87=_0x55a1e5();while(!![]){try{const _0x3dc766=parseInt(_0x54a51e(0xf8))/0x1+-parseInt(_0x54a51e(0xd7))/0x2+parseInt(_0x54a51e(0xfc))/0x3*(-parseInt(_0x54a51e(0xec))/0x4)+parseInt(_0x54a51e(0xe8))/0x5+-parseInt(_0x54a51e(0x108))/0x6+-parseInt(_0x54a51e(0x11d))/0x7+parseInt(_0x54a51e(0x115))/0x8;if(_0x3dc766===_0x27f272)break;else _0x539e87['push'](_0x539e87['shift']());}catch(_0x294876){_0x539e87['push'](_0x539e87['shift']());}}}(_0x54dc,0xdd3e2));let receivedParameters;function _0x41bb(_0x54aaa4,_0x410632){const _0x54dcdc=_0x54dc();return _0x41bb=function(_0x41bb8e,_0x2dd06a){_0x41bb8e=_0x41bb8e-0xc3;let _0x1e0782=_0x54dcdc[_0x41bb8e];return _0x1e0782;},_0x41bb(_0x54aaa4,_0x410632);}export function setParameters(_0x42f040){const _0x1b6161=_0x41bb;receivedParameters=_0x42f040,console[_0x1b6161(0xfe)](_0x1b6161(0x131),receivedParameters),addFreeEndSupports(),recalibrateSupports();const _0x5c31fe=splitBeamIntoSpans(),_0x1d9a1a=calculateFixedEndMoments(_0x5c31fe);let _0x35a013=generateMemberEndMomentExpressions(_0x5c31fe,_0x1d9a1a);const _0x23e63c=eliminateKnownVariables(_0x35a013,_0x5c31fe),_0x529a88=createEquations(_0x23e63c,_0x5c31fe,_0x1d9a1a),_0x2bb5dd=solveEquations(_0x529a88),_0x43ee16=addSolutionsToExpressions(_0x2bb5dd,_0x23e63c),_0xc18968=simplifyExpressions(_0x43ee16),_0xeaab7c=addMemberEndMomentEquationsForFreeEndSpans(_0xc18968,_0x1d9a1a,_0x5c31fe),_0x3ce5a7=addSpanNumbersToMemberEndMomentEquations(_0xeaab7c);displayMemberEndMoments(_0x3ce5a7),displayFixedEndMoments(_0x1d9a1a),displayMemberEndMomentExpressions(_0x35a013),displayMemberEndMomentExpressionsWithEliminatedKnowns(_0x23e63c),displayEquations(_0x529a88),displaySolutions(_0x2bb5dd);}function addFreeEndSupports(){const _0x72b49f=_0x41bb;let _0x338d48=receivedParameters[_0x72b49f(0x121)],_0x4c1dde=receivedParameters[_0x72b49f(0xdd)],_0x24d70e=receivedParameters[_0x72b49f(0xf4)];return _0x338d48[0x0][_0x72b49f(0x105)]!==0x0&&(_0x338d48[_0x72b49f(0xc8)]({'supportNo':0x0,'type':'Free\x20end','location':0x0}),_0x24d70e[_0x72b49f(0xc8)](0x0)),_0x338d48[_0x338d48[_0x72b49f(0x10f)]-0x1]['location']!==_0x4c1dde&&(_0x338d48['push']({'supportNo':_0x338d48[_0x72b49f(0x10f)]+0x1,'type':_0x72b49f(0xed),'location':_0x4c1dde}),_0x24d70e[_0x72b49f(0xc4)](0x0)),console[_0x72b49f(0xfe)](_0x72b49f(0x109),_0x338d48),_0x338d48;}function recalibrateSupports(){const _0x11458c=_0x41bb;let _0x31846d=receivedParameters[_0x11458c(0x121)];_0x31846d['forEach']((_0x10e3ca,_0x4b72ed)=>{const _0x317f96=_0x11458c;_0x10e3ca[_0x317f96(0xe3)]=_0x4b72ed+0x1;}),console[_0x11458c(0xfe)](_0x11458c(0x120),_0x31846d);}function splitBeamIntoSpans(){const _0x39a24f=_0x41bb;let _0x43bc46=receivedParameters[_0x39a24f(0xdd)],_0x3da2f4=receivedParameters[_0x39a24f(0x121)],_0x4cc259=receivedParameters['sections'],_0x4df338=receivedParameters['settlements'],_0x5f1260=receivedParameters[_0x39a24f(0xe6)],_0x1acce7=receivedParameters[_0x39a24f(0xcf)],_0x165446=receivedParameters[_0x39a24f(0x12c)],_0xae55df=receivedParameters['noOfSpans'],_0x218729=[];_0x3da2f4['sort']((_0x26b314,_0x4e94f8)=>_0x26b314[_0x39a24f(0x105)]-_0x4e94f8['location']),console[_0x39a24f(0xfe)](_0x39a24f(0xce),_0x3da2f4);for(let _0x4386e0=0x0;_0x4386e0<_0xae55df;_0x4386e0++){let _0x161422={};_0x161422['spanNo']=_0x4386e0+0x1,_0x161422[_0x39a24f(0xe0)]=_0x3da2f4[_0x4386e0][_0x39a24f(0x105)],_0x161422[_0x39a24f(0x10b)]=_0x3da2f4[_0x4386e0+0x1][_0x39a24f(0x105)],_0x161422['length']=_0x161422[_0x39a24f(0x10b)]-_0x161422[_0x39a24f(0xe0)],_0x161422[_0x39a24f(0x121)]=[_0x3da2f4[_0x4386e0],_0x3da2f4[_0x4386e0+0x1]],_0x161422[_0x39a24f(0xe7)]=_0x4cc259[_0x4386e0],_0x161422[_0x39a24f(0xf4)]=[_0x4df338[_0x4386e0],_0x4df338[_0x4386e0+0x1]],_0x161422[_0x39a24f(0xe6)]=_0x5f1260['filter'](_0x205e86=>_0x205e86['location']>=_0x161422['start']&&_0x205e86[_0x39a24f(0x105)]<=_0x161422[_0x39a24f(0x10b)]),_0x161422[_0x39a24f(0xcf)]=_0x1acce7['map'](_0x591226=>{const _0x3fd053=_0x39a24f;if(_0x591226[_0x3fd053(0xe0)]>=_0x161422['start']&&_0x591226[_0x3fd053(0x10b)]<=_0x161422[_0x3fd053(0x10b)])return _0x591226;else{if(_0x591226[_0x3fd053(0xe0)]>=_0x161422[_0x3fd053(0xe0)]&&_0x591226['end']>_0x161422[_0x3fd053(0x10b)]&&_0x591226[_0x3fd053(0xe0)]<_0x161422[_0x3fd053(0x10b)]){const _0x14422f={..._0x591226};_0x14422f[_0x3fd053(0x10b)]=_0x161422[_0x3fd053(0x10b)];if(_0x14422f['startMag']!==_0x14422f['endMag']){if(_0x14422f['startMag']<_0x14422f[_0x3fd053(0x12a)]){if(_0x14422f[_0x3fd053(0x113)]===0x0){const _0x5ce299=_0x591226[_0x3fd053(0x10b)]-_0x591226[_0x3fd053(0xe0)],_0x2af2f5=_0x14422f[_0x3fd053(0x10b)]-_0x591226[_0x3fd053(0xe0)],_0x42b763=_0x14422f[_0x3fd053(0x12a)],_0x50fdeb=_0x2af2f5*_0x42b763/_0x5ce299;_0x14422f[_0x3fd053(0x12a)]=_0x50fdeb;}else{const _0x14d16d=_0x591226['end']-_0x591226[_0x3fd053(0xe0)],_0x15d560=_0x14422f[_0x3fd053(0x10b)]-_0x591226[_0x3fd053(0xe0)],_0x3f64dc=_0x14422f[_0x3fd053(0x12a)]-_0x14422f['startMag'],_0x2e1ad5=_0x15d560*_0x3f64dc/_0x14d16d;_0x14422f[_0x3fd053(0x12a)]=_0x14422f[_0x3fd053(0x113)]+_0x2e1ad5;}}if(_0x14422f[_0x3fd053(0x113)]>_0x14422f[_0x3fd053(0x12a)]){if(_0x14422f[_0x3fd053(0x12a)]===0x0){const _0x11e606=_0x591226[_0x3fd053(0x10b)]-_0x591226['start'],_0x5ac386=_0x591226[_0x3fd053(0x10b)]-_0x14422f[_0x3fd053(0x10b)],_0x57b1f7=_0x14422f['startMag'],_0x68c6b5=_0x5ac386*_0x57b1f7/_0x11e606;_0x14422f[_0x3fd053(0x12a)]=_0x68c6b5;}else{const _0x17f53a=_0x591226[_0x3fd053(0x10b)]-_0x591226[_0x3fd053(0xe0)],_0x68e22=_0x591226['end']-_0x14422f[_0x3fd053(0x10b)],_0x3be783=_0x14422f[_0x3fd053(0x113)]-_0x14422f[_0x3fd053(0x12a)],_0x352d2e=_0x68e22*_0x3be783/_0x17f53a;_0x14422f[_0x3fd053(0x12a)]=_0x14422f[_0x3fd053(0x12a)]+_0x352d2e;}}}return _0x14422f;}else{if(_0x591226[_0x3fd053(0xe0)]<_0x161422[_0x3fd053(0xe0)]&&_0x591226[_0x3fd053(0x10b)]<=_0x161422['end']&&_0x591226[_0x3fd053(0x10b)]>_0x161422[_0x3fd053(0xe0)]){const _0x37ae72={..._0x591226};_0x37ae72[_0x3fd053(0xe0)]=_0x161422[_0x3fd053(0xe0)];if(_0x37ae72[_0x3fd053(0x113)]!==_0x37ae72[_0x3fd053(0x12a)]){if(_0x37ae72[_0x3fd053(0x113)]<_0x37ae72[_0x3fd053(0x12a)]){if(_0x37ae72[_0x3fd053(0x113)]===0x0){const _0x42f161=_0x591226[_0x3fd053(0x10b)]-_0x591226['start'],_0x304f73=_0x37ae72['start']-_0x591226[_0x3fd053(0xe0)],_0x46b0b0=_0x37ae72['endMag'],_0x521fc7=_0x304f73*_0x46b0b0/_0x42f161;_0x37ae72['startMag']=_0x521fc7;}else{const _0x4f2472=_0x591226[_0x3fd053(0x10b)]-_0x591226['start'],_0x1f2f18=_0x37ae72[_0x3fd053(0xe0)]-_0x591226[_0x3fd053(0xe0)],_0x46a180=_0x37ae72[_0x3fd053(0x12a)]-_0x37ae72[_0x3fd053(0x113)],_0x54a71a=_0x1f2f18*_0x46a180/_0x4f2472;_0x37ae72[_0x3fd053(0x113)]=_0x37ae72['startMag']+_0x54a71a;}}if(_0x37ae72['startMag']>_0x37ae72[_0x3fd053(0x12a)]){if(_0x37ae72[_0x3fd053(0x12a)]===0x0){const _0x1a6e83=_0x591226[_0x3fd053(0x10b)]-_0x591226[_0x3fd053(0xe0)],_0x3a7a92=_0x591226[_0x3fd053(0x10b)]-_0x37ae72['start'],_0x3da6ab=_0x37ae72['startMag'],_0x1f22f1=_0x3a7a92*_0x3da6ab/_0x1a6e83;_0x37ae72[_0x3fd053(0x113)]=_0x1f22f1;}else{const _0x38b4db=_0x591226[_0x3fd053(0x10b)]-_0x591226['start'],_0x4409eb=_0x591226[_0x3fd053(0x10b)]-_0x37ae72['start'],_0x4d1f15=_0x37ae72[_0x3fd053(0x113)]-_0x37ae72[_0x3fd053(0x12a)],_0x312b13=_0x4409eb*_0x4d1f15/_0x38b4db;_0x37ae72['startMag']=_0x37ae72['endMag']+_0x312b13;}}}return _0x37ae72;}else{if(_0x591226[_0x3fd053(0xe0)]<_0x161422[_0x3fd053(0xe0)]&&_0x591226['end']>_0x161422[_0x3fd053(0x10b)]&&_0x591226['start']<_0x161422[_0x3fd053(0x10b)]){const _0x35dd54={..._0x591226};_0x35dd54[_0x3fd053(0xe0)]=_0x161422['start'],_0x35dd54[_0x3fd053(0x10b)]=_0x161422[_0x3fd053(0x10b)];if(_0x35dd54[_0x3fd053(0x113)]!==_0x35dd54[_0x3fd053(0x12a)]){if(_0x35dd54[_0x3fd053(0x113)]<_0x35dd54[_0x3fd053(0x12a)]){if(_0x35dd54[_0x3fd053(0x113)]===0x0){const _0x5d52c5=_0x35dd54[_0x3fd053(0xe0)]-_0x591226['start'],_0x156a9b=_0x35dd54[_0x3fd053(0x10b)]-_0x591226[_0x3fd053(0xe0)],_0x32545b=_0x591226[_0x3fd053(0x10b)]-_0x591226[_0x3fd053(0xe0)],_0x2feff=_0x35dd54[_0x3fd053(0x12a)],_0x17d984=_0x5d52c5*_0x2feff/_0x32545b,_0x2fdcf9=_0x156a9b*_0x2feff/_0x32545b;_0x35dd54[_0x3fd053(0x113)]=_0x17d984,_0x35dd54[_0x3fd053(0x12a)]=_0x2fdcf9;}else{const _0x22ef65=_0x35dd54[_0x3fd053(0xe0)]-_0x591226[_0x3fd053(0xe0)],_0x39ec52=_0x35dd54['end']-_0x591226[_0x3fd053(0xe0)],_0x3a0447=_0x591226['end']-_0x591226[_0x3fd053(0xe0)],_0x20db8c=_0x35dd54[_0x3fd053(0x12a)]-_0x35dd54[_0x3fd053(0x113)],_0x3aa2a7=_0x22ef65*_0x20db8c/_0x3a0447,_0x1f452e=_0x39ec52*_0x20db8c/_0x3a0447;_0x35dd54[_0x3fd053(0x12a)]=_0x35dd54['startMag']+_0x1f452e,_0x35dd54[_0x3fd053(0x113)]=_0x35dd54['startMag']+_0x3aa2a7;}}if(_0x35dd54[_0x3fd053(0x113)]>_0x35dd54[_0x3fd053(0x12a)]){if(_0x35dd54[_0x3fd053(0x12a)]===0x0){const _0x3c7241=_0x591226[_0x3fd053(0x10b)]-_0x35dd54['end'],_0x48f0c0=_0x591226[_0x3fd053(0x10b)]-_0x35dd54[_0x3fd053(0xe0)],_0xcf635e=_0x591226[_0x3fd053(0x10b)]-_0x591226[_0x3fd053(0xe0)],_0x5af996=_0x35dd54['startMag'],_0x21b82e=_0x3c7241*_0x5af996/_0xcf635e,_0x7139ff=_0x48f0c0*_0x5af996/_0xcf635e;_0x35dd54[_0x3fd053(0x113)]=_0x7139ff,_0x35dd54[_0x3fd053(0x12a)]=_0x21b82e;}else{const _0x381f17=_0x591226[_0x3fd053(0x10b)]-_0x35dd54['end'],_0x2a1f11=_0x591226[_0x3fd053(0x10b)]-_0x35dd54['start'],_0x368cf4=_0x591226[_0x3fd053(0x10b)]-_0x591226[_0x3fd053(0xe0)],_0x3400b2=_0x35dd54[_0x3fd053(0x113)]-_0x35dd54['endMag'],_0x1c0637=_0x381f17*_0x3400b2/_0x368cf4,_0x408af0=_0x2a1f11*_0x3400b2/_0x368cf4;_0x35dd54[_0x3fd053(0x113)]=_0x35dd54[_0x3fd053(0x12a)]+_0x408af0,_0x35dd54[_0x3fd053(0x12a)]=_0x35dd54[_0x3fd053(0x12a)]+_0x1c0637;}}}return _0x35dd54;}}}}}),_0x161422[_0x39a24f(0x12c)]=_0x165446[_0x39a24f(0x123)](_0x6bf9af=>_0x6bf9af['position']>=_0x161422[_0x39a24f(0xe0)]&&_0x6bf9af['position']<=_0x161422[_0x39a24f(0x10b)]),_0x218729[_0x39a24f(0xc4)](_0x161422);}return console[_0x39a24f(0xfe)](_0x39a24f(0x10e),_0x218729),_0x218729;}function calculateFixedEndMoments(_0x2608e2){const _0x1be680=_0x41bb;let _0x221b40=[];return _0x2608e2['forEach'](_0x30ac41=>{const _0x5c8c47=_0x41bb;_0x30ac41[_0x5c8c47(0x121)][0x0][_0x5c8c47(0xdf)]==='Free\x20end'||_0x30ac41[_0x5c8c47(0x121)][0x1][_0x5c8c47(0xdf)]==='Free\x20end'?_0x30ac41[_0x5c8c47(0x121)][0x0][_0x5c8c47(0xdf)]==='Free\x20end'?_0x221b40[_0x5c8c47(0xc4)](calculateFixedEndMomentsForLeftFreeEndSpans(_0x30ac41)):_0x221b40['push'](calculateFixedEndMomentsForRightFreeEndSpans(_0x30ac41)):_0x221b40[_0x5c8c47(0xc4)](calculateFixedEndMomentsForFixedEndSpans(_0x30ac41));}),console[_0x1be680(0xfe)](_0x1be680(0xfb),_0x221b40),_0x221b40;}function calculateFixedEndMomentsForLeftFreeEndSpans(_0x8510c4){const _0x3a433f=_0x41bb;let _0x5c6523={};return _0x5c6523[_0x3a433f(0x117)]=_0x8510c4['spanNo'],_0x5c6523[_0x3a433f(0x122)+_0x8510c4[_0x3a433f(0x121)][0x1]['supportNo']+_0x8510c4[_0x3a433f(0x121)][0x0][_0x3a433f(0xe3)]]=0x0,_0x8510c4['pointLoads'][_0x3a433f(0x114)](_0x77cf07=>{const _0x124df1=_0x3a433f;_0x5c6523[_0x124df1(0x122)+_0x8510c4[_0x124df1(0x121)][0x1][_0x124df1(0xe3)]+_0x8510c4[_0x124df1(0x121)][0x0][_0x124df1(0xe3)]]+=-(_0x77cf07[_0x124df1(0x128)]*(_0x8510c4['end']-_0x77cf07[_0x124df1(0x105)]));}),_0x8510c4[_0x3a433f(0xcf)]['forEach'](_0x3b9b3e=>{const _0x409858=_0x3a433f;if(_0x3b9b3e){if(_0x3b9b3e[_0x409858(0x113)]===_0x3b9b3e[_0x409858(0x12a)]){const _0x1db309=(_0x3b9b3e[_0x409858(0xe0)]+_0x3b9b3e['end'])/0x2,_0x432743=_0x8510c4[_0x409858(0x10b)]-_0x1db309;_0x5c6523['FEM'+_0x8510c4[_0x409858(0x121)][0x1][_0x409858(0xe3)]+_0x8510c4['supports'][0x0][_0x409858(0xe3)]]+=-(_0x3b9b3e[_0x409858(0x113)]*_0x432743*(_0x3b9b3e[_0x409858(0x10b)]-_0x3b9b3e['start']));}else{if(_0x3b9b3e[_0x409858(0x113)]<_0x3b9b3e[_0x409858(0x12a)]){if(_0x3b9b3e[_0x409858(0x113)]===0x0){const _0x52447e=_0x3b9b3e['end']-_0x3b9b3e[_0x409858(0xe0)],_0x4f588d=_0x3b9b3e[_0x409858(0x12a)],_0x47c6ca=_0x52447e*_0x4f588d/0x2,_0x434184=0x1/0x3*_0x52447e+(_0x8510c4[_0x409858(0x10b)]-_0x3b9b3e['end']);_0x5c6523['FEM'+_0x8510c4[_0x409858(0x121)][0x1][_0x409858(0xe3)]+_0x8510c4[_0x409858(0x121)][0x0][_0x409858(0xe3)]]+=-(_0x47c6ca*_0x434184);}else{const _0x55c0a4=_0x3b9b3e[_0x409858(0x10b)]-_0x3b9b3e['start'],_0x3c0f9d=_0x3b9b3e['endMag']-_0x3b9b3e['startMag'],_0x2a7713=_0x3b9b3e[_0x409858(0x113)],_0x5db378=_0x55c0a4*_0x3c0f9d/0x2,_0x38eb5e=_0x55c0a4*_0x2a7713,_0x3f4932=0x1/0x3*_0x55c0a4+(_0x8510c4[_0x409858(0x10b)]-_0x3b9b3e[_0x409858(0x10b)]),_0x316b82=0x1/0x2*_0x55c0a4+(_0x8510c4[_0x409858(0x10b)]-_0x3b9b3e[_0x409858(0x10b)]);_0x5c6523[_0x409858(0x122)+_0x8510c4['supports'][0x1][_0x409858(0xe3)]+_0x8510c4[_0x409858(0x121)][0x0][_0x409858(0xe3)]]+=-(_0x5db378*_0x3f4932+_0x38eb5e*_0x316b82);}}if(_0x3b9b3e[_0x409858(0x113)]>_0x3b9b3e[_0x409858(0x12a)]){if(_0x3b9b3e[_0x409858(0x12a)]===0x0){const _0x2cb1be=_0x3b9b3e[_0x409858(0x10b)]-_0x3b9b3e['start'],_0x349de5=_0x3b9b3e['startMag'],_0x33669f=_0x2cb1be*_0x349de5/0x2,_0x106a08=0x2/0x3*_0x2cb1be+(_0x8510c4['end']-_0x3b9b3e[_0x409858(0x10b)]);_0x5c6523['FEM'+_0x8510c4[_0x409858(0x121)][0x1]['supportNo']+_0x8510c4[_0x409858(0x121)][0x0][_0x409858(0xe3)]]+=-(_0x33669f*_0x106a08);}else{const _0x118ea8=_0x3b9b3e[_0x409858(0x10b)]-_0x3b9b3e['start'],_0x151b31=_0x3b9b3e[_0x409858(0x113)]-_0x3b9b3e[_0x409858(0x12a)],_0x263c96=_0x3b9b3e[_0x409858(0x12a)],_0x4dad37=_0x118ea8*_0x151b31/0x2,_0x1a9cf0=_0x118ea8*_0x263c96,_0x22fea0=0x2/0x3*_0x118ea8+(_0x8510c4[_0x409858(0x10b)]-_0x3b9b3e[_0x409858(0x10b)]),_0x2a5f60=0x1/0x2*_0x118ea8+(_0x8510c4['end']-_0x3b9b3e['end']);_0x5c6523[_0x409858(0x122)+_0x8510c4['supports'][0x1][_0x409858(0xe3)]+_0x8510c4[_0x409858(0x121)][0x0][_0x409858(0xe3)]]+=-(_0x4dad37*_0x22fea0+_0x1a9cf0*_0x2a5f60);}}}}}),_0x8510c4[_0x3a433f(0x12c)][_0x3a433f(0x114)](_0x254410=>{const _0x46629=_0x3a433f;_0x5c6523[_0x46629(0x122)+_0x8510c4['supports'][0x1][_0x46629(0xe3)]+_0x8510c4[_0x46629(0x121)][0x0]['supportNo']]+=_0x254410['magnitude'];}),_0x5c6523;}function calculateFixedEndMomentsForRightFreeEndSpans(_0x54b9ed){const _0x3f931b=_0x41bb;let _0x4bc3c0={};return _0x4bc3c0[_0x3f931b(0x117)]=_0x54b9ed[_0x3f931b(0x117)],_0x4bc3c0[_0x3f931b(0x122)+_0x54b9ed['supports'][0x0]['supportNo']+_0x54b9ed[_0x3f931b(0x121)][0x1][_0x3f931b(0xe3)]]=0x0,_0x54b9ed[_0x3f931b(0xe6)]['forEach'](_0x16ea64=>{const _0x1bc6f7=_0x3f931b;_0x4bc3c0['FEM'+_0x54b9ed[_0x1bc6f7(0x121)][0x0][_0x1bc6f7(0xe3)]+_0x54b9ed[_0x1bc6f7(0x121)][0x1][_0x1bc6f7(0xe3)]]+=_0x16ea64[_0x1bc6f7(0x128)]*(_0x16ea64['location']-_0x54b9ed[_0x1bc6f7(0xe0)]);}),_0x54b9ed[_0x3f931b(0xcf)][_0x3f931b(0x114)](_0x325e69=>{const _0x262214=_0x3f931b;if(_0x325e69){if(_0x325e69[_0x262214(0x113)]===_0x325e69[_0x262214(0x12a)]){const _0x379592=(_0x325e69[_0x262214(0xe0)]+_0x325e69[_0x262214(0x10b)])/0x2,_0x28df63=_0x379592-_0x54b9ed[_0x262214(0xe0)];_0x4bc3c0['FEM'+_0x54b9ed[_0x262214(0x121)][0x0][_0x262214(0xe3)]+_0x54b9ed[_0x262214(0x121)][0x1][_0x262214(0xe3)]]+=_0x325e69['startMag']*_0x28df63*(_0x325e69['end']-_0x325e69[_0x262214(0xe0)]);}else{if(_0x325e69[_0x262214(0x113)]<_0x325e69[_0x262214(0x12a)]){if(_0x325e69[_0x262214(0x113)]===0x0){const _0x5f08fd=_0x325e69[_0x262214(0x10b)]-_0x325e69[_0x262214(0xe0)],_0x4c43b7=_0x325e69['endMag'],_0x775949=_0x5f08fd*_0x4c43b7/0x2,_0x53b41c=0x2/0x3*_0x5f08fd+(_0x325e69[_0x262214(0xe0)]-_0x54b9ed[_0x262214(0xe0)]);_0x4bc3c0[_0x262214(0x122)+_0x54b9ed[_0x262214(0x121)][0x0]['supportNo']+_0x54b9ed[_0x262214(0x121)][0x1][_0x262214(0xe3)]]+=_0x775949*_0x53b41c;}else{const _0xabbb7e=_0x325e69['end']-_0x325e69[_0x262214(0xe0)],_0x2f0613=_0x325e69[_0x262214(0x12a)]-_0x325e69[_0x262214(0x113)],_0x5c5cad=_0x325e69[_0x262214(0x113)],_0x1033dd=_0xabbb7e*_0x2f0613/0x2,_0x574360=_0xabbb7e*_0x5c5cad,_0x55f943=0x2/0x3*_0xabbb7e+(_0x325e69[_0x262214(0xe0)]-_0x54b9ed['start']),_0x2c9784=0x1/0x2*_0xabbb7e+(_0x325e69['start']-_0x54b9ed['start']);_0x4bc3c0[_0x262214(0x122)+_0x54b9ed[_0x262214(0x121)][0x0][_0x262214(0xe3)]+_0x54b9ed[_0x262214(0x121)][0x1][_0x262214(0xe3)]]+=_0x1033dd*_0x55f943+_0x574360*_0x2c9784;}}if(_0x325e69[_0x262214(0x113)]>_0x325e69['endMag']){if(_0x325e69[_0x262214(0x12a)]===0x0){const _0x147093=_0x325e69[_0x262214(0x10b)]-_0x325e69[_0x262214(0xe0)],_0x33b393=_0x325e69['startMag'],_0x695a2c=_0x147093*_0x33b393/0x2,_0x43b8d4=0x1/0x3*_0x147093+(_0x325e69[_0x262214(0xe0)]-_0x54b9ed[_0x262214(0xe0)]);console[_0x262214(0xfe)](_0x695a2c,_0x43b8d4),_0x4bc3c0[_0x262214(0x122)+_0x54b9ed[_0x262214(0x121)][0x0][_0x262214(0xe3)]+_0x54b9ed[_0x262214(0x121)][0x1][_0x262214(0xe3)]]+=_0x695a2c*_0x43b8d4;}else{const _0x1614b2=_0x325e69[_0x262214(0x10b)]-_0x325e69[_0x262214(0xe0)],_0x216e55=_0x325e69['startMag']-_0x325e69[_0x262214(0x12a)],_0x45124e=_0x325e69['endMag'],_0x2caa0c=_0x1614b2*_0x216e55/0x2,_0x44ac02=_0x1614b2*_0x45124e,_0xbe2849=0x1/0x3*_0x1614b2+(_0x325e69[_0x262214(0xe0)]-_0x54b9ed[_0x262214(0xe0)]),_0x279d90=0x1/0x2*_0x1614b2+(_0x325e69[_0x262214(0xe0)]-_0x54b9ed[_0x262214(0xe0)]);_0x4bc3c0[_0x262214(0x122)+_0x54b9ed[_0x262214(0x121)][0x0][_0x262214(0xe3)]+_0x54b9ed[_0x262214(0x121)][0x1]['supportNo']]+=_0x2caa0c*_0xbe2849+_0x44ac02*_0x279d90;}}}}}),_0x54b9ed[_0x3f931b(0x12c)]['forEach'](_0x2d3380=>{const _0x48ebbd=_0x3f931b;_0x4bc3c0[_0x48ebbd(0x122)+_0x54b9ed['supports'][0x0]['supportNo']+_0x54b9ed[_0x48ebbd(0x121)][0x1][_0x48ebbd(0xe3)]]+=_0x2d3380[_0x48ebbd(0x128)];}),_0x4bc3c0;}function calculateFixedEndMomentsForFixedEndSpans(_0xb896a9){const _0x1e60cc=_0x41bb;let _0x57817d={};return _0x57817d[_0x1e60cc(0x117)]=_0xb896a9[_0x1e60cc(0x117)],_0x57817d['FEM'+_0xb896a9[_0x1e60cc(0x121)][0x0][_0x1e60cc(0xe3)]+_0xb896a9[_0x1e60cc(0x121)][0x1][_0x1e60cc(0xe3)]]=0x0,_0x57817d['FEM'+_0xb896a9[_0x1e60cc(0x121)][0x1][_0x1e60cc(0xe3)]+_0xb896a9[_0x1e60cc(0x121)][0x0][_0x1e60cc(0xe3)]]=0x0,_0xb896a9[_0x1e60cc(0xe6)][_0x1e60cc(0x114)](_0xe8f04a=>{const _0x362409=_0x1e60cc,_0x15898f=_0xe8f04a[_0x362409(0x105)]-_0xb896a9['start'],_0x2c32d1=_0xb896a9[_0x362409(0x10b)]-_0xe8f04a[_0x362409(0x105)],_0x272fef=_0xb896a9[_0x362409(0x10f)],_0x45ba71=_0xe8f04a['magnitude'];_0x57817d[_0x362409(0x122)+_0xb896a9['supports'][0x0]['supportNo']+_0xb896a9['supports'][0x1][_0x362409(0xe3)]]+=_0x45ba71*_0x15898f*_0x2c32d1*_0x2c32d1/(_0x272fef*_0x272fef),_0x57817d[_0x362409(0x122)+_0xb896a9[_0x362409(0x121)][0x1]['supportNo']+_0xb896a9['supports'][0x0]['supportNo']]+=-(_0x45ba71*_0x2c32d1*_0x15898f*_0x15898f/(_0x272fef*_0x272fef));}),_0xb896a9[_0x1e60cc(0xcf)][_0x1e60cc(0x114)](_0x462e2e=>{const _0x223c1c=_0x1e60cc;if(_0x462e2e){if(_0x462e2e['startMag']===_0x462e2e[_0x223c1c(0x12a)]){const _0x1500db=_0x462e2e[_0x223c1c(0xe0)]-_0xb896a9[_0x223c1c(0xe0)],_0x3e759a=_0x462e2e[_0x223c1c(0x10b)]-_0xb896a9[_0x223c1c(0xe0)],_0x49c92b=_0xb896a9[_0x223c1c(0x10f)],_0x9ebd3a=_0x462e2e['startMag'],_0x23c47a='('+_0x9ebd3a+_0x223c1c(0xcc)+_0x49c92b+_0x223c1c(0x12b)+_0x49c92b+'^2';console[_0x223c1c(0xfe)](_0x23c47a);const _0xa49ce3=parseFloat(nerdamer(_0x223c1c(0xcb)+_0x23c47a+',\x20'+_0x1500db+',\x20'+_0x3e759a+')')[_0x223c1c(0x11b)]());_0x57817d['FEM'+_0xb896a9[_0x223c1c(0x121)][0x0][_0x223c1c(0xe3)]+_0xb896a9[_0x223c1c(0x121)][0x1][_0x223c1c(0xe3)]]+=_0xa49ce3;const _0x55650d='('+_0x9ebd3a+_0x223c1c(0xc6)+_0x49c92b+_0x223c1c(0xf2)+_0x49c92b+'^2',_0x1f5fbb=parseFloat(nerdamer(_0x223c1c(0xcb)+_0x55650d+',\x20'+_0x1500db+',\x20'+_0x3e759a+')')[_0x223c1c(0x11b)]());_0x57817d['FEM'+_0xb896a9[_0x223c1c(0x121)][0x1][_0x223c1c(0xe3)]+_0xb896a9[_0x223c1c(0x121)][0x0]['supportNo']]+=-_0x1f5fbb;}if(_0x462e2e[_0x223c1c(0x113)]<_0x462e2e[_0x223c1c(0x12a)]){if(_0x462e2e[_0x223c1c(0x113)]===0x0){const _0x57ebd1=_0x462e2e['start']-_0xb896a9['start'],_0x5ea314=_0x462e2e[_0x223c1c(0x10b)]-_0xb896a9[_0x223c1c(0xe0)],_0x18b90c=_0xb896a9[_0x223c1c(0x10f)],_0x3cccbb=_0x462e2e[_0x223c1c(0x12a)],_0x34feb7='('+_0x3cccbb+_0x223c1c(0xef)+_0x57ebd1+_0x223c1c(0xe4)+_0x5ea314+_0x223c1c(0xf9)+_0x57ebd1+')';console['log'](_0x34feb7);const _0x3374fb=parseFloat(nerdamer('defint(('+_0x34feb7+_0x223c1c(0xcc)+_0x18b90c+'\x20-\x20x)^2)/'+_0x18b90c+_0x223c1c(0x106)+_0x57ebd1+',\x20'+_0x5ea314+')')[_0x223c1c(0x11b)]());_0x57817d[_0x223c1c(0x122)+_0xb896a9[_0x223c1c(0x121)][0x0]['supportNo']+_0xb896a9[_0x223c1c(0x121)][0x1][_0x223c1c(0xe3)]]+=_0x3374fb;const _0x3fe1f3=parseFloat(nerdamer(_0x223c1c(0xc3)+_0x34feb7+'\x20*\x20('+_0x18b90c+_0x223c1c(0xf2)+_0x18b90c+_0x223c1c(0x106)+_0x57ebd1+',\x20'+_0x5ea314+')')[_0x223c1c(0x11b)]());_0x57817d[_0x223c1c(0x122)+_0xb896a9[_0x223c1c(0x121)][0x1][_0x223c1c(0xe3)]+_0xb896a9[_0x223c1c(0x121)][0x0]['supportNo']]+=-_0x3fe1f3;}else{const _0x337868=_0x462e2e['start']-_0xb896a9[_0x223c1c(0xe0)],_0x291bf9=_0x462e2e['end']-_0xb896a9[_0x223c1c(0xe0)],_0x2926d5=_0xb896a9[_0x223c1c(0x10f)],_0x571795=_0x462e2e[_0x223c1c(0x113)],_0xcebe30=_0x462e2e[_0x223c1c(0x12a)],_0x46b52a='(('+_0xcebe30+'\x20-\x20'+_0x571795+')*(x\x20-\x20'+_0x337868+_0x223c1c(0x11a)+_0x291bf9+_0x223c1c(0xf9)+_0x337868+_0x223c1c(0xde)+_0x571795;console['log'](_0x46b52a);const _0x2027d4=parseFloat(nerdamer(_0x223c1c(0xc3)+_0x46b52a+_0x223c1c(0xcc)+_0x2926d5+_0x223c1c(0x12b)+_0x2926d5+_0x223c1c(0x106)+_0x337868+',\x20'+_0x291bf9+')')[_0x223c1c(0x11b)]());_0x57817d[_0x223c1c(0x122)+_0xb896a9[_0x223c1c(0x121)][0x0][_0x223c1c(0xe3)]+_0xb896a9[_0x223c1c(0x121)][0x1]['supportNo']]+=_0x2027d4;const _0x581b09=parseFloat(nerdamer(_0x223c1c(0xc3)+_0x46b52a+_0x223c1c(0xc6)+_0x2926d5+_0x223c1c(0xf2)+_0x2926d5+'^2,\x20'+_0x337868+',\x20'+_0x291bf9+')')[_0x223c1c(0x11b)]());_0x57817d[_0x223c1c(0x122)+_0xb896a9[_0x223c1c(0x121)][0x1][_0x223c1c(0xe3)]+_0xb896a9[_0x223c1c(0x121)][0x0][_0x223c1c(0xe3)]]+=-_0x581b09;}}if(_0x462e2e[_0x223c1c(0x113)]>_0x462e2e['endMag']){if(_0x462e2e[_0x223c1c(0x12a)]===0x0){const _0x4df47a=_0x462e2e[_0x223c1c(0xe0)]-_0xb896a9[_0x223c1c(0xe0)],_0x3bde51=_0x462e2e[_0x223c1c(0x10b)]-_0xb896a9['start'],_0x3547a9=_0xb896a9[_0x223c1c(0x10f)],_0x51995f=_0x462e2e[_0x223c1c(0x113)],_0x191ff2='('+_0x51995f+_0x223c1c(0xc6)+_0x3bde51+_0x223c1c(0x12d)+_0x3bde51+'-'+_0x4df47a+'))';console['log'](_0x191ff2);const _0xdf6449=parseFloat(nerdamer(_0x223c1c(0xc3)+_0x191ff2+'\x20*\x20x\x20*\x20('+_0x3547a9+_0x223c1c(0x12b)+_0x3547a9+_0x223c1c(0x106)+_0x4df47a+',\x20'+_0x3bde51+')')['text']());_0x57817d[_0x223c1c(0x122)+_0xb896a9[_0x223c1c(0x121)][0x0][_0x223c1c(0xe3)]+_0xb896a9[_0x223c1c(0x121)][0x1]['supportNo']]+=_0xdf6449;const _0x2ada9f=parseFloat(nerdamer(_0x223c1c(0xc3)+_0x191ff2+'\x20*\x20('+_0x3547a9+'\x20-\x20x)\x20*\x20x^2)/'+_0x3547a9+_0x223c1c(0x106)+_0x4df47a+',\x20'+_0x3bde51+')')['text']());_0x57817d[_0x223c1c(0x122)+_0xb896a9['supports'][0x1][_0x223c1c(0xe3)]+_0xb896a9[_0x223c1c(0x121)][0x0]['supportNo']]+=-_0x2ada9f;}else{const _0x4158ef=_0x462e2e[_0x223c1c(0xe0)]-_0xb896a9['start'],_0xda14d4=_0x462e2e[_0x223c1c(0x10b)]-_0xb896a9['start'],_0x53433e=_0xb896a9[_0x223c1c(0x10f)],_0x36556b=_0x462e2e[_0x223c1c(0x12a)],_0x5a1747=_0x462e2e[_0x223c1c(0x113)],_0x5c6138='(('+_0x5a1747+'\x20-\x20'+_0x36556b+_0x223c1c(0xd9)+_0xda14d4+_0x223c1c(0x100)+_0xda14d4+'-'+_0x4158ef+_0x223c1c(0xde)+_0x36556b;console[_0x223c1c(0xfe)](_0x5c6138);const _0x3dba56=parseFloat(nerdamer(_0x223c1c(0xc3)+_0x5c6138+'\x20*\x20x\x20*\x20('+_0x53433e+'\x20-\x20x)^2)/'+_0x53433e+'^2,\x20'+_0x4158ef+',\x20'+_0xda14d4+')')[_0x223c1c(0x11b)]());_0x57817d[_0x223c1c(0x122)+_0xb896a9[_0x223c1c(0x121)][0x0][_0x223c1c(0xe3)]+_0xb896a9[_0x223c1c(0x121)][0x1][_0x223c1c(0xe3)]]+=_0x3dba56;const _0x3e616b=parseFloat(nerdamer('defint(('+_0x5c6138+_0x223c1c(0xc6)+_0x53433e+'\x20-\x20x)\x20*\x20x^2)/'+_0x53433e+_0x223c1c(0x106)+_0x4158ef+',\x20'+_0xda14d4+')')[_0x223c1c(0x11b)]());_0x57817d[_0x223c1c(0x122)+_0xb896a9[_0x223c1c(0x121)][0x1][_0x223c1c(0xe3)]+_0xb896a9[_0x223c1c(0x121)][0x0][_0x223c1c(0xe3)]]+=-_0x3e616b;}}}}),_0xb896a9[_0x1e60cc(0x12c)][_0x1e60cc(0x114)](_0x3bdac0=>{const _0x1827e5=_0x1e60cc,_0xbe557=_0x3bdac0[_0x1827e5(0x127)]-_0xb896a9[_0x1827e5(0xe0)],_0x402a86=_0xb896a9['end']-_0x3bdac0[_0x1827e5(0x127)],_0x1dd2a3=_0xb896a9[_0x1827e5(0x10f)],_0x406167=_0x3bdac0['magnitude'];_0x57817d['FEM'+_0xb896a9[_0x1827e5(0x121)][0x0]['supportNo']+_0xb896a9[_0x1827e5(0x121)][0x1][_0x1827e5(0xe3)]]+=_0x406167*_0x402a86*(0x2*_0xbe557-_0x402a86)/(_0x1dd2a3*_0x1dd2a3),_0x57817d['FEM'+_0xb896a9[_0x1827e5(0x121)][0x1][_0x1827e5(0xe3)]+_0xb896a9[_0x1827e5(0x121)][0x0][_0x1827e5(0xe3)]]+=_0x406167*_0xbe557*(0x2*_0x402a86-_0xbe557)/(_0x1dd2a3*_0x1dd2a3);}),_0x57817d;}function generateMemberEndMomentExpressions(_0x18d5f4,_0x3201a3){const _0x4c8b79=_0x41bb;let _0x318bed=[];return _0x18d5f4[_0x4c8b79(0x114)](_0x376e8b=>{const _0x3759a9=_0x4c8b79;if(_0x376e8b[_0x3759a9(0x121)][0x0][_0x3759a9(0xdf)]==='Free\x20end'||_0x376e8b['supports'][0x1][_0x3759a9(0xdf)]===_0x3759a9(0xed))return;let _0x35c70a;if(_0x376e8b[_0x3759a9(0xf4)][0x0]===undefined&&_0x376e8b[_0x3759a9(0xf4)][0x1]===undefined)_0x35c70a=0x0;else{if(_0x376e8b['settlements'][0x0]===undefined)_0x35c70a=-_0x376e8b['settlements'][0x1]/0x3e8;else _0x376e8b[_0x3759a9(0xf4)][0x1]===undefined?_0x35c70a=_0x376e8b[_0x3759a9(0xf4)][0x0]/0x3e8:_0x35c70a=-(_0x376e8b[_0x3759a9(0xf4)][0x1]-_0x376e8b[_0x3759a9(0xf4)][0x0])/0x3e8;}let _0x577c20,_0x52639e;_0x376e8b[_0x3759a9(0xe7)]===undefined?(_0x577c20=0x1,_0x52639e=0x1):_0x376e8b[_0x3759a9(0xe7)][_0x3759a9(0x10a)]===null||_0x376e8b['section'][_0x3759a9(0x132)]===null?(_0x577c20=_0x376e8b[_0x3759a9(0xe7)][_0x3759a9(0x104)],_0x52639e=0x1):(_0x577c20=_0x376e8b[_0x3759a9(0xe7)][_0x3759a9(0x10a)]*0x3e8*_0x376e8b['section'][_0x3759a9(0x104)],_0x52639e=_0x376e8b[_0x3759a9(0xe7)][_0x3759a9(0x132)]*Math[_0x3759a9(0xd5)](0xa,-0xc));const _0x433cc8=_0x376e8b['length'],_0x3b6e7b=_0x3201a3[_0x3759a9(0x10c)](_0xa8496f=>_0xa8496f['spanNo']===_0x376e8b[_0x3759a9(0x117)])[_0x3759a9(0x122)+_0x376e8b[_0x3759a9(0x121)][0x0][_0x3759a9(0xe3)]+_0x376e8b[_0x3759a9(0x121)][0x1]['supportNo']],_0x31040f=_0x3201a3[_0x3759a9(0x10c)](_0x5ace80=>_0x5ace80['spanNo']===_0x376e8b[_0x3759a9(0x117)])['FEM'+_0x376e8b[_0x3759a9(0x121)][0x1][_0x3759a9(0xe3)]+_0x376e8b[_0x3759a9(0x121)][0x0]['supportNo']],_0x3e190b=_0x3b6e7b+_0x3759a9(0x126)+_0x577c20+'*'+_0x52639e+'/'+_0x433cc8+_0x3759a9(0xc9)+_0x376e8b[_0x3759a9(0x121)][0x0][_0x3759a9(0xe3)]+_0x3759a9(0xe9)+_0x376e8b['supports'][0x1][_0x3759a9(0xe3)]+_0x3759a9(0xd6)+_0x35c70a+'/'+_0x433cc8+')',_0x4d7cf6=_0x31040f+_0x3759a9(0x126)+_0x577c20+'*'+_0x52639e+'/'+_0x433cc8+_0x3759a9(0xc9)+_0x376e8b[_0x3759a9(0x121)][0x1][_0x3759a9(0xe3)]+_0x3759a9(0xe9)+_0x376e8b[_0x3759a9(0x121)][0x0]['supportNo']+'\x20-\x203*'+_0x35c70a+'/'+_0x433cc8+')';_0x318bed['push']({'spanNo':_0x376e8b[_0x3759a9(0x117)],'Mab':_0x3e190b,'Mba':_0x4d7cf6});}),console[_0x4c8b79(0xfe)](_0x4c8b79(0x11e),_0x318bed),_0x318bed;}function eliminateKnownVariables(_0x309b0d,_0x1ba7ea){const _0x348138=_0x41bb,_0x231aa5=JSON[_0x348138(0xfd)](JSON['stringify'](_0x309b0d));return _0x1ba7ea[0x0][_0x348138(0x121)][0x0][_0x348138(0xdf)]==='Fixed'&&(_0x231aa5[0x0][_0x348138(0x102)]=_0x231aa5[0x0][_0x348138(0x102)][_0x348138(0xf1)]('θ'+_0x1ba7ea[0x0]['supports'][0x0][_0x348138(0xe3)],'0'),_0x231aa5[0x0]['Mba']=_0x231aa5[0x0][_0x348138(0xf6)][_0x348138(0xf1)]('θ'+_0x1ba7ea[0x0][_0x348138(0x121)][0x0]['supportNo'],'0')),_0x1ba7ea[_0x1ba7ea[_0x348138(0x10f)]-0x1][_0x348138(0x121)][0x1][_0x348138(0xdf)]===_0x348138(0xf0)&&(_0x231aa5[_0x231aa5[_0x348138(0x10f)]-0x1]['Mba']=_0x231aa5[_0x231aa5[_0x348138(0x10f)]-0x1]['Mba']['replace']('θ'+_0x1ba7ea[_0x1ba7ea['length']-0x1][_0x348138(0x121)][0x1][_0x348138(0xe3)],'0'),_0x231aa5[_0x231aa5[_0x348138(0x10f)]-0x1][_0x348138(0x102)]=_0x231aa5[_0x231aa5['length']-0x1]['Mab'][_0x348138(0xf1)]('θ'+_0x1ba7ea[_0x1ba7ea[_0x348138(0x10f)]-0x1]['supports'][0x1][_0x348138(0xe3)],'0')),console['log'](_0x348138(0xeb),_0x231aa5),_0x231aa5;}function createEquations(_0x1172e8,_0x3bac55,_0x46a651){const _0x9cec14=_0x41bb;let _0x409b5a=[];(_0x3bac55[0x0][_0x9cec14(0x121)][0x0]['type']==='Roller'||_0x3bac55[0x0]['supports'][0x0][_0x9cec14(0xdf)]===_0x9cec14(0xf3))&&_0x409b5a['push'](_0x1172e8[0x0][_0x9cec14(0x102)]+_0x9cec14(0x112));(_0x3bac55[_0x3bac55[_0x9cec14(0x10f)]-0x1][_0x9cec14(0x121)][0x1][_0x9cec14(0xdf)]===_0x9cec14(0x119)||_0x3bac55[_0x3bac55[_0x9cec14(0x10f)]-0x1][_0x9cec14(0x121)][0x1][_0x9cec14(0xdf)]===_0x9cec14(0xf3))&&_0x409b5a[_0x9cec14(0xc4)](_0x1172e8[_0x3bac55[_0x9cec14(0x10f)]-0x1]['Mba']+'\x20=\x200');_0x3bac55[0x0]['supports'][0x0]['type']==='Free\x20end'&&_0x409b5a['push'](_0x1172e8[0x0][_0x9cec14(0x102)]+_0x9cec14(0x103)+-_0x46a651[_0x9cec14(0x10c)](_0xacfc07=>_0xacfc07[_0x9cec14(0x117)]===_0x3bac55[0x0]['spanNo'])[_0x9cec14(0x122)+_0x3bac55[0x0][_0x9cec14(0x121)][0x1][_0x9cec14(0xe3)]+_0x3bac55[0x0]['supports'][0x0]['supportNo']]);_0x3bac55[_0x3bac55['length']-0x1][_0x9cec14(0x121)][0x1][_0x9cec14(0xdf)]===_0x9cec14(0xed)&&_0x409b5a['push'](_0x1172e8[_0x1172e8[_0x9cec14(0x10f)]-0x1][_0x9cec14(0xf6)]+_0x9cec14(0x103)+-_0x46a651['find'](_0x29c8f8=>_0x29c8f8[_0x9cec14(0x117)]===_0x3bac55[_0x3bac55[_0x9cec14(0x10f)]-0x1][_0x9cec14(0x117)])[_0x9cec14(0x122)+_0x3bac55[_0x3bac55['length']-0x1][_0x9cec14(0x121)][0x0][_0x9cec14(0xe3)]+_0x3bac55[_0x3bac55[_0x9cec14(0x10f)]-0x1][_0x9cec14(0x121)][0x1][_0x9cec14(0xe3)]]);for(let _0x3a405d=0x0;_0x3a405d<_0x1172e8[_0x9cec14(0x10f)]-0x1;_0x3a405d++){_0x409b5a[_0x9cec14(0xc4)](_0x1172e8[_0x3a405d][_0x9cec14(0xf6)]+_0x9cec14(0x111)+_0x1172e8[_0x3a405d+0x1][_0x9cec14(0x102)]+_0x9cec14(0x112));}return console[_0x9cec14(0xfe)](_0x9cec14(0xc5),_0x409b5a),_0x409b5a;}function solveEquations(_0x2b86b9){const _0x3e2009=_0x41bb,_0x26980f=JSON[_0x3e2009(0xfd)](JSON[_0x3e2009(0xda)](_0x2b86b9));let _0x314d38=nerdamer[_0x3e2009(0x107)](_0x26980f);return console['log'](_0x3e2009(0xca),_0x314d38),_0x314d38;}function addSolutionsToExpressions(_0x1197e4,_0x41f2dd){const _0x574b1f=_0x41bb,_0x44f79b=JSON[_0x574b1f(0xfd)](JSON[_0x574b1f(0xda)](_0x41f2dd));return _0x1197e4[_0x574b1f(0x114)](_0x3ec0c5=>{const _0x3a65c6=_0x574b1f;for(let _0x4f07fc=0x0;_0x4f07fc<_0x44f79b[_0x3a65c6(0x10f)];_0x4f07fc++){_0x44f79b[_0x4f07fc]['Mab']=_0x44f79b[_0x4f07fc][_0x3a65c6(0x102)][_0x3a65c6(0xf1)](_0x3ec0c5[0x0],_0x3ec0c5[0x1]),_0x44f79b[_0x4f07fc][_0x3a65c6(0xf6)]=_0x44f79b[_0x4f07fc]['Mba']['replace'](_0x3ec0c5[0x0],_0x3ec0c5[0x1]);}}),console[_0x574b1f(0xfe)](_0x574b1f(0x110),_0x44f79b),_0x44f79b;}function simplifyExpressions(_0x5689f1){const _0x47d350=_0x41bb,_0x5b002b=JSON[_0x47d350(0xfd)](JSON['stringify'](_0x5689f1));return _0x5b002b[_0x47d350(0x114)](_0x346ae3=>{const _0x55a3aa=_0x47d350;_0x346ae3[_0x55a3aa(0x102)]=nerdamer(_0x346ae3['Mab'])[_0x55a3aa(0xd0)]()['toString']();const _0x1186cd=_0x346ae3[_0x55a3aa(0x102)];_0x346ae3['Mab']=nerdamer(_0x346ae3[_0x55a3aa(0x102)]);_0x346ae3[_0x55a3aa(0x102)][_0x55a3aa(0xff)]()['toString']()==='1'?_0x346ae3[_0x55a3aa(0x102)]=_0x1186cd+_0x55a3aa(0xdc):_0x346ae3['Mab']=_0x1186cd+'\x20or\x20'+parseFloat(parseFloat(_0x346ae3[_0x55a3aa(0x102)][_0x55a3aa(0xea)]()['toString']())/parseFloat(_0x346ae3[_0x55a3aa(0x102)][_0x55a3aa(0xff)]()['toString']()))[_0x55a3aa(0xf7)](0x2)['toString']()+_0x55a3aa(0xdc);_0x346ae3[_0x55a3aa(0xf6)]=nerdamer(_0x346ae3['Mba'])['evaluate']()[_0x55a3aa(0xd2)]();const _0x2027ae=_0x346ae3[_0x55a3aa(0xf6)];_0x346ae3[_0x55a3aa(0xf6)]=nerdamer(_0x346ae3[_0x55a3aa(0xf6)]),_0x346ae3[_0x55a3aa(0xf6)][_0x55a3aa(0xff)]()[_0x55a3aa(0xd2)]()==='1'?_0x346ae3[_0x55a3aa(0xf6)]=_0x2027ae+_0x55a3aa(0xdc):_0x346ae3['Mba']=_0x2027ae+'\x20or\x20'+parseFloat(parseFloat(_0x346ae3[_0x55a3aa(0xf6)][_0x55a3aa(0xea)]()[_0x55a3aa(0xd2)]())/parseFloat(_0x346ae3['Mba']['denominator']()[_0x55a3aa(0xd2)]()))[_0x55a3aa(0xf7)](0x2)[_0x55a3aa(0xd2)]()+_0x55a3aa(0xdc);}),console[_0x47d350(0xfe)](_0x47d350(0x11f),_0x5b002b),_0x5b002b;}function addMemberEndMomentEquationsForFreeEndSpans(_0x32a89a,_0x2624ee,_0x2983ca){const _0xc10d88=_0x41bb,_0x1e7126=JSON[_0xc10d88(0xfd)](JSON[_0xc10d88(0xda)](_0x32a89a));return _0x2983ca[0x0][_0xc10d88(0x121)][0x0][_0xc10d88(0xdf)]===_0xc10d88(0xed)&&_0x1e7126[_0xc10d88(0xc8)]({'spanNo':_0x2983ca[0x0]['spanNo'],'Mab':'0','Mba':''+_0x2624ee['find'](_0x48de79=>_0x48de79[_0xc10d88(0x117)]===_0x2983ca[0x0][_0xc10d88(0x117)])['FEM'+_0x2983ca[0x0][_0xc10d88(0x121)][0x1]['supportNo']+_0x2983ca[0x0][_0xc10d88(0x121)][0x0][_0xc10d88(0xe3)]]+_0xc10d88(0xdc)}),_0x2983ca[_0x2983ca[_0xc10d88(0x10f)]-0x1][_0xc10d88(0x121)][0x1][_0xc10d88(0xdf)]==='Free\x20end'&&_0x1e7126[_0xc10d88(0xc4)]({'spanNo':_0x2983ca[_0x2983ca[_0xc10d88(0x10f)]-0x1][_0xc10d88(0x117)],'Mab':''+_0x2624ee[_0xc10d88(0x10c)](_0x1a99ce=>_0x1a99ce[_0xc10d88(0x117)]===_0x2983ca[_0x2983ca[_0xc10d88(0x10f)]-0x1][_0xc10d88(0x117)])[_0xc10d88(0x122)+_0x2983ca[_0x2983ca['length']-0x1][_0xc10d88(0x121)][0x0][_0xc10d88(0xe3)]+_0x2983ca[_0x2983ca[_0xc10d88(0x10f)]-0x1][_0xc10d88(0x121)][0x1]['supportNo']]+_0xc10d88(0xdc),'Mba':'0'}),console[_0xc10d88(0xfe)](_0xc10d88(0xd4),_0x1e7126),_0x1e7126;}function _0x54dc(){const _0x34d537=['Moi','defint((','push','Equations:','\x20*\x20(','innerHTML','unshift','\x20*\x20(2*θ','Solutions:','defint(','\x20*\x20x\x20*\x20(','.member-end-moments','Sorted\x20supports:','distributedLoads','evaluate','d-none','toString','<b\x20class=\x22fs-4\x22>EQUATIONS:</b>','Member\x20end\x20moment\x20equations\x20with\x20free\x20end\x20spans:','pow','\x20-\x203*','2681262RaAsAj','querySelector',')*(','stringify',',\x20M','kNm','beamLength','))\x20+\x20','type','start','.eliminated-known-variables',':</b>\x20M','supportNo','))\x20/\x20(','fw-bold','pointLoads','section','8234835ISsIlb','\x20+\x20θ','numerator','Eliminated\x20known\x20variables:','8yCksnl','Free\x20end','createElement','\x20*\x20(x\x20-\x20','Fixed','replace','\x20-\x20x)\x20*\x20x^2)/','Hinge','settlements','fs-5','Mba','toFixed','1310713dqhAuE','\x20-\x20','<b\x20class=\x22fs-4\x22>ELIMINATED\x20KNOWN\x20VARIABLES:</b>','Fixed\x20end\x20moments:','78795MRETUF','parse','log','denominator','-x)/(','.rotations','Mab','\x20=\x20','Coefficient','location','^2,\x20','solveEquations','8996448TFOYJm','Supports\x20with\x20free\x20ends:','YoungMod','end','find','remove','Spans:','length','Member\x20end\x20moment\x20equations\x20with\x20solutions:','\x20+\x20','\x20=\x200','startMag','forEach','17734648zUMLpe','add','spanNo','<br><b>','Roller',')/(','text','.equations','9630124pFLvTO','Member\x20end\x20moment\x20expressions:','Simplified\x20member\x20end\x20moment\x20equations:','Recalibrated\x20supports:','supports','FEM','filter','<b\x20class=\x22fs-4\x22>MEMBER\x20END\x20MOMENT\x20EXPRESSIONS:</b>','θ<sub>$1</sub>','\x20+\x202*','position','magnitude','.fixed-end-moments','endMag','\x20-\x20x)^2)/','moments','\x20-\x20x)/(','appendChild','classList','.member-end-moment-equations','Received\x20parameters:'];_0x54dc=function(){return _0x34d537;};return _0x54dc();}function addSpanNumbersToMemberEndMomentEquations(_0x1dadf6){const _0x2f2d8e=_0x41bb,_0x431e20=JSON[_0x2f2d8e(0xfd)](JSON['stringify'](_0x1dadf6));return _0x431e20['forEach'](_0x389c5b=>{const _0x48e1af=_0x2f2d8e;_0x389c5b['M'+_0x389c5b['spanNo']+(_0x389c5b[_0x48e1af(0x117)]+0x1)]=_0x389c5b['Mab'],_0x389c5b['M'+(_0x389c5b[_0x48e1af(0x117)]+0x1)+_0x389c5b[_0x48e1af(0x117)]]=_0x389c5b[_0x48e1af(0xf6)],delete _0x389c5b[_0x48e1af(0x102)],delete _0x389c5b['Mba'];}),console['log']('Member\x20end\x20moment\x20equations\x20with\x20span\x20numbers:',_0x431e20),_0x431e20;}function displayFixedEndMoments(_0x1d9255){const _0x1b4b21=_0x41bb;let _0x944af7='<b\x20class=\x22fs-4\x22>FIXED\x20END\x20MOMENTS:</b>';_0x1d9255[_0x1b4b21(0x114)](_0x35cc58=>{const _0x45050b=_0x1b4b21;_0x944af7+=_0x45050b(0x118)+_0x35cc58[_0x45050b(0x117)]+':</b>\x20FEM'+_0x35cc58[_0x45050b(0x117)]+(_0x35cc58[_0x45050b(0x117)]+0x1)+_0x45050b(0x103)+_0x35cc58['FEM'+_0x35cc58[_0x45050b(0x117)]+(_0x35cc58[_0x45050b(0x117)]+0x1)]+'kNm,\x20FEM'+(_0x35cc58[_0x45050b(0x117)]+0x1)+_0x35cc58[_0x45050b(0x117)]+_0x45050b(0x103)+_0x35cc58[_0x45050b(0x122)+(_0x35cc58['spanNo']+0x1)+_0x35cc58['spanNo']]+'kNm';});const _0x1ed2a1=document[_0x1b4b21(0xee)]('p');return _0x1ed2a1[_0x1b4b21(0xc7)]=_0x944af7,_0x1ed2a1['classList'][_0x1b4b21(0x116)]('fw-bold'),_0x1ed2a1[_0x1b4b21(0x12f)][_0x1b4b21(0x116)](_0x1b4b21(0xf5)),document['querySelector'](_0x1b4b21(0x129))[_0x1b4b21(0x12e)](_0x1ed2a1),document[_0x1b4b21(0xd8)](_0x1b4b21(0x129))[_0x1b4b21(0x12f)][_0x1b4b21(0x10d)](_0x1b4b21(0xd1)),_0x944af7;}function displayMemberEndMomentExpressions(_0x183f6e){const _0x1b54bb=_0x41bb,_0x4c0860=JSON['parse'](JSON[_0x1b54bb(0xda)](_0x183f6e));let _0x1ea047=_0x1b54bb(0x124);_0x4c0860['forEach'](_0x30218b=>{const _0x13e5d4=_0x1b54bb;_0x30218b[_0x13e5d4(0x102)]=_0x30218b['Mab'][_0x13e5d4(0xf1)](/θ(\d+)/g,'θ<sub>$1</sub>'),_0x30218b[_0x13e5d4(0xf6)]=_0x30218b['Mba']['replace'](/θ(\d+)/g,_0x13e5d4(0x125)),_0x1ea047+=_0x13e5d4(0x118)+_0x30218b[_0x13e5d4(0x117)]+_0x13e5d4(0xe2)+_0x30218b[_0x13e5d4(0x117)]+(_0x30218b[_0x13e5d4(0x117)]+0x1)+'\x20=\x20'+_0x30218b[_0x13e5d4(0x102)]+',\x20M'+(_0x30218b[_0x13e5d4(0x117)]+0x1)+_0x30218b[_0x13e5d4(0x117)]+_0x13e5d4(0x103)+_0x30218b['Mba'];});const _0x275ef4=document['createElement']('p');return _0x275ef4['innerHTML']=_0x1ea047,_0x275ef4[_0x1b54bb(0x12f)][_0x1b54bb(0x116)]('fw-bold'),_0x275ef4[_0x1b54bb(0x12f)][_0x1b54bb(0x116)]('fs-5'),document[_0x1b54bb(0xd8)](_0x1b54bb(0x130))[_0x1b54bb(0x12e)](_0x275ef4),document['querySelector'](_0x1b54bb(0x130))[_0x1b54bb(0x12f)]['remove'](_0x1b54bb(0xd1)),_0x1ea047;}function displayMemberEndMomentExpressionsWithEliminatedKnowns(_0x4441e9){const _0x56ad22=_0x41bb,_0x274af7=JSON[_0x56ad22(0xfd)](JSON[_0x56ad22(0xda)](_0x4441e9));let _0x5c6171=_0x56ad22(0xfa);_0x274af7[_0x56ad22(0x114)](_0x524b7e=>{const _0x539c6d=_0x56ad22;_0x524b7e['Mab']=_0x524b7e[_0x539c6d(0x102)][_0x539c6d(0xf1)](/θ(\d+)/g,_0x539c6d(0x125)),_0x524b7e[_0x539c6d(0xf6)]=_0x524b7e[_0x539c6d(0xf6)][_0x539c6d(0xf1)](/θ(\d+)/g,_0x539c6d(0x125)),_0x5c6171+=_0x539c6d(0x118)+_0x524b7e[_0x539c6d(0x117)]+':</b>\x20M'+_0x524b7e[_0x539c6d(0x117)]+(_0x524b7e['spanNo']+0x1)+'\x20=\x20'+_0x524b7e[_0x539c6d(0x102)]+_0x539c6d(0xdb)+(_0x524b7e[_0x539c6d(0x117)]+0x1)+_0x524b7e[_0x539c6d(0x117)]+_0x539c6d(0x103)+_0x524b7e[_0x539c6d(0xf6)];});const _0x22ed82=document['createElement']('p');return _0x22ed82['innerHTML']=_0x5c6171,_0x22ed82['classList'][_0x56ad22(0x116)](_0x56ad22(0xe5)),_0x22ed82[_0x56ad22(0x12f)][_0x56ad22(0x116)](_0x56ad22(0xf5)),document[_0x56ad22(0xd8)]('.eliminated-known-variables')['appendChild'](_0x22ed82),document[_0x56ad22(0xd8)](_0x56ad22(0xe1))[_0x56ad22(0x12f)]['remove'](_0x56ad22(0xd1)),_0x5c6171;}function displayEquations(_0x5c7271){const _0x30b78e=_0x41bb,_0x5bfd39=JSON[_0x30b78e(0xfd)](JSON[_0x30b78e(0xda)](_0x5c7271));let _0x8ffa7c=_0x30b78e(0xd3);_0x5bfd39[_0x30b78e(0x114)](_0x2bb9c7=>{const _0x862af1=_0x30b78e;_0x2bb9c7=_0x2bb9c7[_0x862af1(0xf1)](/θ(\d+)/g,_0x862af1(0x125)),_0x8ffa7c+='<br>'+_0x2bb9c7;});const _0x142442=document[_0x30b78e(0xee)]('p');return _0x142442[_0x30b78e(0xc7)]=_0x8ffa7c,_0x142442[_0x30b78e(0x12f)][_0x30b78e(0x116)](_0x30b78e(0xe5)),_0x142442[_0x30b78e(0x12f)][_0x30b78e(0x116)](_0x30b78e(0xf5)),document[_0x30b78e(0xd8)](_0x30b78e(0x11c))['appendChild'](_0x142442),document[_0x30b78e(0xd8)](_0x30b78e(0x11c))[_0x30b78e(0x12f)][_0x30b78e(0x10d)](_0x30b78e(0xd1)),_0x8ffa7c;}function displaySolutions(_0x2b94b1){const _0x4d7676=_0x41bb;let _0x1a3ea4='<b\x20class=\x22fs-4\x22>ROTATIONS:</b>';_0x2b94b1['forEach'](_0x22bf27=>{const _0xf7710e=_0x41bb;_0x22bf27[0x0]=_0x22bf27[0x0]['replace'](/θ(\d+)/g,'θ<sub>$1</sub>'),_0x1a3ea4+=_0xf7710e(0x118)+_0x22bf27[0x0]+_0xf7710e(0x103)+_0x22bf27[0x1]+'</b>';});const _0x90e459=document[_0x4d7676(0xee)]('p');return _0x90e459[_0x4d7676(0xc7)]=_0x1a3ea4,_0x90e459[_0x4d7676(0x12f)][_0x4d7676(0x116)](_0x4d7676(0xf5)),document[_0x4d7676(0xd8)](_0x4d7676(0x101))['appendChild'](_0x90e459),document[_0x4d7676(0xd8)](_0x4d7676(0x101))[_0x4d7676(0x12f)]['remove'](_0x4d7676(0xd1)),_0x1a3ea4;}function displayMemberEndMoments(_0x90ce42){const _0x17075f=_0x41bb;let _0x1733af='<b\x20class=\x22fs-4\x22>MEMBER\x20END\x20MOMENTS:</b>';_0x90ce42[_0x17075f(0x114)](_0x458b77=>{const _0x4ba889=_0x17075f;_0x1733af+=_0x4ba889(0x118)+_0x458b77[_0x4ba889(0x117)]+_0x4ba889(0xe2)+_0x458b77['spanNo']+(_0x458b77[_0x4ba889(0x117)]+0x1)+_0x4ba889(0x103)+_0x458b77['M'+_0x458b77[_0x4ba889(0x117)]+(_0x458b77[_0x4ba889(0x117)]+0x1)]+_0x4ba889(0xdb)+(_0x458b77[_0x4ba889(0x117)]+0x1)+_0x458b77[_0x4ba889(0x117)]+_0x4ba889(0x103)+_0x458b77['M'+(_0x458b77['spanNo']+0x1)+_0x458b77[_0x4ba889(0x117)]];});const _0x4db0a0=document['createElement']('p');return _0x4db0a0[_0x17075f(0xc7)]=_0x1733af,_0x4db0a0[_0x17075f(0x12f)][_0x17075f(0x116)]('fs-5'),document[_0x17075f(0xd8)]('.member-end-moments')[_0x17075f(0x12e)](_0x4db0a0),document['querySelector'](_0x17075f(0xcd))[_0x17075f(0x12f)][_0x17075f(0x10d)](_0x17075f(0xd1)),_0x1733af;}
+// The file contains the main calculations for the beam analysis
+
+// the format of the received parameters is as follows
+// 1.) Beam Length {float}
+// 2.) Supports {array of support objects} e.g
+// [{supportNo: 1, type: 'Roller', location: 0},{supportNo: 2, type: 'Hinge', location: 6},{supportNo: 3, type: 'Fixed', location: 12}]
+// 3.) Sections {array  of section objects for each span(the rest of the section objects inherit the Moi and YoungMod properties of the first section object in the array)}
+// [{Moi: null or value, YoungMod: null, Coefficient: 1},{Moi: null or value, YoungMod: null, Coefficient: 1}]
+// 4.) Settlement {array of settlement values(non-negative) for each support}
+// [12, 34, 23]
+// 5.) pointLoads { array of point Load objects(non negative magnitude)}
+// [{location: 0, magnitude: 12}, {location: 6, magnitude: 5}, {location: 12, magnitude: 24}]
+// 6.) distributedLoads {array of distributed Load objects(non negative magnitude)}
+// [{start: 3, end: 4, startMag: 15, endMag: 15},{start: 6, end: 8, startMag: 12, endMag: 0},
+// {start: 0, end: 2, startMag: 30, endMag: 10}]
+// 7.) Moments {array of moment objects(either positive or negative magnitude)}
+// [{position: 12, magnitude: 19},{position: 10, magnitude: -12}]
+// 8.) noOfSpans {a calculated no of spans}
+
+// create a doc for the received parameters
+/**
+ * @param {float} beamLength
+ * @param {array} supports
+ * @param {array} sections
+ * @param {array} settlements
+ * @param {array} pointLoads
+ * @param {array} distributedLoads
+ * @param {array} moments
+ * @param {int} noOfSpans
+ */
+let receivedParameters;
+
+export function setParameters(params) {
+  receivedParameters = params;
+  console.log("Received parameters:", receivedParameters);
+  // Perform further processing with the received parameters
+  addFreeEndSupports();
+  recalibrateSupports();
+  const spans = splitBeamIntoSpans();
+  const FixedEndMoments = calculateFixedEndMoments(spans);
+  let expressionsArray = generateMemberEndMomentExpressions(spans, FixedEndMoments);
+  const expressionsWithEliminatedknowns = eliminateKnownVariables(expressionsArray, spans);
+  const Equations = createEquations(expressionsWithEliminatedknowns, spans, FixedEndMoments);
+  const solution = solveEquations(Equations);
+  const expressionsWithSolutions = addSolutionsToExpressions(solution, expressionsWithEliminatedknowns);
+  const expressionsSimplified = simplifyExpressions(expressionsWithSolutions);
+  const expressionsWithFreeEndSpan = addMemberEndMomentEquationsForFreeEndSpans(expressionsSimplified, FixedEndMoments, spans);
+  const expressionsFinal = addSpanNumbersToMemberEndMomentEquations(expressionsWithFreeEndSpan);
+  displayMemberEndMoments(expressionsFinal);
+  displayFixedEndMoments(FixedEndMoments);
+  displayMemberEndMomentExpressions(expressionsArray);
+  displayMemberEndMomentExpressionsWithEliminatedKnowns(expressionsWithEliminatedknowns);
+  displayEquations(Equations);
+  displaySolutions(solution);
+}
+
+// function to add free end supports to the supports array
+// works on the support object such that if the location of the first support is not 0, 
+// then add a new support object at location 0 with type 'Free end', and if the location 
+// of the last support is not equal to the beam length, then add a new support object at the beam length with type 'Free end'
+// The function returns the modified supports array
+// The function also adds the corresponding settlement value to the settlements array
+function addFreeEndSupports() {
+  let supports = receivedParameters.supports;
+  let beamLength = receivedParameters.beamLength;
+  let settlements = receivedParameters.settlements;
+  if (supports[0].location !== 0) {
+    supports.unshift({ supportNo: 0, type: 'Free end', location: 0 });
+    settlements.unshift(0);
+  }
+  if (supports[supports.length - 1].location !== beamLength) {
+    supports.push({ supportNo: supports.length + 1, type: 'Free end', location: beamLength });
+    settlements.push(0);
+  }
+  console.log("Supports with free ends:", supports);
+  return supports;
+}
+
+// function to recalibrate the supports array
+// it changes the supportNo property of each support object in the supports array, such that the supportNo property of the first support object is 1 and the supportNo property of the last support object is equal to the length of the supports array
+function recalibrateSupports() {
+  let supports = receivedParameters.supports;
+  supports.forEach((support, index) => {
+    support.supportNo = index + 1;
+  });
+  console.log("Recalibrated supports:", supports);
+}
+
+// S P L I T T I N G  B E A M S  I N T O  S P A N S
+
+// The function splits the beam into spans
+// The function returns an array of spans
+// Each span is an object with the following properties
+// 1.) spanNo {int} - the span number
+// 2.) start {float} - the start location of the span
+// 3.) end {float} - the end location of the span
+// 4.) length {float} - the length of the span
+// 5.) supports {array} - the supports in the span e.g [{supportNo: 1, type: 'Roller', location: 0},{supportNo: 2, type: 'Hinge', location: 6}] or [{supportNo: 1, type: 'Free end', location: 0},{supportNo: 2, type: 'Hinge', location: 6}, {supportNo: 3, type: 'Fixed', location: 12}]
+// 6.) section of the span {object} - the section object of the span e.g {Moi: null or value, YoungMod: null, Coefficient: 1}
+// 7.) settlements of the supports {array} - the settlements of the supports in the span e.g [12, 34]
+// 8.) pointLoads in the span {array} - the point loads in the span e.g [{location: 0, magnitude: 12}, {location: 6, magnitude: 5}]
+// 9.) distributedLoads in the span {array} - the distributed loads in the span e.g [{start: 3, end: 4, startMag: 15, endMag: 15},{start: 6, end: 8, startMag: 12, endMag: 0}]
+// 10.) moments in the span {array} - the moments in the span e.g [{position: 12, magnitude: 19},{position: 10, magnitude: -12}]
+// Note that: each span has varying length so it is important to calculate the length of each span by using the supports in the span
+
+// The function also filters the point loads, distributed loads and moments in the span
+
+// There are five cases to consider when filtering the distributed loads in the span
+// 1.) The start and end of the distributed load are within the span, if so then include the distributed load in the span
+// 2.) The start of the distributed load is within the span and the end is outside the span, if so change the end of the distributed load to the end of the span and include the distributed load in the span, for varying distributed loads, calculate the magnitude at the end of the span
+// 3.) The start of the distributed load is outside the span and the end is within the span, if so change the start of the distributed load to the start of the span and include the distributed load in the span, for varying distributed loads, calculate the magnitude at the start of the span
+// 4.) The start and end of the distributed load are outside the span, if so then exclude the distributed load from the span
+// 5.) The start and end of the distributed load are outside the span, but the span length falls within the start and end of the distributed load, if so change the start and end of the distributed load to the start and end of the span and include the distributed load in the span and calculate the magnitude at the start and end of the span for varying distributed loads
+
+
+function splitBeamIntoSpans() {
+  let beamLength = receivedParameters.beamLength;
+  let supports = receivedParameters.supports;
+  let sections = receivedParameters.sections;
+  let settlements = receivedParameters.settlements;
+  let pointLoads = receivedParameters.pointLoads;
+  let distributedLoads = receivedParameters.distributedLoads;
+  let moments = receivedParameters.moments;
+  let noOfSpans = receivedParameters.noOfSpans;
+  let spans = [];
+
+  // sort the supports array in ascending order of location
+  supports.sort((a, b) => a.location - b.location);
+  console.log("Sorted supports:", supports);
+  console.log(noOfSpans);
+
+  for (let i = 0; i < noOfSpans; i++) {
+    let span = {};
+    span.spanNo = i + 1;
+    span.start = supports[i].location;
+    span.end = supports[i + 1].location;
+    span.length = span.end - span.start;
+    span.supports = [supports[i], supports[i + 1]];
+    span.section = sections[i];
+    span.settlements = [settlements[i], settlements[i + 1]];
+    // filter the point loads in the span
+    span.pointLoads = pointLoads.filter((load) => load.location >= span.start && load.location <= span.end);
+
+    // filter the distributed loads in the span
+    span.distributedLoads = distributedLoads.map((load) => {
+      if (load.start >= span.start && load.end <= span.end) {
+        return load;
+      } else if (load.start >= span.start && load.end > span.end && load.start < span.end) {
+        const newLoad = { ...load };
+        newLoad.end = span.end;
+        if (newLoad.startMag !== newLoad.endMag) {
+          if (newLoad.startMag < newLoad.endMag) {
+            if (newLoad.startMag === 0) {
+              const x2 = load.end - load.start;
+              const x1 = newLoad.end - load.start;
+              const y2 = newLoad.endMag;
+              const y1 = (x1 * y2) / x2;
+              newLoad.endMag = y1;
+            } else {
+              const x2 = load.end - load.start;
+              const x1 = newLoad.end - load.start;
+              const y2 = newLoad.endMag - newLoad.startMag;
+              const y1 = (x1 * y2) / x2;
+              newLoad.endMag = newLoad.startMag + y1;
+            }
+          }
+          if (newLoad.startMag > newLoad.endMag) {
+            if (newLoad.endMag === 0) {
+              const x2 = load.end - load.start;
+              const x1 = load.end - newLoad.end;
+              const y2 = newLoad.startMag;
+              const y1 = (x1 * y2) / x2;
+              newLoad.endMag = y1;
+            } else {
+              const x2 = load.end - load.start;
+              const x1 = load.end - newLoad.end;
+              const y2 = newLoad.startMag - newLoad.endMag;
+              const y1 = (x1 * y2) / x2;
+              newLoad.endMag = newLoad.endMag + y1;
+            }
+          }
+        }
+        return newLoad;
+      } else if (load.start < span.start && load.end <= span.end && load.end > span.start) {
+        const newLoad = { ...load };
+        newLoad.start = span.start;
+        if (newLoad.startMag !== newLoad.endMag) {
+          if (newLoad.startMag < newLoad.endMag) {
+            if (newLoad.startMag === 0) {
+              const x2 = load.end - load.start;
+              const x1 = newLoad.start - load.start;
+              const y2 = newLoad.endMag;
+              const y1 = (x1 * y2) / x2;
+              newLoad.startMag = y1;
+            } else {
+              const x2 = load.end - load.start;
+              const x1 = newLoad.start - load.start;
+              const y2 = newLoad.endMag - newLoad.startMag;
+              const y1 = (x1 * y2) / x2;
+              newLoad.startMag = newLoad.startMag + y1;
+            }
+          }
+          if (newLoad.startMag > newLoad.endMag) {
+            if (newLoad.endMag === 0) {
+              const x2 = load.end - load.start;
+              const x1 = load.end - newLoad.start;
+              const y2 = newLoad.startMag;
+              const y1 = (x1 * y2) / x2;
+              newLoad.startMag = y1;
+            } else {
+              const x2 = load.end - load.start;
+              const x1 = load.end - newLoad.start;
+              const y2 = newLoad.startMag - newLoad.endMag;
+              const y1 = (x1 * y2) / x2;
+              newLoad.startMag = newLoad.endMag + y1;
+            }
+          }
+        }
+        return newLoad;
+      } else if (load.start < span.start && load.end > span.end && load.start < span.end) {
+        const newLoad = { ...load };
+        newLoad.start = span.start;
+        newLoad.end = span.end;
+        if (newLoad.startMag !== newLoad.endMag) {
+          if (newLoad.startMag < newLoad.endMag) {
+            if (newLoad.startMag === 0) {
+              const x1a = newLoad.start - load.start;
+              const x1b = newLoad.end - load.start;
+              const x2 = load.end - load.start;
+              const y2 = newLoad.endMag;
+              const y1a = (x1a * y2) / x2;
+              const y1b = (x1b * y2) / x2;
+              newLoad.startMag = y1a;
+              newLoad.endMag = y1b;
+            } else {
+              const x1a = newLoad.start - load.start;
+              const x1b = newLoad.end - load.start;
+              const x2 = load.end - load.start;
+              const y2 = newLoad.endMag - newLoad.startMag;
+              const y1a = (x1a * y2) / x2;
+              const y1b = (x1b * y2) / x2;
+              newLoad.endMag = newLoad.startMag + y1b;
+              newLoad.startMag = newLoad.startMag + y1a;
+            }
+          }
+          if (newLoad.startMag > newLoad.endMag) {
+            if (newLoad.endMag === 0) {
+              const x1a = load.end - newLoad.end
+              const x1b = load.end - newLoad.start;
+              const x2 = load.end - load.start;
+              const y2 = newLoad.startMag;
+              const y1a = (x1a * y2) / x2;
+              const y1b = (x1b * y2) / x2;
+              newLoad.startMag = y1b;
+              newLoad.endMag = y1a;
+            } else {
+              const x1a = load.end - newLoad.end;
+              const x1b = load.end - newLoad.start;
+              const x2 = load.end - load.start;
+              const y2 = newLoad.startMag - newLoad.endMag;
+              const y1a = (x1a * y2) / x2;
+              const y1b = (x1b * y2) / x2;
+              newLoad.startMag = newLoad.endMag + y1b;
+              newLoad.endMag = newLoad.endMag + y1a;
+            }
+          }
+        }
+        return newLoad;
+      }
+    });
+    span.moments = moments.filter((moment) => moment.position >= span.start && moment.position <= span.end);
+    spans.push(span);
+  }
+  console.log("Spans:", spans);
+  return spans;
+}
+
+// F I X E D  E N D  M O M E N T S  C A L C U L A T I O N S  I N T E G R A T I O N  and  S U P E R P O S I T I O N 
+
+// The function calculates the fixed end moments for each span
+
+// The function returns an array of fixed end moments objects for each span in the beam. E.g [{spanNo: 1, M+"{span.supports[0].supportNo}"+"span.{supports[1].supportNo}": 12, M+"{span.supports[1].supportNo}"+"span.{supports[0].supportNo}": -12}, {spanNo: 2, M+"{span.supports[0].supportNo}"+"span.{supports[1].supportNo}": 12, M+"{span.supports[1].supportNo}"+"span.{supports[0].supportNo}": -12}]
+// The fixed end moments are calculated using the following steps
+// 1.) check if the span has a free end support, if so then calculate the fixed end moment for the spans with a free end, if span has no free end support then calculate the fixed end moments for the spans with fixed end supports
+
+// create a template for the function to calculate the fixed end moments
+
+
+function calculateFixedEndMoments(spans) {
+  let femArray = [];
+  spans.forEach((span) => {
+    if (span.supports[0].type === 'Free end' || span.supports[1].type === 'Free end') {
+      // calculate the fixed end moments for the spans with a free end
+      if (span.supports[0].type === 'Free end') {
+        femArray.push(calculateFixedEndMomentsForLeftFreeEndSpans(span));
+      } else {
+        femArray.push(calculateFixedEndMomentsForRightFreeEndSpans(span));
+      }
+    } else {
+      // calculate the fixed end moments for the spans with fixed end supports
+      femArray.push(calculateFixedEndMomentsForFixedEndSpans(span));
+    }
+
+  });
+  console.log("Fixed end moments:", femArray);
+  return femArray;
+}
+
+// function to calculate the fixed end moments for the spans with a free end support at the left end
+// The function returns an object with the fixed end moments for the span
+// The object has the following properties which differs from the other fixed end moments objects, by the fact that the span has a free end support at the left end and at that end, the fixed end moment is zero
+// 1.) spanNo {int} - the span number
+// 2.) FEM+"{span.supports[1].supportNo}"+"span.{supports[0].supportNo} {float} - the fixed end moment at the right end of the span
+// It is found for the following loading conditions for every load in the span
+// 1.) point loads - the fixed end moment is equal to the magnitude of the point load multiplied by the distance from the point load to the right end of the span
+// 2.) distributed loads - the fixed end moment is equal to the area of the distributed load diagram multiplied by the distance from the centroid of the distributed load diagram to the right end of the span
+// 3.) moments - the fixed end moment is given by a formula to be provided later
+function calculateFixedEndMomentsForLeftFreeEndSpans(span) {
+  let fem = {};
+  fem.spanNo = span.spanNo;
+  fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] = 0;
+  span.pointLoads.forEach((load) => {
+    fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -(load.magnitude * (span.end - load.location));
+  });
+  span.distributedLoads.forEach((load) => {
+    if (load) {
+      if (load.startMag === load.endMag) {
+        const midLoadpoint = (load.start + load.end) / 2;
+        const midLoadToEnd = span.end - midLoadpoint;
+        fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -(load.startMag * midLoadToEnd * (load.end - load.start));
+      } else {
+        if (load.startMag < load.endMag) {
+          if (load.startMag === 0) {
+            const base = load.end - load.start;
+            const height = load.endMag;
+            const area = (base * height) / 2;
+            const centroid = (1 / 3 * base) + (span.end - load.end);
+            fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -(area * centroid);
+          } else {
+            const base = load.end - load.start;
+            const triheight = load.endMag - load.startMag;
+            const recheight = load.startMag;
+            const triarea = (base * triheight) / 2;
+            const recarea = base * recheight;
+            const tricentroid = (1 / 3 * base) + (span.end - load.end);
+            const reccentroid = (1 / 2 * base) + (span.end - load.end);
+            fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -((triarea * tricentroid) + (recarea * reccentroid));
+          }
+
+        }
+        if (load.startMag > load.endMag) {
+          if (load.endMag === 0) {
+            const base = load.end - load.start;
+            const height = load.startMag;
+            const area = (base * height) / 2;
+            const centroid = (2 / 3 * base) + (span.end - load.end);
+            fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -(area * centroid);
+          } else {
+            const base = load.end - load.start;
+            const triheight = load.startMag - load.endMag;
+            const recheight = load.endMag;
+            const triarea = (base * triheight) / 2;
+            const recarea = base * recheight;
+            const tricentroid = (2 / 3 * base) + (span.end - load.end);
+            const reccentroid = (1 / 2 * base) + (span.end - load.end);
+            fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -((triarea * tricentroid) + (recarea * reccentroid));
+          }
+        }
+      }
+    }
+
+  });
+  span.moments.forEach((moment) => {
+    fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += moment.magnitude;
+  });
+  return fem;
+}
+
+// function to calculate the fixed end moments for the spans with a free end support at the right end
+// The function returns an object with the fixed end moments for the span
+// The object has the following properties which differs from the other fixed end moments objects, by the fact that the span has a free end support at the right end and at that end, the fixed end moment is zero
+// 1.) spanNo {int} - the span number
+// 2.) M+"{span.supports[0].supportNo}"+"span.{supports[1].supportNo} {float} - the fixed end moment at the left end of the span
+// It is found for the following loading conditions for every load in the span
+// 1.) point loads - the fixed end moment is equal to the magnitude of the point load multiplied by the distance from the point load to the left end of the span
+// 2.) distributed loads - the fixed end moment is equal to the area of the distributed load diagram multiplied by the distance from the centroid of the distributed load diagram to the left end of the span
+// 3.) moments - the fixed end moment is given by a formula to be provided later
+
+function calculateFixedEndMomentsForRightFreeEndSpans(span) {
+  let fem = {};
+  fem.spanNo = span.spanNo;
+  fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] = 0;
+  span.pointLoads.forEach((load) => {
+    fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (load.magnitude * (load.location - span.start));
+  });
+  span.distributedLoads.forEach((load) => {
+    if (load) {
+      if (load.startMag === load.endMag) {
+        const midLoadpoint = (load.start + load.end) / 2;
+        const midLoadToEnd = midLoadpoint - span.start;
+        fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (load.startMag * midLoadToEnd * (load.end - load.start));
+      } else {
+        if (load.startMag < load.endMag) {
+          if (load.startMag === 0) {
+            const base = load.end - load.start;
+            const height = load.endMag;
+            const area = (base * height) / 2;
+            const centroid = (2 / 3 * base) + (load.start - span.start);
+            fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (area * centroid);
+          } else {
+            const base = load.end - load.start;
+            const triheight = load.endMag - load.startMag;
+            const recheight = load.startMag;
+            const triarea = (base * triheight) / 2;
+            const recarea = base * recheight;
+            const tricentroid = (2 / 3 * base) + (load.start - span.start);
+            const reccentroid = (1 / 2 * base) + (load.start - span.start);
+            fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += ((triarea * tricentroid) + (recarea * reccentroid));
+          }
+
+        }
+        if (load.startMag > load.endMag) {
+          if (load.endMag === 0) {
+            const base = load.end - load.start;
+            const height = load.startMag;
+            const area = (base * height) / 2;
+            const centroid = (1 / 3 * base) + (load.start - span.start);
+            console.log(area, centroid); // remove later
+            fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (area * centroid);
+          }
+          else {
+            const base = load.end - load.start;
+            const triheight = load.startMag - load.endMag;
+            const recheight = load.endMag;
+            const triarea = (base * triheight) / 2;
+            const recarea = base * recheight;
+            const tricentroid = (1 / 3 * base) + (load.start - span.start);
+            const reccentroid = (1 / 2 * base) + (load.start - span.start);
+            fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += ((triarea * tricentroid) + (recarea * reccentroid));
+          }
+        }
+      }
+    }
+  }
+  );
+  span.moments.forEach((moment) => {
+    fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += moment.magnitude;
+  });
+  return fem;
+}
+
+// function to calculate the fixed end moments for the spans with no free end supports at both ends, in this case the fixed end moments are calculated for the following loading conditions for every load in the span
+// 1.) point Loads - is done by the formula to be provided later
+// 2.) distributed loads - is done by integrating each elemental load of the distributed load diagram to find the fixed end moment, integration to be done using the nerdamer.js library
+// 3.) moments - the fixed end moment is given by a formula to be provided later
+
+function calculateFixedEndMomentsForFixedEndSpans(span) {
+  let fem = {};
+  fem.spanNo = span.spanNo;
+  fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] = 0;
+  fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] = 0;
+  span.pointLoads.forEach((load) => {
+    // each point load has a fixed end moment at both ends of the span,
+    // for the left end (i.e M12) the formula is given by the following formula, M12 = +((P * a * b^2)/l^2)
+    // for the right end (i.e M21) the formula is given by the following formula, M21 = -((P * b * a^2)/l^2)
+    // where P is the magnitude of the point load, a is the distance from the point load to the left end of the span, b is the distance from the point load to the right end of the span, and l is the length of the span
+    const a = load.location - span.start;
+    const b = span.end - load.location;
+    const l = span.length;
+    const p = load.magnitude;
+    fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += ((p * a * b * b) / (l * l));
+    fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -((p * b * a * a) / (l * l));
+  });
+  span.distributedLoads.forEach((load) => {
+    if (load) {
+      if (load.startMag === load.endMag) {
+        // for distributed loads we are taking an integral approach based on the formulas using the pointLoads approach
+        // to find the left end (i.e M12), we take the integral of the expression ((y* x * (l-x)^2)/l^2) from a to b, where y is the elemental load, x is the distance from the left end of the span, l is the length of the span, a is the start of the distributed load, and b is the end of the distributed load.
+        // for the right end (i.e M21), we take the negative of the integral of the expression ((y * (l-x) * x^2)/l^2) from a to b, where y is the elemental load, x is the distance from the left end of the span, l is the length of the span, a is the start of the distributed load, and b is the end of the distributed load.
+        // for udl, y = pdx, where p is the magnitude of the udl, and dx is the elemental load
+        const a = load.start - span.start;
+        const b = load.end - span.start;
+        const l = span.length;
+        const p = load.startMag;
+        // using the nerdamer library instead to integrate the expression
+        // syntax: nerdamer('defint(e^(cos(x)), 1, 2)');
+
+        const expressionLeft = `(${p} * x * (${l} - x)^2)/${l}^2`;
+        console.log(expressionLeft);
+        const integralforleftFEM = parseFloat(nerdamer(`defint(${expressionLeft}, ${a}, ${b})`).text());
+        fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+        const expressionRight = `(${p} * (${l} - x) * x^2)/${l}^2`;
+        const integralforrightFEM = parseFloat(nerdamer(`defint(${expressionRight}, ${a}, ${b})`).text());
+        fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+      }
+      if (load.startMag < load.endMag) {
+        if (load.startMag === 0) {
+          // for varying distributed loads, we are taking an integral approach based on the formulas using the pointLoads approach also
+          // for vdl, y is found by the equation of the line y = mx + c.
+          // to find the equation for load.startMag < load.endMag, we use the expression(derived from similar triangles) y = (p*(x - a))/(b - a), where p is endMag of the vdl, x is the distance from the left end of the span(variable), a is the distance to the start of the distributed load, and b is distance to the end of the distributed load.
+          // find y in terms of x,
+          // for the left end (i.e M12), we take the integral of the expression ((y* x * (l-x)^2)/l^2) from a to b, where y is the elemental load, x is the distance from the left end of the span, l is the length of the span, a is the start of the distributed load, and b is the end of the distributed load.
+          // for the right end (i.e M21), we take the negative of the integral of the expression ((y * (l-x) * x^2)/l^2) from a to b, where y is the elemental load, x is the distance from the left end of the span, l is the length of the span, a is the start of the distributed load, and b is the end of the distributed load.
+          const a = load.start - span.start;
+          const b = load.end - span.start;
+          const l = span.length;
+          const p = load.endMag;
+          const expression = `(${p} * (x - ${a})) / (${b} - ${a})`;
+          console.log(expression);
+          const integralforleftFEM = parseFloat(nerdamer(`defint((${expression} * x * (${l} - x)^2)/${l}^2, ${a}, ${b})`).text());
+          fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+          const integralforrightFEM = parseFloat(nerdamer(`defint((${expression} * (${l} - x) * x^2)/${l}^2, ${a}, ${b})`).text());
+          fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+
+          // const simplifiedExpression = math.simplify(expression);
+          // const integralforleftFEM = math.integral(`((${simplifiedExpression} * x * (${l} - x)^2)/${l}^2)`, 'x', a, b);
+          // fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+          // const integralforrightFEM = math.integral(`((${simplifiedExpression} * (${l} - x) * x^2)/${l}^2)`, 'x', a, b);
+          // fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+        } else {
+          // here y = ((p2-p1)*(x-a)/(b-a)) + p1, where p1 is startMag and p2 is endMag, x is the distance from the left end of the span(variable), a is the distance to the start of the distributed load, and b is distance to the end of the distributed load.
+          const a = load.start - span.start;
+          const b = load.end - span.start;
+          const l = span.length;
+          const p1 = load.startMag;
+          const p2 = load.endMag;
+          const expression = `((${p2} - ${p1})*(x - ${a})/(${b} - ${a})) + ${p1}`;
+          console.log(expression);
+          const integralforleftFEM = parseFloat(nerdamer(`defint((${expression} * x * (${l} - x)^2)/${l}^2, ${a}, ${b})`).text());
+          fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+          const integralforrightFEM = parseFloat(nerdamer(`defint((${expression} * (${l} - x) * x^2)/${l}^2, ${a}, ${b})`).text());
+          fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+
+          // const simplifiedExpression = math.simplify(expression);
+          // const integralforleftFEM = math.integral(`((${simplifiedExpression} * x * (${l} - x)^2)/${l}^2)`, 'x', a, b);
+          // fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+          // const integralforrightFEM = math.integral(`((${simplifiedExpression} * (${l} - x) * x^2)/${l}^2)`, 'x', a, b);
+          // fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+        }
+      }
+      if (load.startMag > load.endMag) {
+        if (load.endMag === 0) {
+          // here y = (p*(b-x)/(b-a)), where p is startMag of the vdl, x is the distance from the left end of the span(variable), a is the distance to the start of the distributed load, and b is distance to the end of the distributed load.
+          const a = load.start - span.start;
+          const b = load.end - span.start;
+          const l = span.length;
+          const p = load.startMag;
+          const expression = `(${p} * (${b} - x)/(${b}-${a}))`;
+          console.log(expression);
+          const integralforleftFEM = parseFloat(nerdamer(`defint((${expression} * x * (${l} - x)^2)/${l}^2, ${a}, ${b})`).text());
+          fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+          const integralforrightFEM = parseFloat(nerdamer(`defint((${expression} * (${l} - x) * x^2)/${l}^2, ${a}, ${b})`).text());
+          fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+
+          // const simplifiedExpression = math.simplify(expression);
+          // const integralforleftFEM = math.integral(`((${simplifiedExpression} * x * (${l} - x)^2)/${l}^2)`, 'x', a, b);
+          // fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+          // const integralforrightFEM = math.integral(`((${simplifiedExpression} * (${l} - x) * x^2)/${l}^2)`, 'x', a, b);
+          // fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+        }
+        else {
+          // here y = ((p2-p1)*(b-x)/(b-a)) + p1, where p2 is startMag and p1 is endMag, x is the distance from the left end of the span(variable), a is the distance to the start of the distributed load, and b is distance to the end of the distributed load.
+          const a = load.start - span.start;
+          const b = load.end - span.start;
+          const l = span.length;
+          const p1 = load.endMag;
+          const p2 = load.startMag;
+          const expression = `((${p2} - ${p1})*(${b}-x)/(${b}-${a})) + ${p1}`;
+          console.log(expression);
+          const integralforleftFEM = parseFloat(nerdamer(`defint((${expression} * x * (${l} - x)^2)/${l}^2, ${a}, ${b})`).text());
+          fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+          const integralforrightFEM = parseFloat(nerdamer(`defint((${expression} * (${l} - x) * x^2)/${l}^2, ${a}, ${b})`).text());
+          fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+
+          // const simplifiedExpression = math.simplify(expression);
+          // const integralforleftFEM = math.integral(`((${simplifiedExpression} * x * (${l} - x)^2)/${l}^2)`, 'x', a, b);
+          // fem[`M${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
+          // const integralforrightFEM = math.integral(`((${simplifiedExpression} * (${l} - x) * x^2)/${l}^2)`, 'x', a, b);
+          // fem[`M${span.supports[1].supportNo}${span.supports[0].supportNo}`] += -integralforrightFEM;
+        }
+      }
+    }
+  });
+  span.moments.forEach((moment) => {
+    // each moment has a fixed end moment at both ends of the span,
+    // for the left end (i.e M12) the formula is given by the following formula, M12 = (M*b*(2a - b))/(l^2)
+    // for the right end (i.e M21) the formula is given by the following formula, M21 = (M*a*(2b - a))/(l^2)
+    // where M is the magnitude of the moment, a is the distance from the moment to the left end of the span, b is the distance from the moment to the right end of the span, and l is the length of the span
+    const a = moment.position - span.start;
+    const b = span.end - moment.position;
+    const l = span.length;
+    const M = moment.magnitude;
+    fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += (M * b * (2 * a - b)) / (l * l);
+    fem[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`] += (M * a * (2 * b - a)) / (l * l);
+  });
+  return fem;
+}
+
+
+// M E M B E R   E N D  M O M E N T  E Q U A T I O N S  G E N E R A T I O N
+
+// The function generates the member end moment equations for each span in the beam
+// The member end moment equations for one end is given by the following general EXPRESSIONS,
+// Mab = FEMab + 2EI/L * (2θa + θb - 3δ/L)
+// Mba = FEMba + 2EI/L * (2θb + θa - 3δ/L)
+// where Mab is the member end moment equation, FEMab is the fixed end moment of current side(i.e M12 = FEM12 and FEMba = M21), E is the modulus of elasticity, I is the moment of inertia, L is the length of the span, θa is the rotation at the left end of the span, θb is the rotation at the right end of the span, and δ is the differential settlement between the left and right end of the span
+// δ is given by the following formula, δ = δ2 - δ1, where δ1 is the settlement at the left end of the span, and δ2 is the settlement at the right end of the span(settlement is given in span object as a property, if it undefined then δ = 0)
+// θa, θb are the unknowns in the member end moment equations, and they are found by solving the simultaneous equations of equilibrium of the span
+// θa or θb at a fixed end is zero
+// No moment equation is found at a free end support
+// if for a span, there exists a free end support at one end, then the member end moment equation for that end is not generated and the moment equation for the other end is unneccessary as the moment there is equal to Fixed end moment at that end
+// the equilibrium conditions occurs at the joints in the beam(at joint, M21 + M23 = 0, M32+M34 = 0, M43 + M45 = 0, etc)
+
+// The following steps are to be done in the order below
+
+// 1.) Generate the expressions then convert them to simplified STRINGS for every span, except for spans with a free end.(Mind the differential settlement) return as an array of object strings [M12: 'expression', M21: 'expression'..., Mn(n-1): 'expression' e.t.c]
+
+// 2.) ELIMINATE the known variables in the expression
+// For ends fixed(for fixed end as first or last support) set θ1 and θn to be ZERO (i.e for the first and last expression in the array of expressions
+
+// 3.) CREATION OF EQUATIONS (by equilibrium and exterior roller)
+// MOMENT EQUATION FOR EXTERNAL ROLLER
+// 1.) This is For the one end fixed continuous beam(i.e has one fixed end and one end that is not fixed),
+// 2.) If has an external roller or hinge support  set M12 to zero (if the roller or hinge is the first support) or M(n-1)n to zero (if the roller or hinge is the last support)
+// 3.) If has a free end as the last or first support, then set the 2nd to the last or 2nd support Moment (M(n-1)(n-2) or M21 to the negative of the FEM of the free end span) developing an equation M(n-1)(n-2) = -FEM(n-1)n or M21 = -FEM21.
+
+// Return the equations in string format, simplify then add them to the equations array).
+
+// MOMENT EQUATIONS FOR INTERNAL JOINT MEMBERS
+// For all the inner joints, add the expressions in the array of expressions equating them to zero (e.g M21+M23 =0, M32+M34=0..., M(n-1)n + M(n-2)(n-1)= 0 e.t.c)
+
+// then convert the equations to string format and simplifying them then adding them into the the equations array
+
+// 4.) Solve the linear equations in the equations array with nerdamer 
+
+// 5.) Return the solution as an array of objects, each object contains the span number and the member end moment equations for the span
+// e.g [{spanNo: 1, M12: 'expression', M21: 'expression'}, {spanNo: 2, M12: 'expression', M21: 'expression'}]
+
+
+function generateMemberEndMomentExpressions(spans, fixedEndMoments) {
+  let expressionsArray = [];
+  spans.forEach((span) => {
+    // if any support is free, then the member end moment expression for the span is not generated
+    // The FEMs in the expression are gotten from the fixed end moments array
+    // The differential settlement is gotten from the span object: if the settlements are undefined, then the differential settlement is zero
+    // The modulus of elasticity and the moment of inertia are gotten from the section property of the span object, section: {Moi: ignore, YoungMod: ignore, Coefficient: int}. If the section property is undefined, then the modulus of elasticity and the moment of inertia are set to 1 and 1 respectively, else if the section property is defined, then the modulus of elasticity and the moment of inertia are set to the coefficient value of the section property(i.e E*I = section.Coefficient)
+    // The differential settlement is gotten from the span object: if the settlements are undefined, then the differential settlement is zero else δ = δ2 - δ1
+    // To simplify the expression θ{span.supports[0].supportNo} and θ{span.supports[1].supportNo} are to be set to solvable variables, keeping reference that θ{span.supports[0].supportNo} and θ{span.supports[1].supportNo} correspond to those variables in the equations array
+
+    if (span.supports[0].type === 'Free end' || span.supports[1].type === 'Free end') {
+      return;
+    }
+    let differentialSettlement;
+    // for settlement in span.settlements, if undefined, then set that settlement to zero, and find the differential settlement. span.settlements can be like [0.5, 0.5] or [undefined, 0.5] or [0.5, undefined] or [undefined, undefined] but not undefined
+    // settlement is in mm 
+    if (span.settlements[0] === undefined && span.settlements[1] === undefined) {
+      differentialSettlement = 0;
+    } else if (span.settlements[0] === undefined) {
+      differentialSettlement = -span.settlements[1] / 1000;
+    } else if (span.settlements[1] === undefined) {
+      differentialSettlement = span.settlements[0] / 1000;
+    } else {
+      differentialSettlement = -(span.settlements[1] - span.settlements[0]) / 1000;
+    }
+
+    let E, I; // modulus of elasticity and moment of inertia
+    if (span.section === undefined) {
+      E = 1;
+      I = 1;
+    } else {
+      if (span.section.YoungMod === null || span.section.Moi === null) {
+        E = span.section.Coefficient;
+        I = 1;
+      } else {
+        E = span.section.YoungMod * 1000 * span.section.Coefficient;
+        I = span.section.Moi * Math.pow(10, -12);
+      }
+    }
+    const L = span.length;
+    const FEMab = fixedEndMoments.find((fem) => fem.spanNo === span.spanNo)[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`];
+    const FEMba = fixedEndMoments.find((fem) => fem.spanNo === span.spanNo)[`FEM${span.supports[1].supportNo}${span.supports[0].supportNo}`];
+    const expressionMab = `${FEMab} + 2*${E}*${I}/${L} * (2*θ${span.supports[0].supportNo} + θ${span.supports[1].supportNo} - 3*${differentialSettlement}/${L})`;
+    const expressionMba = `${FEMba} + 2*${E}*${I}/${L} * (2*θ${span.supports[1].supportNo} + θ${span.supports[0].supportNo} - 3*${differentialSettlement}/${L})`;
+    expressionsArray.push({ spanNo: span.spanNo, Mab: expressionMab, Mba: expressionMba });
+  });
+  console.log("Member end moment expressions:", expressionsArray);
+  return expressionsArray;
+}
+
+
+function eliminateKnownVariables(expressionsArray, spans) {
+  // For ends fixed(for fixed end as first or last support) set θ1 and θn to be ZERO (i.e sfor the first and last expression in the array of expressions
+  // if the first support is fixed, then set θ1 to zero, if the last support is fixed, then set θn to zero
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
+  if (spans[0].supports[0].type === 'Fixed') {
+    newExpressionsArray[0].Mab = newExpressionsArray[0].Mab.replace(`θ${spans[0].supports[0].supportNo}`, '0');
+    newExpressionsArray[0].Mba = newExpressionsArray[0].Mba.replace(`θ${spans[0].supports[0].supportNo}`, '0');
+  }
+  if (spans[spans.length - 1].supports[1].type === 'Fixed') {
+    newExpressionsArray[newExpressionsArray.length - 1].Mba = newExpressionsArray[newExpressionsArray.length - 1].Mba.replace(`θ${spans[spans.length - 1].supports[1].supportNo}`, '0');
+    newExpressionsArray[newExpressionsArray.length - 1].Mab = newExpressionsArray[newExpressionsArray.length - 1].Mab.replace(`θ${spans[spans.length - 1].supports[1].supportNo}`, '0');
+  }
+  console.log("Eliminated known variables:", newExpressionsArray);
+  return newExpressionsArray;
+}
+
+
+function createEquations(expressionsArray, spans, fixedEndMoments) {
+  let equationsArray = [];
+  // MOMENT EQUATION FOR EXTERNAL ROLLER
+  // 1.) This is For the one end fixed continuous beam(i.e has one fixed end and one end that is not fixed),
+  // 2.) If has an external roller or hinge support  set M12 to zero (if the roller or hinge is the first support) or M(n-1)n to zero (if the roller or hinge is the last support)
+  // 3.) If has a free end as the last or first support, then set the 2nd to the last or 2nd support Moment (M(n-1)(n-2) or M21 to the negative of the FEM of the free end span) developing an equation M(n-1)(n-2) = -FEM(n-1)n or M23 = -FEM21.
+  if (spans[0].supports[0].type === 'Roller' || spans[0].supports[0].type === 'Hinge') {
+    equationsArray.push(expressionsArray[0].Mab + " = 0");
+  }
+  if (spans[spans.length - 1].supports[1].type === 'Roller' || spans[spans.length - 1].supports[1].type === 'Hinge') {
+    equationsArray.push(expressionsArray[spans.length - 1].Mba + " = 0");
+  }
+  if (spans[0].supports[0].type === 'Free end') {
+    equationsArray.push(expressionsArray[0].Mab + " = " + -fixedEndMoments.find((fem) => fem.spanNo === spans[0].spanNo)[`FEM${spans[0].supports[1].supportNo}${spans[0].supports[0].supportNo}`]);
+  }
+  if (spans[spans.length - 1].supports[1].type === 'Free end') {
+    equationsArray.push(expressionsArray[expressionsArray.length - 1].Mba + " = " + -fixedEndMoments.find((fem) => fem.spanNo === spans[spans.length - 1].spanNo)[`FEM${spans[spans.length - 1].supports[0].supportNo}${spans[spans.length - 1].supports[1].supportNo}`]);
+  }
+
+  // MOMENT EQUATIONS FOR INTERNAL JOINT MEMBERS
+
+  for (let i = 0; i < expressionsArray.length - 1; i++) {
+    equationsArray.push(expressionsArray[i].Mba + " + " + expressionsArray[i + 1].Mab + " = 0");
+  }
+  console.log("Equations:", equationsArray);
+  return equationsArray;
+}
+
+// To solve the linear equations in the equations array with nerdamer
+// e.g nerdamer.solveEquations(['-67.5 + 2*1*1/9 * (2*θ3 + θ2 - 3*0/9) = -120', '0 + 2*1*1/6 * (2*θ2 + 0 - 3*0/6) + 67.5 + 2*1*1/9 * (2*θ2 + θ3 - 3*0/9) = 0']);
+// returns [['θ2', '-41.25`] ['θ3', '-97.5']]
+
+function solveEquations(equationsArray) {
+  const newEquationsArray = JSON.parse(JSON.stringify(equationsArray));
+  let solutions = nerdamer.solveEquations(newEquationsArray);
+  console.log("Solutions:", solutions);
+  return solutions;
+}
+
+// For each result in the solutions array, the result is an array with two elements, the first element is the variable and the second element is the value of the variable
+// for each expression in each span in the expressions array, the expressions are solved by replacing the variable with the value of the variable and then solving using nerdamer({replaced expression}).evaluate().toString()
+// the solved expressions are then added to the member end moment equations array for the span
+
+function addSolutionsToExpressions(solutions, expressionsArray) {
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
+  solutions.forEach((solution) => {
+    for (let i = 0; i < newExpressionsArray.length; i++) {
+      newExpressionsArray[i].Mab = newExpressionsArray[i].Mab.replace(solution[0], solution[1]);
+      newExpressionsArray[i].Mba = newExpressionsArray[i].Mba.replace(solution[0], solution[1]);
+    }
+  });
+  console.log("Member end moment equations with solutions:", newExpressionsArray);
+  return newExpressionsArray;
+}
+
+// for each expression in the expressions array, the expressions are converted to simplified strings using nerdamer({expression}).evaluate().toString()
+// the simplified expressions are then added to the member end moment equations array for the span
+
+function simplifyExpressions(expressionsArray) {
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
+  newExpressionsArray.forEach((expression) => {
+    expression.Mab = nerdamer(expression.Mab).evaluate().toString();
+    const fraction = expression.Mab;
+    expression.Mab = nerdamer(expression.Mab);
+    if (expression.Mab.denominator().toString() === '1') {
+      expression.Mab = fraction + "kNm";
+    } else {
+      expression.Mab = fraction + " or " + parseFloat(parseFloat(expression.Mab.numerator().toString()) / parseFloat(expression.Mab.denominator().toString())).toFixed(2).toString() + "kNm";
+    }
+
+    expression.Mba = nerdamer(expression.Mba).evaluate().toString();
+    const fraction2 = expression.Mba;
+    expression.Mba = nerdamer(expression.Mba);
+    if (expression.Mba.denominator().toString() === '1') {
+      expression.Mba = fraction2 + "kNm";
+    } else {
+      expression.Mba = fraction2 + " or " + parseFloat(parseFloat(expression.Mba.numerator().toString()) / parseFloat(expression.Mba.denominator().toString())).toFixed(2).toString() + "kNm";
+    }
+  });
+  console.log("Simplified member end moment equations:", newExpressionsArray);
+  return newExpressionsArray;
+}
+
+// Simplified member end moment equations: 
+// [{spanNo: 1, Mab: '-55/4', Mba: '-55/2'}, {spanNo: 2, Mab: '55/2', Mba: '-120'}]
+// This is the final result of the member end moment equations generation, but the free end spans are not included in the result. The free end spans are not included in the result because the member end moment equations for the free end spans are not generated
+// to add the member end moment equations for the free end spans, the fixed end moments for the free end spans are added to the result, if and only if the free end spans are the first or last spans in the beam
+
+function addMemberEndMomentEquationsForFreeEndSpans(expressionsArray, fixedEndMoments, spans) {
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
+  if (spans[0].supports[0].type === 'Free end') {
+    newExpressionsArray.unshift({ spanNo: spans[0].spanNo, Mab: `0`, Mba: `${fixedEndMoments.find((fem) => fem.spanNo === spans[0].spanNo)[`FEM${spans[0].supports[1].supportNo}${spans[0].supports[0].supportNo}`]}` + 'kNm' });
+  }
+  if (spans[spans.length - 1].supports[1].type === 'Free end') {
+    newExpressionsArray.push({ spanNo: spans[spans.length - 1].spanNo, Mab: `${fixedEndMoments.find((fem) => fem.spanNo === spans[spans.length - 1].spanNo)[`FEM${spans[spans.length - 1].supports[0].supportNo}${spans[spans.length - 1].supports[1].supportNo}`]}` + 'kNm', Mba: `0` });
+  }
+  console.log("Member end moment equations with free end spans:", newExpressionsArray);
+  return newExpressionsArray;
+}
+
+// Member end moment equations with free end spans:
+// [{spanNo: 1, Mab: '-55/4', Mba: '-55/2'}, {spanNo: 2, Mab: '55/2', Mba: '-120'}, {spanNo: 3, Mab: '120', Mba: '0'}]
+// This is the final result of the member end moment equations generation, the member end moment equations for the free end spans are included in the result
+// But I will add the span numbers to the member end moment equations for easy identification as such
+// [{spanNo: 1, M12: '-55/4', M21: '-55/2'}, {spanNo: 2, M23: '55/2', M32: '-120'}, {spanNo: 3, M34: '120', M43: '0'}]
+
+function addSpanNumbersToMemberEndMomentEquations(expressionsArray) {
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
+  newExpressionsArray.forEach((expression) => {
+    expression[`M${expression.spanNo}${expression.spanNo + 1}`] = expression.Mab;
+    expression[`M${expression.spanNo + 1}${expression.spanNo}`] = expression.Mba;
+    delete expression.Mab;
+    delete expression.Mba;
+  });
+  console.log("Member end moment equations with span numbers:", newExpressionsArray);
+  return newExpressionsArray;
+}
+
+// a function to convert the fixed end moments to a string to be inserted into a p element in the html,
+function displayFixedEndMoments(fixedEndMoments) {
+  let displayString = '<b class="fs-4">FIXED END MOMENTS:</b>';
+  fixedEndMoments.forEach((fem) => {
+    displayString += `<br><b>${fem.spanNo}:</b> FEM${fem.spanNo}${fem.spanNo + 1} = ${fem[`FEM${fem.spanNo}${fem.spanNo + 1}`]}kNm, FEM${fem.spanNo + 1}${fem.spanNo} = ${fem[`FEM${fem.spanNo + 1}${fem.spanNo}`]}kNm`;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  p.classList.add('fw-bold');
+  p.classList.add('fs-5');
+  // append the p element to the div with class fixed-end-moments in the html
+  document.querySelector('.fixed-end-moments').appendChild(p);
+  // remove the d-none class from the div with class fixed-end-moments in the html
+  document.querySelector('.fixed-end-moments').classList.remove('d-none');
+  return displayString;
+}
+
+// a function to convert the member end moment expressions to a string to be inserted into a p element in the html,
+function displayMemberEndMomentExpressions(expressionsArray) {
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
+  let displayString = '<b class="fs-4">MEMBER END MOMENT EXPRESSIONS:</b>';
+  newExpressionsArray.forEach((expression) => {
+    // in each expression, there exist θ1, θ2, e.t.c, change the numbers to subscripts
+    expression.Mab = expression.Mab.replace(/θ(\d+)/g, 'θ<sub>$1</sub>');
+    expression.Mba = expression.Mba.replace(/θ(\d+)/g, 'θ<sub>$1</sub>');
+    displayString += `<br><b>${expression.spanNo}:</b> M${expression.spanNo}${expression.spanNo + 1} = ${expression.Mab}, M${expression.spanNo + 1}${expression.spanNo} = ${expression.Mba}`;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  p.classList.add('fw-bold');
+  p.classList.add('fs-5');
+  // append the p element to the div with class member-end-moment-equations in the html
+  document.querySelector('.member-end-moment-equations').appendChild(p);
+  // remove the d-none class from the div with class member-end-moment-equations in the html
+  document.querySelector('.member-end-moment-equations').classList.remove('d-none');
+  return displayString;
+}
+
+// A function to convert the Eliminated known variables expressions to a string to be inserted into a p element in the html,
+function displayMemberEndMomentExpressionsWithEliminatedKnowns(expressionsArray) {
+  const newExpressionsArray = JSON.parse(JSON.stringify(expressionsArray));
+  let displayString = '<b class="fs-4">ELIMINATED KNOWN VARIABLES:</b>';
+  newExpressionsArray.forEach((expression) => {
+    // in each expression, there exist θ1, θ2, e.t.c, change the numbers to subscripts
+    expression.Mab = expression.Mab.replace(/θ(\d+)/g, 'θ<sub>$1</sub>');
+    expression.Mba = expression.Mba.replace(/θ(\d+)/g, 'θ<sub>$1</sub>');
+    displayString += `<br><b>${expression.spanNo}:</b> M${expression.spanNo}${expression.spanNo + 1} = ${expression.Mab}, M${expression.spanNo + 1}${expression.spanNo} = ${expression.Mba}`;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  // add class fw-bold and fs-4 to the p element
+  p.classList.add('fw-bold');
+  p.classList.add('fs-5');
+  // append the p element to the div with class eliminated-known-variables in the html
+  document.querySelector('.eliminated-known-variables').appendChild(p);
+  // remove the d-none class from the div with class eliminated-known-variables in the html
+  document.querySelector('.eliminated-known-variables').classList.remove('d-none');
+  return displayString;
+}
+
+// A function to convert the equations to a string to be inserted into a p element in the html,
+function displayEquations(equationsArray) {
+  const newEquationsArray = JSON.parse(JSON.stringify(equationsArray));
+  let displayString = '<b class="fs-4">EQUATIONS:</b>';
+  newEquationsArray.forEach((equation) => {
+    // in each equation, there exist θ1, θ2, e.t.c, change the numbers to subscripts
+    equation = equation.replace(/θ(\d+)/g, 'θ<sub>$1</sub>');
+    displayString += `<br>` + equation;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  p.classList.add('fw-bold');
+  p.classList.add('fs-5');
+  // append the p element to the div with class equations in the html
+  document.querySelector('.equations').appendChild(p);
+  // remove the d-none class from the div with class equations in the html
+  document.querySelector('.equations').classList.remove('d-none');
+  return displayString;
+}
+
+// A function to convert the solutions to a string to be inserted into a p element in the html,
+function displaySolutions(solutions) {
+  let displayString = '<b class="fs-4">ROTATIONS:</b>';
+  solutions.forEach((solution) => {
+    // change the numbers to subscripts
+    solution[0] = solution[0].replace(/θ(\d+)/g, 'θ<sub>$1</sub>');
+    displayString += `<br><b>${solution[0]} = ${solution[1]}</b>`;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  p.classList.add('fs-5');
+  // append the p element to the div with class solutions in the html
+  document.querySelector('.rotations').appendChild(p);
+  // remove the d-none class from the div with class solutions in the html
+  document.querySelector('.rotations').classList.remove('d-none');
+  return displayString;
+}
+
+// a function to convert the member end moments expressionsFinal to a string to be inserted into a p element in the html,
+function displayMemberEndMoments(expressionsArray) {
+  let displayString = '<b class="fs-4">MEMBER END MOMENTS:</b>';
+  expressionsArray.forEach((expression) => {
+    displayString += `<br><b>${expression.spanNo}:</b> M${expression.spanNo}${expression.spanNo + 1} = ${expression[`M${expression.spanNo}${expression.spanNo + 1}`]}, M${expression.spanNo + 1}${expression.spanNo} = ${expression[`M${expression.spanNo + 1}${expression.spanNo}`]}`;
+  });
+  // create a p element
+  // set the innerHTML of the p element to the displayString
+  const p = document.createElement('p');
+  p.innerHTML = displayString;
+  p.classList.add('fs-5');
+  // append the p element to the div with class member-end-moments in the html
+  document.querySelector('.member-end-moments').appendChild(p);
+  // remove the d-none class from the div with class member-end-moments in the html
+  document.querySelector('.member-end-moments').classList.remove('d-none');
+  return displayString;
+}

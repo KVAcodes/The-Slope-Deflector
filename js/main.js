@@ -1,1 +1,1047 @@
-const _0x561081=_0xfc49;(function(_0x478a82,_0x30de60){const _0x214c66=_0xfc49,_0x23b5ed=_0x478a82();while(!![]){try{const _0x3ff390=parseInt(_0x214c66(0xe7))/0x1*(-parseInt(_0x214c66(0xec))/0x2)+parseInt(_0x214c66(0x167))/0x3+-parseInt(_0x214c66(0x13b))/0x4*(-parseInt(_0x214c66(0x12d))/0x5)+-parseInt(_0x214c66(0x146))/0x6*(parseInt(_0x214c66(0x13a))/0x7)+parseInt(_0x214c66(0x119))/0x8*(-parseInt(_0x214c66(0x16b))/0x9)+-parseInt(_0x214c66(0x138))/0xa+parseInt(_0x214c66(0x102))/0xb*(parseInt(_0x214c66(0x112))/0xc);if(_0x3ff390===_0x30de60)break;else _0x23b5ed['push'](_0x23b5ed['shift']());}catch(_0x4c2bbe){_0x23b5ed['push'](_0x23b5ed['shift']());}}}(_0x5c34,0x6a626));import*as _0x2e38a7 from'./calculations.js';let beamLength,supports=[],sections=[],settlements=[],pointLoads=[],distributedLoads=[],moments=[],noOfSpans;const beamButton=document[_0x561081(0x109)](_0x561081(0x12c)),supportButton=document['getElementById'](_0x561081(0x130)),sectionButton=document[_0x561081(0x109)](_0x561081(0x175)),settlementButton=document['getElementById'](_0x561081(0xe6)),plButton=document[_0x561081(0x109)]('pl-button'),dlButton=document[_0x561081(0x109)](_0x561081(0x121)),mButton=document['getElementById'](_0x561081(0x13c)),backButton=document['getElementById']('back-button'),addButton=document[_0x561081(0x109)](_0x561081(0x152)),takebackButton=document[_0x561081(0x109)](_0x561081(0x158));beamButton[_0x561081(0x15c)]('click',function(){const _0x1d4bb0=_0x561081;document[_0x1d4bb0(0x177)]('.menu-buttons')[_0x1d4bb0(0xf6)][_0x1d4bb0(0x125)](_0x1d4bb0(0x127)),document[_0x1d4bb0(0x177)](_0x1d4bb0(0x131))[_0x1d4bb0(0xf6)][_0x1d4bb0(0x169)]('d-none'),document[_0x1d4bb0(0x177)](_0x1d4bb0(0x141))[_0x1d4bb0(0xf6)][_0x1d4bb0(0x169)]('d-none'),document[_0x1d4bb0(0x109)]('takeback-button')[_0x1d4bb0(0xf6)]['add'](_0x1d4bb0(0x127));}),supportButton['addEventListener'](_0x561081(0x14c),function(){const _0x2741b9=_0x561081;document[_0x2741b9(0x177)](_0x2741b9(0x16e))[_0x2741b9(0xf6)]['add'](_0x2741b9(0x127)),document[_0x2741b9(0x177)](_0x2741b9(0x131))[_0x2741b9(0xf6)][_0x2741b9(0x169)]('d-none'),document['querySelector']('[element-type=\x27Support\x27]')['classList'][_0x2741b9(0x169)]('d-none'),document[_0x2741b9(0x109)](_0x2741b9(0x158))['classList'][_0x2741b9(0x125)]('d-none');}),sectionButton[_0x561081(0x15c)]('click',function(){const _0x1ee80d=_0x561081;document['querySelector'](_0x1ee80d(0x16e))[_0x1ee80d(0xf6)]['add'](_0x1ee80d(0x127)),document[_0x1ee80d(0x177)](_0x1ee80d(0x131))[_0x1ee80d(0xf6)][_0x1ee80d(0x169)](_0x1ee80d(0x127)),document[_0x1ee80d(0x177)]('[element-type=\x27Section\x27]')[_0x1ee80d(0xf6)][_0x1ee80d(0x169)](_0x1ee80d(0x127)),document[_0x1ee80d(0x109)]('takeback-button')[_0x1ee80d(0xf6)][_0x1ee80d(0x169)](_0x1ee80d(0x127));}),settlementButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0x18a897=_0x561081;document[_0x18a897(0x177)](_0x18a897(0x16e))['classList'][_0x18a897(0x125)](_0x18a897(0x127)),document[_0x18a897(0x177)](_0x18a897(0x131))[_0x18a897(0xf6)][_0x18a897(0x169)](_0x18a897(0x127)),document[_0x18a897(0x177)](_0x18a897(0x12a))[_0x18a897(0xf6)][_0x18a897(0x169)]('d-none'),document[_0x18a897(0x109)](_0x18a897(0x158))[_0x18a897(0xf6)][_0x18a897(0x169)](_0x18a897(0x127));}),plButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0x10ba5f=_0x561081;document[_0x10ba5f(0x177)](_0x10ba5f(0x16e))[_0x10ba5f(0xf6)][_0x10ba5f(0x125)](_0x10ba5f(0x127)),document['querySelector'](_0x10ba5f(0x131))[_0x10ba5f(0xf6)]['remove'](_0x10ba5f(0x127)),document[_0x10ba5f(0x177)](_0x10ba5f(0x171))['classList'][_0x10ba5f(0x169)](_0x10ba5f(0x127)),document[_0x10ba5f(0x109)](_0x10ba5f(0x158))[_0x10ba5f(0xf6)][_0x10ba5f(0x169)](_0x10ba5f(0x127));}),dlButton['addEventListener'](_0x561081(0x14c),function(){const _0x1312b6=_0x561081;document[_0x1312b6(0x177)](_0x1312b6(0x16e))[_0x1312b6(0xf6)][_0x1312b6(0x125)](_0x1312b6(0x127)),document['querySelector'](_0x1312b6(0x131))[_0x1312b6(0xf6)]['remove'](_0x1312b6(0x127)),document[_0x1312b6(0x177)]('[element-type=\x27Distributed\x20Load\x27]')[_0x1312b6(0xf6)][_0x1312b6(0x169)](_0x1312b6(0x127)),document[_0x1312b6(0x109)](_0x1312b6(0x158))[_0x1312b6(0xf6)][_0x1312b6(0x169)](_0x1312b6(0x127));}),mButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0xfe5f31=_0x561081;document[_0xfe5f31(0x177)](_0xfe5f31(0x16e))[_0xfe5f31(0xf6)][_0xfe5f31(0x125)](_0xfe5f31(0x127)),document[_0xfe5f31(0x177)]('.menu-inputs')[_0xfe5f31(0xf6)][_0xfe5f31(0x169)]('d-none'),document[_0xfe5f31(0x177)]('[element-type=\x27Moments\x27]')[_0xfe5f31(0xf6)][_0xfe5f31(0x169)](_0xfe5f31(0x127)),document['getElementById'](_0xfe5f31(0x158))[_0xfe5f31(0xf6)][_0xfe5f31(0x169)](_0xfe5f31(0x127));}),backButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0x4700bf=_0x561081;document[_0x4700bf(0x177)](_0x4700bf(0x16e))[_0x4700bf(0xf6)][_0x4700bf(0x169)](_0x4700bf(0x127)),document[_0x4700bf(0x177)](_0x4700bf(0x131))[_0x4700bf(0xf6)][_0x4700bf(0x125)]('d-none'),document[_0x4700bf(0x177)](_0x4700bf(0x115))[_0x4700bf(0xf6)][_0x4700bf(0x125)](_0x4700bf(0x127));});const rollerButton=document[_0x561081(0x109)](_0x561081(0x104)),hingeButton=document[_0x561081(0x109)](_0x561081(0x143)),fixedButton=document[_0x561081(0x109)](_0x561081(0x14b));function _0x5c34(){const _0x49b577=['.menu-inputs','Moments','is-valid','value','createElement','<br>>>\x20<b\x20class=\x22fs-4\x22>Point\x20Loads:</b>\x20','.member-end-moments','3884740GHgleS','error-text','119SngvBG','4EflIMY','m-button','settlementInput','mm<sup>4</sup>,\x20Young\x20Modulus:\x20','KN\x20at\x20','m-support','[element-type=\x27Beam\x27]','d-inline-block','hinge','getAttribute','dlStartMag','127518PqPeuX','Settlement','.equations','.eliminated-known-variables','<br>','fixed','click','mt-3','Section','<br>>>\x20<b\x20class=\x22fs-4\x22>Settlements:</b>\x20','pl-location-form','.display','add-button','YoungMod','#support-type\x20>\x20button.active','.member-end-moment-equations','.visualizer','reset','takeback-button','contains','#support-input\x20>\x20p','fs-6','addEventListener','FlexRigInput','m-r','appendChild','Settlement\x20at\x20Support','dlNo','firstChild','Distributed\x20Load\x20','log','\x20at\x20','beam','2598129ZCQTyJ','Moment\x20','remove','m-magnitude-form','1381671ELCSSN','innerHTML','MPa,\x20Coefficient:\x20','.menu-buttons','dlEnd','sort','[element-type=\x27Point\x20Load\x27]','beamLengthInput','disabled','Point\x20Load','section-button','setAttribute','querySelector','type','Distributed\x20Load','settlement-button','30105hNDAEa','Coefficient','m-position-form','element-type','m\x20to\x20','10bPahgu','supportNo','<br>>>\x20<b\x20class=\x22fs-4\x22>Moments:</b>\x20','KN\x20from\x20','l-support','mNo','position','.add-on\x20>\x20p','.fixed-end-moments','childNodes','classList','dlEndMag','m-m','pop','Mode:\x20solutions','#support-input','magnitude','Beam','<br>>>\x20<b\x20class=\x22fs-4\x22>Supports:</b>\x20','dlStart','YoungModInput','insertBefore','912857BeYQtu','MoiInput','roller','select\x20a\x20support\x20type!','trim','KN\x20to\x20','#support-input\x20>\x20p:last-child','getElementById','removeChild','removeAttribute','r-support',':\x20Moi:\x20','mode','pl-m','debug','location','24uUUlkh','solve','Mode:\x20parameters','.menu-input-inputs\x20>\x20div:not(.d-none)','Moi','>>\x20<b\x20class=\x22fs-4\x22>Beam\x20Length:</b>\x20','key','16eGzuId','is-invalid','setParameters','move-left','startMag','pl-magnitude-form','Support','support-location-form','dl-button','<br>>>\x20<b\x20class=\x22fs-4\x22>Sections:</b>\x20','element-value','a\x20support\x20already\x20exists\x20at\x20this\x20location!','add','.rotations','d-none','verify\x20the\x20highlighted\x20input\x20fields!','active','[element-type=\x27Settlement\x27]','move-right','beam-button','3055355xkEmdb','pl-button','length','support-button'];_0x5c34=function(){return _0x49b577;};return _0x5c34();}rollerButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0x362dcb=_0x561081;rollerButton[_0x362dcb(0xf6)][_0x362dcb(0x125)](_0x362dcb(0x129)),hingeButton[_0x362dcb(0xf6)][_0x362dcb(0x169)](_0x362dcb(0x129)),fixedButton[_0x362dcb(0xf6)][_0x362dcb(0x169)](_0x362dcb(0x129)),document[_0x362dcb(0x177)](_0x362dcb(0x15a))!=null&&document[_0x362dcb(0x177)]('#support-input\x20>\x20p')[_0x362dcb(0x169)]();}),hingeButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0x34f01d=_0x561081;rollerButton[_0x34f01d(0xf6)][_0x34f01d(0x169)](_0x34f01d(0x129)),hingeButton[_0x34f01d(0xf6)][_0x34f01d(0x125)](_0x34f01d(0x129)),fixedButton[_0x34f01d(0xf6)][_0x34f01d(0x169)](_0x34f01d(0x129)),document['querySelector'](_0x34f01d(0x15a))!=null&&document[_0x34f01d(0x177)](_0x34f01d(0x15a))[_0x34f01d(0x169)]();}),fixedButton['addEventListener'](_0x561081(0x14c),function(){const _0x2eaab8=_0x561081;rollerButton[_0x2eaab8(0xf6)][_0x2eaab8(0x169)](_0x2eaab8(0x129)),hingeButton[_0x2eaab8(0xf6)][_0x2eaab8(0x169)](_0x2eaab8(0x129)),fixedButton[_0x2eaab8(0xf6)][_0x2eaab8(0x125)](_0x2eaab8(0x129)),document[_0x2eaab8(0x177)](_0x2eaab8(0x15a))!=null&&document['querySelector'](_0x2eaab8(0x15a))[_0x2eaab8(0x169)]();});const lSupportButton=document[_0x561081(0x109)](_0x561081(0xf0)),mSupportButton=document[_0x561081(0x109)](_0x561081(0x140)),rSupportButton=document[_0x561081(0x109)](_0x561081(0x10c));lSupportButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0xe552be=_0x561081;lSupportButton['classList'][_0xe552be(0x125)]('active'),mSupportButton['classList'][_0xe552be(0x169)](_0xe552be(0x129)),rSupportButton[_0xe552be(0xf6)][_0xe552be(0x169)](_0xe552be(0x129)),document[_0xe552be(0x109)](_0xe552be(0x120))[_0xe552be(0x134)]=0x0,document[_0xe552be(0x177)]('#support-input\x20>\x20p:last-child')!=null&&document[_0xe552be(0x177)](_0xe552be(0x108))[_0xe552be(0x169)]();}),mSupportButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0xd17125=_0x561081;lSupportButton['classList'][_0xd17125(0x169)](_0xd17125(0x129)),mSupportButton[_0xd17125(0xf6)][_0xd17125(0x125)](_0xd17125(0x129)),rSupportButton[_0xd17125(0xf6)][_0xd17125(0x169)]('active'),document[_0xd17125(0x109)](_0xd17125(0x120))['value']=beamLength/0x2,document[_0xd17125(0x177)](_0xd17125(0x108))!=null&&document['querySelector'](_0xd17125(0x108))[_0xd17125(0x169)]();}),rSupportButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0x9c8043=_0x561081;lSupportButton['classList'][_0x9c8043(0x169)]('active'),mSupportButton[_0x9c8043(0xf6)]['remove']('active'),rSupportButton[_0x9c8043(0xf6)]['add'](_0x9c8043(0x129)),document['getElementById'](_0x9c8043(0x120))[_0x9c8043(0x134)]=beamLength,document['querySelector'](_0x9c8043(0x108))!=null&&document[_0x9c8043(0x177)](_0x9c8043(0x108))[_0x9c8043(0x169)]();});const plLButton=document[_0x561081(0x109)]('pl-l'),plMButton=document[_0x561081(0x109)](_0x561081(0x10f)),plRButton=document['getElementById']('pl-r');plLButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0x65fe2c=_0x561081;plLButton['classList']['add'](_0x65fe2c(0x129)),plMButton[_0x65fe2c(0xf6)]['remove']('active'),plRButton[_0x65fe2c(0xf6)]['remove'](_0x65fe2c(0x129)),document[_0x65fe2c(0x109)]('pl-location-form')[_0x65fe2c(0x134)]=0x0;}),plMButton[_0x561081(0x15c)]('click',function(){const _0x6c701a=_0x561081;plLButton[_0x6c701a(0xf6)][_0x6c701a(0x169)](_0x6c701a(0x129)),plMButton[_0x6c701a(0xf6)][_0x6c701a(0x125)]('active'),plRButton[_0x6c701a(0xf6)]['remove'](_0x6c701a(0x129)),document['getElementById'](_0x6c701a(0x150))['value']=beamLength/0x2;}),plRButton[_0x561081(0x15c)]('click',function(){const _0x3d0f9f=_0x561081;plLButton['classList'][_0x3d0f9f(0x169)](_0x3d0f9f(0x129)),plMButton[_0x3d0f9f(0xf6)][_0x3d0f9f(0x169)]('active'),plRButton['classList']['add'](_0x3d0f9f(0x129)),document['getElementById'](_0x3d0f9f(0x150))['value']=beamLength;});const dlLButton=document[_0x561081(0x109)]('dl-l'),dlRButton=document['getElementById']('dl-r');dlLButton[_0x561081(0x15c)]('click',function(){const _0x116c6e=_0x561081;document[_0x116c6e(0x109)](_0x116c6e(0xff))[_0x116c6e(0x134)]=0x0;}),dlRButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0x5b2e4d=_0x561081;document[_0x5b2e4d(0x109)](_0x5b2e4d(0x16f))[_0x5b2e4d(0x134)]=beamLength;});const mLButton=document[_0x561081(0x109)]('m-l'),mMButton=document[_0x561081(0x109)](_0x561081(0xf8)),mRButton=document['getElementById'](_0x561081(0x15e));mLButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0x245eb5=_0x561081;mLButton[_0x245eb5(0xf6)][_0x245eb5(0x125)](_0x245eb5(0x129)),mMButton[_0x245eb5(0xf6)][_0x245eb5(0x169)](_0x245eb5(0x129)),mRButton[_0x245eb5(0xf6)][_0x245eb5(0x169)](_0x245eb5(0x129)),document['getElementById'](_0x245eb5(0xe9))[_0x245eb5(0x134)]=0x0;}),mMButton[_0x561081(0x15c)]('click',function(){const _0x42cd66=_0x561081;mLButton[_0x42cd66(0xf6)][_0x42cd66(0x169)](_0x42cd66(0x129)),mMButton[_0x42cd66(0xf6)]['add']('active'),mRButton[_0x42cd66(0xf6)][_0x42cd66(0x169)]('active'),document[_0x42cd66(0x109)](_0x42cd66(0xe9))[_0x42cd66(0x134)]=beamLength/0x2;}),mRButton['addEventListener'](_0x561081(0x14c),function(){const _0x111a53=_0x561081;mLButton['classList'][_0x111a53(0x169)](_0x111a53(0x129)),mMButton['classList'][_0x111a53(0x169)](_0x111a53(0x129)),mRButton[_0x111a53(0xf6)]['add'](_0x111a53(0x129)),document[_0x111a53(0x109)]('m-position-form')[_0x111a53(0x134)]=beamLength;});const solveButton=document[_0x561081(0x109)](_0x561081(0x113));solveButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0x3e5c12=_0x561081;document['querySelector'](_0x3e5c12(0x156))[_0x3e5c12(0xf6)][_0x3e5c12(0x125)](_0x3e5c12(0x127)),solveButton['setAttribute'](_0x3e5c12(0x173),''),document['getElementById'](_0x3e5c12(0x11c))[_0x3e5c12(0x10b)]('disabled'),document[_0x3e5c12(0x109)](_0x3e5c12(0x10e))[_0x3e5c12(0x16c)]=_0x3e5c12(0xfa);try{exportParameters();}catch(_0x25d288){const _0x584d40=document[_0x3e5c12(0x135)]('p');_0x584d40['innerHTML']='an\x20Error\x20Occurred!\x20Please\x20Hit\x20reset\x20and\x20try\x20again',_0x584d40[_0x3e5c12(0xf6)]['add']('fw-bold'),_0x584d40['classList'][_0x3e5c12(0x125)](_0x3e5c12(0x15b)),_0x584d40[_0x3e5c12(0xf6)][_0x3e5c12(0x125)](_0x3e5c12(0x14d)),document[_0x3e5c12(0x177)](_0x3e5c12(0x151))[_0x3e5c12(0x15f)](_0x584d40);}});const moveLeftButton=document[_0x561081(0x109)]('move-left'),moveRightButton=document[_0x561081(0x109)](_0x561081(0x12b));moveLeftButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0x9af162=_0x561081;moveRightButton[_0x9af162(0x10b)](_0x9af162(0x173)),moveLeftButton['setAttribute'](_0x9af162(0x173),''),document[_0x9af162(0x177)](_0x9af162(0xf4))['classList'][_0x9af162(0x125)]('d-none'),document[_0x9af162(0x177)](_0x9af162(0x155))[_0x9af162(0xf6)][_0x9af162(0x125)](_0x9af162(0x127)),document[_0x9af162(0x177)](_0x9af162(0x149))[_0x9af162(0xf6)]['add'](_0x9af162(0x127)),document[_0x9af162(0x177)](_0x9af162(0x148))[_0x9af162(0xf6)][_0x9af162(0x125)](_0x9af162(0x127)),document[_0x9af162(0x177)](_0x9af162(0x126))[_0x9af162(0xf6)][_0x9af162(0x125)](_0x9af162(0x127)),document[_0x9af162(0x177)](_0x9af162(0x137))[_0x9af162(0xf6)][_0x9af162(0x125)]('d-none'),document[_0x9af162(0x177)]('.visualizer')[_0x9af162(0xf6)][_0x9af162(0x169)](_0x9af162(0x127)),document[_0x9af162(0x109)](_0x9af162(0x10e))[_0x9af162(0x16c)]=_0x9af162(0x114);}),moveRightButton[_0x561081(0x15c)](_0x561081(0x14c),function(){const _0x132898=_0x561081;moveLeftButton['removeAttribute']('disabled'),moveRightButton['setAttribute'](_0x132898(0x173),''),document[_0x132898(0x177)](_0x132898(0xf4))[_0x132898(0xf6)][_0x132898(0x169)](_0x132898(0x127)),document[_0x132898(0x177)](_0x132898(0x155))[_0x132898(0xf6)][_0x132898(0x169)]('d-none'),document['querySelector'](_0x132898(0x149))[_0x132898(0xf6)]['remove'](_0x132898(0x127)),document[_0x132898(0x177)]('.equations')[_0x132898(0xf6)][_0x132898(0x169)](_0x132898(0x127)),document['querySelector']('.rotations')[_0x132898(0xf6)][_0x132898(0x169)](_0x132898(0x127)),document['querySelector'](_0x132898(0x137))[_0x132898(0xf6)][_0x132898(0x169)](_0x132898(0x127)),document['querySelector'](_0x132898(0x156))[_0x132898(0xf6)][_0x132898(0x125)](_0x132898(0x127)),document[_0x132898(0x109)](_0x132898(0x10e))[_0x132898(0x16c)]=_0x132898(0xfa);});const resetButton=document['getElementById'](_0x561081(0x157));function _0xfc49(_0x32c22a,_0x2baa67){const _0x5c3404=_0x5c34();return _0xfc49=function(_0xfc49fa,_0x34f7b2){_0xfc49fa=_0xfc49fa-0xe5;let _0x5384ba=_0x5c3404[_0xfc49fa];return _0x5384ba;},_0xfc49(_0x32c22a,_0x2baa67);}resetButton[_0x561081(0x15c)](_0x561081(0x14c),function(){location['reload']();}),takebackButton[_0x561081(0x15c)]('click',function(){const _0x5b1c31=_0x561081;document[_0x5b1c31(0x177)](_0x5b1c31(0x115))!=null&&(document[_0x5b1c31(0x177)](_0x5b1c31(0x115))['getAttribute'](_0x5b1c31(0xea))==_0x5b1c31(0x14e)&&(sections['pop'](),visualizeParameters(),document[_0x5b1c31(0x109)]('spanNo')['innerHTML']=sections[_0x5b1c31(0x12f)]+0x1,sections['length']<0x1&&(document[_0x5b1c31(0x109)](_0x5b1c31(0x103))[_0x5b1c31(0x10b)](_0x5b1c31(0x173)),document['getElementById'](_0x5b1c31(0x100))[_0x5b1c31(0x10b)](_0x5b1c31(0x173)),document['getElementById'](_0x5b1c31(0x103))['classList']['remove']('is-valid'),document[_0x5b1c31(0x109)](_0x5b1c31(0x100))[_0x5b1c31(0xf6)]['remove'](_0x5b1c31(0x133))),document[_0x5b1c31(0x109)]('FlexRigInput')[_0x5b1c31(0xf6)]['remove'](_0x5b1c31(0x133)),document['getElementById'](_0x5b1c31(0x15d))[_0x5b1c31(0x134)]=''),document['querySelector'](_0x5b1c31(0x115))[_0x5b1c31(0x144)]('element-type')==_0x5b1c31(0x147)&&(settlements[_0x5b1c31(0xf9)](),visualizeParameters(),document[_0x5b1c31(0x109)]('supportNo')[_0x5b1c31(0x16c)]=settlements[_0x5b1c31(0x12f)]+0x1,document['getElementById']('settlementInput')[_0x5b1c31(0xf6)][_0x5b1c31(0x169)]('is-valid')),document['querySelector'](_0x5b1c31(0x115))[_0x5b1c31(0x144)](_0x5b1c31(0xea))==_0x5b1c31(0x174)&&(pointLoads['pop'](),visualizeParameters(),document[_0x5b1c31(0x109)]('plNo')[_0x5b1c31(0x16c)]=pointLoads['length']+0x1),document[_0x5b1c31(0x177)](_0x5b1c31(0x115))[_0x5b1c31(0x144)](_0x5b1c31(0xea))=='Distributed\x20Load'&&(distributedLoads[_0x5b1c31(0xf9)](),visualizeParameters(),document[_0x5b1c31(0x109)](_0x5b1c31(0x161))[_0x5b1c31(0x16c)]=distributedLoads[_0x5b1c31(0x12f)]+0x1),document[_0x5b1c31(0x177)]('.menu-input-inputs\x20>\x20div:not(.d-none)')[_0x5b1c31(0x144)](_0x5b1c31(0xea))==_0x5b1c31(0x132)&&(moments[_0x5b1c31(0xf9)](),visualizeParameters(),document[_0x5b1c31(0x109)](_0x5b1c31(0xf1))[_0x5b1c31(0x16c)]=moments[_0x5b1c31(0x12f)]+0x1));}),addButton['addEventListener'](_0x561081(0x14c),function(){const _0x32c637=_0x561081;if(document['querySelector']('.menu-input-inputs\x20>\x20div:not(.d-none)')!=null){document[_0x32c637(0x177)](_0x32c637(0x115))[_0x32c637(0x144)]('element-type')==_0x32c637(0xfd)&&(beamLength=collectBeamData(),visualizeParameters());if(document[_0x32c637(0x177)]('.menu-input-inputs\x20>\x20div:not(.d-none)')[_0x32c637(0x144)]('element-type')==_0x32c637(0x11f)){const _0x26ae1c=collectSupportData();if(_0x26ae1c==-0x1)return;if(supports!=null)for(let _0xb2a840=0x0;_0xb2a840<supports[_0x32c637(0x12f)];_0xb2a840++){if(supports[_0xb2a840][_0x32c637(0x111)]==_0x26ae1c['location']){if(document[_0x32c637(0x177)](_0x32c637(0x108))==null){const _0x32eb0a=document['createElement']('p');_0x32eb0a[_0x32c637(0x16c)]=_0x32c637(0x124),_0x32eb0a[_0x32c637(0xf6)][_0x32c637(0x125)]('error-text');const _0x184887=document[_0x32c637(0x177)](_0x32c637(0xfb));_0x184887['appendChild'](_0x32eb0a);}return;}}supports[supports[_0x32c637(0x12f)]]=_0x26ae1c,visualizeParameters(),document[_0x32c637(0x109)]('supportSupportNo')[_0x32c637(0x16c)]=supports['length']+0x1,document[_0x32c637(0x109)](_0x32c637(0xf0))[_0x32c637(0xf6)][_0x32c637(0x159)](_0x32c637(0x129))&&document[_0x32c637(0x109)](_0x32c637(0xf0))[_0x32c637(0xf6)][_0x32c637(0x169)]('active'),document[_0x32c637(0x109)]('m-support')['classList']['contains']('active')&&document[_0x32c637(0x109)](_0x32c637(0x140))[_0x32c637(0xf6)]['remove'](_0x32c637(0x129)),document[_0x32c637(0x109)](_0x32c637(0x10c))[_0x32c637(0xf6)][_0x32c637(0x159)](_0x32c637(0x129))&&document[_0x32c637(0x109)](_0x32c637(0x10c))['classList'][_0x32c637(0x169)](_0x32c637(0x129)),document[_0x32c637(0x109)](_0x32c637(0x120))[_0x32c637(0x134)]='',supports['length']>0x2&&(document[_0x32c637(0x109)](_0x32c637(0x175))[_0x32c637(0x10b)]('disabled'),document[_0x32c637(0x109)](_0x32c637(0xe6))[_0x32c637(0x10b)](_0x32c637(0x173)),noOfSpans=calculateNoOfSpans()),console[_0x32c637(0x164)](settlements),console[_0x32c637(0x164)](supports),console[_0x32c637(0x164)](supports[_0x32c637(0x12f)]);}document[_0x32c637(0x177)]('.menu-input-inputs\x20>\x20div:not(.d-none)')[_0x32c637(0x144)]('element-type')==_0x32c637(0x14e)&&(collectSectionData(),visualizeParameters()),document[_0x32c637(0x177)](_0x32c637(0x115))[_0x32c637(0x144)](_0x32c637(0xea))=='Settlement'&&(collectSettlementData(),visualizeParameters()),document[_0x32c637(0x177)](_0x32c637(0x115))[_0x32c637(0x144)]('element-type')==_0x32c637(0x174)&&(collectPointLoadData(),visualizeParameters()),document['querySelector'](_0x32c637(0x115))[_0x32c637(0x144)](_0x32c637(0xea))=='Distributed\x20Load'&&(collectDistributedLoadData(),visualizeParameters()),document['querySelector'](_0x32c637(0x115))[_0x32c637(0x144)](_0x32c637(0xea))==_0x32c637(0x132)&&(collectMomentData(),visualizeParameters());}}),document['addEventListener']('keydown',function(_0x36f9ed){const _0x196ce1=_0x561081;if(_0x36f9ed[_0x196ce1(0x118)]=='Enter'){if(document['querySelector'](_0x196ce1(0x115))!=null){document[_0x196ce1(0x177)](_0x196ce1(0x115))['getAttribute'](_0x196ce1(0xea))=='Beam'&&(beamLength=collectBeamData(),visualizeParameters());if(document[_0x196ce1(0x177)](_0x196ce1(0x115))[_0x196ce1(0x144)](_0x196ce1(0xea))==_0x196ce1(0x11f)){const _0x10ea57=collectSupportData();if(_0x10ea57==-0x1)return;if(supports!=null)for(let _0x452dd5=0x0;_0x452dd5<supports['length'];_0x452dd5++){if(supports[_0x452dd5]['location']==_0x10ea57[_0x196ce1(0x111)]){if(document[_0x196ce1(0x177)]('#support-input\x20>\x20p:last-child')==null){const _0x1721bb=document['createElement']('p');_0x1721bb[_0x196ce1(0x16c)]=_0x196ce1(0x124),_0x1721bb[_0x196ce1(0xf6)][_0x196ce1(0x125)](_0x196ce1(0x139));const _0x2076c0=document[_0x196ce1(0x177)](_0x196ce1(0xfb));_0x2076c0['appendChild'](_0x1721bb);}return;}}supports[supports['length']]=_0x10ea57,visualizeParameters(),document[_0x196ce1(0x109)]('supportSupportNo')[_0x196ce1(0x16c)]=supports[_0x196ce1(0x12f)]+0x1,document[_0x196ce1(0x109)](_0x196ce1(0xf0))[_0x196ce1(0xf6)]['contains'](_0x196ce1(0x129))&&document[_0x196ce1(0x109)](_0x196ce1(0xf0))['classList'][_0x196ce1(0x169)](_0x196ce1(0x129)),document[_0x196ce1(0x109)](_0x196ce1(0x140))['classList'][_0x196ce1(0x159)]('active')&&document[_0x196ce1(0x109)](_0x196ce1(0x140))[_0x196ce1(0xf6)][_0x196ce1(0x169)]('active'),document[_0x196ce1(0x109)](_0x196ce1(0x10c))[_0x196ce1(0xf6)][_0x196ce1(0x159)](_0x196ce1(0x129))&&document[_0x196ce1(0x109)](_0x196ce1(0x10c))[_0x196ce1(0xf6)][_0x196ce1(0x169)](_0x196ce1(0x129)),document['getElementById']('support-location-form')['value']='',supports[_0x196ce1(0x12f)]>0x2&&(document[_0x196ce1(0x109)](_0x196ce1(0x175))[_0x196ce1(0x10b)](_0x196ce1(0x173)),document[_0x196ce1(0x109)](_0x196ce1(0xe6))[_0x196ce1(0x10b)](_0x196ce1(0x173)),noOfSpans=calculateNoOfSpans()),console[_0x196ce1(0x164)](settlements),console[_0x196ce1(0x164)](supports),console['log'](supports['length']);}document[_0x196ce1(0x177)](_0x196ce1(0x115))[_0x196ce1(0x144)](_0x196ce1(0xea))==_0x196ce1(0x14e)&&(collectSectionData(),visualizeParameters()),document[_0x196ce1(0x177)]('.menu-input-inputs\x20>\x20div:not(.d-none)')[_0x196ce1(0x144)](_0x196ce1(0xea))==_0x196ce1(0x147)&&(collectSettlementData(),visualizeParameters()),document[_0x196ce1(0x177)](_0x196ce1(0x115))[_0x196ce1(0x144)](_0x196ce1(0xea))=='Point\x20Load'&&(collectPointLoadData(),visualizeParameters()),document[_0x196ce1(0x177)](_0x196ce1(0x115))['getAttribute']('element-type')==_0x196ce1(0xe5)&&(collectDistributedLoadData(),visualizeParameters()),document[_0x196ce1(0x177)]('.menu-input-inputs\x20>\x20div:not(.d-none)')[_0x196ce1(0x144)](_0x196ce1(0xea))==_0x196ce1(0x132)&&(collectMomentData(),visualizeParameters());}}});function collectBeamData(){const _0x54a6d0=_0x561081,_0x415dec=document['getElementById']('beamLengthInput')[_0x54a6d0(0x134)][_0x54a6d0(0x106)]();return _0x415dec==''||isNaN(_0x415dec)||_0x415dec<=0x0?(document[_0x54a6d0(0x109)](_0x54a6d0(0x172))['classList']['add'](_0x54a6d0(0x11a)),addErrorElement(),disableButtons('beam'),-0x1):(document[_0x54a6d0(0x109)](_0x54a6d0(0x172))[_0x54a6d0(0xf6)][_0x54a6d0(0x169)](_0x54a6d0(0x11a)),document[_0x54a6d0(0x109)](_0x54a6d0(0x172))['classList'][_0x54a6d0(0x125)](_0x54a6d0(0x133)),document[_0x54a6d0(0x109)](_0x54a6d0(0x172))[_0x54a6d0(0x176)](_0x54a6d0(0x173),''),document[_0x54a6d0(0x177)]('.add-on\x20>\x20p')!=null&&document[_0x54a6d0(0x177)](_0x54a6d0(0xf3))[_0x54a6d0(0x169)](),console['log'](parseFloat(_0x415dec)),unDisableButtons(_0x54a6d0(0x166)),parseFloat(_0x415dec));}function collectSupportData(){const _0x20cc95=_0x561081;let _0x4182f2=null,_0xb74403=null;if(document[_0x20cc95(0x177)](_0x20cc95(0x154))!=null)_0x4182f2=document[_0x20cc95(0x177)](_0x20cc95(0x154))[_0x20cc95(0x144)](_0x20cc95(0x123)),console[_0x20cc95(0x164)](_0x4182f2);else{if(document[_0x20cc95(0x177)]('#support-input\x20>\x20p')==null){const _0x396c62=document['createElement']('p');_0x396c62['innerHTML']=_0x20cc95(0x105),_0x396c62[_0x20cc95(0xf6)][_0x20cc95(0x125)](_0x20cc95(0x139));const _0x441c81=document[_0x20cc95(0x177)](_0x20cc95(0xfb));_0x441c81[_0x20cc95(0x101)](_0x396c62,_0x441c81[_0x20cc95(0xf5)][0x2]);}}if(document[_0x20cc95(0x109)](_0x20cc95(0x120))[_0x20cc95(0x134)][_0x20cc95(0x106)]()!=''&&!isNaN(document[_0x20cc95(0x109)](_0x20cc95(0x120))['value'][_0x20cc95(0x106)]())&&document['getElementById']('support-location-form')[_0x20cc95(0x134)][_0x20cc95(0x106)]()<=beamLength)_0xb74403=document[_0x20cc95(0x109)](_0x20cc95(0x120))[_0x20cc95(0x134)]['trim'](),document[_0x20cc95(0x177)](_0x20cc95(0x108))!=null&&document[_0x20cc95(0x177)](_0x20cc95(0x108))[_0x20cc95(0x169)]();else{if(document[_0x20cc95(0x177)](_0x20cc95(0x108))==null){const _0x49506b=document[_0x20cc95(0x135)]('p');_0x49506b[_0x20cc95(0x16c)]='select\x20a\x20valid\x20support\x20position!',_0x49506b[_0x20cc95(0xf6)]['add'](_0x20cc95(0x139));const _0x1a94b0=document[_0x20cc95(0x177)]('#support-input');_0x1a94b0['appendChild'](_0x49506b);}}if(_0x4182f2!=null&&_0xb74403!=null){const _0x50943b={'supportNo':supports[_0x20cc95(0x12f)]+0x1,'type':_0x4182f2,'location':parseFloat(_0xb74403)};return _0x50943b;}else return-0x1;}function collectSectionData(){const _0x2f72fe=_0x561081;let _0x573ec6;if(sections['length']<noOfSpans){console['log'](_0x2f72fe(0x110));const _0x116e6f=document['getElementById']('MoiInput')[_0x2f72fe(0x134)][_0x2f72fe(0x106)]();if(_0x116e6f!=''&&(isNaN(_0x116e6f)||_0x116e6f<0x0))return document[_0x2f72fe(0x109)](_0x2f72fe(0x103))[_0x2f72fe(0xf6)][_0x2f72fe(0x125)](_0x2f72fe(0x11a)),addErrorElement(),-0x1;else document[_0x2f72fe(0x109)]('MoiInput')[_0x2f72fe(0xf6)][_0x2f72fe(0x169)](_0x2f72fe(0x11a)),document[_0x2f72fe(0x109)](_0x2f72fe(0x103))[_0x2f72fe(0xf6)][_0x2f72fe(0x125)]('is-valid'),document[_0x2f72fe(0x177)](_0x2f72fe(0xf3))!=null&&document[_0x2f72fe(0x177)]('.add-on\x20>\x20p')[_0x2f72fe(0x169)]();const _0x1fef5f=document[_0x2f72fe(0x109)](_0x2f72fe(0x100))[_0x2f72fe(0x134)][_0x2f72fe(0x106)]();if(_0x1fef5f!=''&&(isNaN(_0x1fef5f)||_0x1fef5f<0x0))return document[_0x2f72fe(0x109)](_0x2f72fe(0x100))['classList'][_0x2f72fe(0x125)]('is-invalid'),addErrorElement(),-0x1;else document['getElementById'](_0x2f72fe(0x100))['classList'][_0x2f72fe(0x169)](_0x2f72fe(0x11a)),document[_0x2f72fe(0x109)](_0x2f72fe(0x100))[_0x2f72fe(0xf6)][_0x2f72fe(0x125)](_0x2f72fe(0x133)),document[_0x2f72fe(0x177)](_0x2f72fe(0xf3))!=null&&document[_0x2f72fe(0x177)](_0x2f72fe(0xf3))[_0x2f72fe(0x169)]();const _0x442506=document[_0x2f72fe(0x109)](_0x2f72fe(0x15d))[_0x2f72fe(0x134)]['trim']();if(_0x442506==''||isNaN(_0x442506)||_0x442506<0x0)return document['getElementById'](_0x2f72fe(0x15d))[_0x2f72fe(0xf6)][_0x2f72fe(0x125)](_0x2f72fe(0x11a)),addErrorElement(),-0x1;else document['getElementById'](_0x2f72fe(0x15d))[_0x2f72fe(0xf6)][_0x2f72fe(0x169)](_0x2f72fe(0x11a)),document[_0x2f72fe(0x109)]('FlexRigInput')[_0x2f72fe(0xf6)][_0x2f72fe(0x125)]('is-valid'),document[_0x2f72fe(0x177)](_0x2f72fe(0xf3))!=null&&document[_0x2f72fe(0x177)](_0x2f72fe(0xf3))[_0x2f72fe(0x169)]();sections['length']==0x0?(_0x573ec6={'Moi':_0x116e6f==''?null:parseFloat(_0x116e6f),'YoungMod':_0x1fef5f==''?null:parseFloat(_0x1fef5f),'Coefficient':parseFloat(_0x442506)},document['getElementById']('MoiInput')[_0x2f72fe(0x176)](_0x2f72fe(0x173),''),document[_0x2f72fe(0x109)]('YoungModInput')[_0x2f72fe(0x176)](_0x2f72fe(0x173),'')):_0x573ec6={'Moi':sections[sections[_0x2f72fe(0x12f)]-0x1][_0x2f72fe(0x116)],'YoungMod':sections[sections[_0x2f72fe(0x12f)]-0x1][_0x2f72fe(0x153)],'Coefficient':parseFloat(_0x442506)},sections[sections[_0x2f72fe(0x12f)]]=_0x573ec6,sections[_0x2f72fe(0x12f)]<noOfSpans&&(document[_0x2f72fe(0x109)]('spanNo')['innerHTML']=sections['length']+0x1,document[_0x2f72fe(0x109)](_0x2f72fe(0x15d))[_0x2f72fe(0x134)]='',document[_0x2f72fe(0x109)](_0x2f72fe(0x15d))[_0x2f72fe(0xf6)][_0x2f72fe(0x169)](_0x2f72fe(0x133))),console[_0x2f72fe(0x164)](sections);}}function collectSettlementData(){const _0x1167f6=_0x561081;if(settlements[_0x1167f6(0x12f)]<supports[_0x1167f6(0x12f)]){console[_0x1167f6(0x164)](_0x1167f6(0x110));const _0x96c1da=document[_0x1167f6(0x109)]('settlementInput')[_0x1167f6(0x134)][_0x1167f6(0x106)]();if(_0x96c1da==''||isNaN(_0x96c1da)||parseFloat(_0x96c1da)<0x0)return document[_0x1167f6(0x109)]('settlementInput')[_0x1167f6(0xf6)]['add'](_0x1167f6(0x11a)),addErrorElement(),-0x1;else document[_0x1167f6(0x109)](_0x1167f6(0x13d))[_0x1167f6(0xf6)][_0x1167f6(0x169)](_0x1167f6(0x11a)),document[_0x1167f6(0x109)]('settlementInput')['classList'][_0x1167f6(0x125)](_0x1167f6(0x133)),document[_0x1167f6(0x177)](_0x1167f6(0xf3))!=null&&document[_0x1167f6(0x177)](_0x1167f6(0xf3))['remove']();settlements[settlements[_0x1167f6(0x12f)]]=parseFloat(_0x96c1da),settlements[_0x1167f6(0x12f)]<supports[_0x1167f6(0x12f)]&&(document[_0x1167f6(0x109)](_0x1167f6(0xed))[_0x1167f6(0x16c)]=settlements[_0x1167f6(0x12f)]+0x1,document[_0x1167f6(0x109)](_0x1167f6(0x13d))[_0x1167f6(0x134)]='',document[_0x1167f6(0x109)](_0x1167f6(0x13d))['classList'][_0x1167f6(0x169)](_0x1167f6(0x133))),console[_0x1167f6(0x164)](settlements);}}function collectPointLoadData(){const _0x2cf997=_0x561081,_0x4c9701=document[_0x2cf997(0x109)](_0x2cf997(0x150))[_0x2cf997(0x134)][_0x2cf997(0x106)]();if(_0x4c9701==''||isNaN(_0x4c9701)||parseFloat(_0x4c9701)<0x0||parseFloat(_0x4c9701)>beamLength)return document[_0x2cf997(0x109)](_0x2cf997(0x150))[_0x2cf997(0xf6)][_0x2cf997(0x125)](_0x2cf997(0x11a)),addErrorElement(),-0x1;else document['getElementById'](_0x2cf997(0x150))[_0x2cf997(0xf6)]['remove'](_0x2cf997(0x11a)),document[_0x2cf997(0x109)]('pl-location-form')[_0x2cf997(0xf6)][_0x2cf997(0x125)]('is-valid'),document[_0x2cf997(0x177)](_0x2cf997(0xf3))!=null&&document[_0x2cf997(0x177)]('.add-on\x20>\x20p')[_0x2cf997(0x169)]();const _0x14e0b7=document[_0x2cf997(0x109)](_0x2cf997(0x11e))[_0x2cf997(0x134)]['trim']();if(_0x14e0b7==''||isNaN(_0x14e0b7)||parseFloat(_0x14e0b7)<0x0)return document[_0x2cf997(0x109)](_0x2cf997(0x11e))[_0x2cf997(0xf6)][_0x2cf997(0x125)](_0x2cf997(0x11a)),addErrorElement(),-0x1;else document['getElementById'](_0x2cf997(0x11e))[_0x2cf997(0xf6)][_0x2cf997(0x169)](_0x2cf997(0x11a)),document['getElementById']('pl-magnitude-form')['classList'][_0x2cf997(0x125)](_0x2cf997(0x133)),document['querySelector'](_0x2cf997(0xf3))!=null&&document[_0x2cf997(0x177)](_0x2cf997(0xf3))[_0x2cf997(0x169)]();const _0x19af93={'location':parseFloat(_0x4c9701),'magnitude':parseFloat(_0x14e0b7)};pointLoads[pointLoads[_0x2cf997(0x12f)]]=_0x19af93,document[_0x2cf997(0x109)]('plNo')[_0x2cf997(0x16c)]=pointLoads[_0x2cf997(0x12f)]+0x1,document[_0x2cf997(0x109)](_0x2cf997(0x150))[_0x2cf997(0x134)]='',document[_0x2cf997(0x109)](_0x2cf997(0x11e))[_0x2cf997(0x134)]='',document[_0x2cf997(0x109)](_0x2cf997(0x150))[_0x2cf997(0xf6)][_0x2cf997(0x169)](_0x2cf997(0x133)),document[_0x2cf997(0x109)](_0x2cf997(0x11e))[_0x2cf997(0xf6)][_0x2cf997(0x169)]('is-valid'),console[_0x2cf997(0x164)](pointLoads);}function collectDistributedLoadData(){const _0x9c3cb9=_0x561081,_0x5c9444=document[_0x9c3cb9(0x109)](_0x9c3cb9(0xff))[_0x9c3cb9(0x134)][_0x9c3cb9(0x106)](),_0x583b60=document['getElementById'](_0x9c3cb9(0x16f))[_0x9c3cb9(0x134)][_0x9c3cb9(0x106)](),_0x3f029a=document[_0x9c3cb9(0x109)](_0x9c3cb9(0x145))[_0x9c3cb9(0x134)][_0x9c3cb9(0x106)](),_0x373d5e=document[_0x9c3cb9(0x109)]('dlEndMag')[_0x9c3cb9(0x134)][_0x9c3cb9(0x106)]();if(parseFloat(_0x5c9444)>parseFloat(_0x583b60))return document[_0x9c3cb9(0x109)](_0x9c3cb9(0xff))['classList'][_0x9c3cb9(0x125)]('is-invalid'),document[_0x9c3cb9(0x109)](_0x9c3cb9(0x16f))[_0x9c3cb9(0xf6)][_0x9c3cb9(0x125)]('is-invalid'),addErrorElement(),-0x1;else document['getElementById'](_0x9c3cb9(0xff))['classList'][_0x9c3cb9(0x169)]('is-invalid'),document['getElementById'](_0x9c3cb9(0xff))[_0x9c3cb9(0xf6)][_0x9c3cb9(0x125)]('is-valid'),document['getElementById'](_0x9c3cb9(0x16f))['classList'][_0x9c3cb9(0x169)](_0x9c3cb9(0x11a)),document[_0x9c3cb9(0x109)]('dlEnd')[_0x9c3cb9(0xf6)][_0x9c3cb9(0x125)]('is-valid'),document[_0x9c3cb9(0x177)](_0x9c3cb9(0xf3))!=null&&document[_0x9c3cb9(0x177)]('.add-on\x20>\x20p')[_0x9c3cb9(0x169)]();if(_0x5c9444==''||isNaN(_0x5c9444)||parseFloat(_0x5c9444)<0x0||parseFloat(_0x5c9444)>beamLength)return document[_0x9c3cb9(0x109)]('dlStart')[_0x9c3cb9(0xf6)][_0x9c3cb9(0x125)](_0x9c3cb9(0x11a)),addErrorElement(),-0x1;else document['getElementById'](_0x9c3cb9(0xff))['classList'][_0x9c3cb9(0x169)]('is-invalid'),document[_0x9c3cb9(0x109)]('dlStart')['classList']['add'](_0x9c3cb9(0x133)),document[_0x9c3cb9(0x177)](_0x9c3cb9(0xf3))!=null&&document['querySelector'](_0x9c3cb9(0xf3))[_0x9c3cb9(0x169)]();if(_0x583b60==''||isNaN(_0x583b60)||parseFloat(_0x583b60)<0x0||parseFloat(_0x583b60)>beamLength)return document['getElementById'](_0x9c3cb9(0x16f))[_0x9c3cb9(0xf6)][_0x9c3cb9(0x125)]('is-invalid'),addErrorElement(),-0x1;else document[_0x9c3cb9(0x109)]('dlEnd')[_0x9c3cb9(0xf6)][_0x9c3cb9(0x169)](_0x9c3cb9(0x11a)),document[_0x9c3cb9(0x109)](_0x9c3cb9(0x16f))[_0x9c3cb9(0xf6)]['add'](_0x9c3cb9(0x133)),document['querySelector'](_0x9c3cb9(0xf3))!=null&&document[_0x9c3cb9(0x177)](_0x9c3cb9(0xf3))['remove']();if(_0x3f029a==''||isNaN(_0x3f029a)||parseFloat(_0x3f029a)<0x0)return document[_0x9c3cb9(0x109)](_0x9c3cb9(0x145))['classList'][_0x9c3cb9(0x125)](_0x9c3cb9(0x11a)),addErrorElement(),-0x1;else document[_0x9c3cb9(0x109)](_0x9c3cb9(0x145))[_0x9c3cb9(0xf6)]['remove'](_0x9c3cb9(0x11a)),document[_0x9c3cb9(0x109)](_0x9c3cb9(0x145))[_0x9c3cb9(0xf6)]['add'](_0x9c3cb9(0x133)),document[_0x9c3cb9(0x177)]('.add-on\x20>\x20p')!=null&&document[_0x9c3cb9(0x177)](_0x9c3cb9(0xf3))[_0x9c3cb9(0x169)]();if(_0x373d5e==''||isNaN(_0x373d5e)||parseFloat(_0x373d5e)<0x0)return document[_0x9c3cb9(0x109)](_0x9c3cb9(0xf7))['classList'][_0x9c3cb9(0x125)](_0x9c3cb9(0x11a)),addErrorElement(),-0x1;else document[_0x9c3cb9(0x109)]('dlEndMag')[_0x9c3cb9(0xf6)][_0x9c3cb9(0x169)](_0x9c3cb9(0x11a)),document['getElementById']('dlEndMag')['classList'][_0x9c3cb9(0x125)](_0x9c3cb9(0x133)),document[_0x9c3cb9(0x177)](_0x9c3cb9(0xf3))!=null&&document[_0x9c3cb9(0x177)](_0x9c3cb9(0xf3))['remove']();const _0x5d3bea={'start':parseFloat(_0x5c9444),'end':parseFloat(_0x583b60),'startMag':parseFloat(_0x3f029a),'endMag':parseFloat(_0x373d5e)};distributedLoads[distributedLoads[_0x9c3cb9(0x12f)]]=_0x5d3bea,document[_0x9c3cb9(0x109)](_0x9c3cb9(0x161))[_0x9c3cb9(0x16c)]=distributedLoads[_0x9c3cb9(0x12f)]+0x1,document['getElementById'](_0x9c3cb9(0xff))[_0x9c3cb9(0x134)]='',document['getElementById'](_0x9c3cb9(0x16f))['value']='',document['getElementById'](_0x9c3cb9(0x145))[_0x9c3cb9(0x134)]='',document['getElementById'](_0x9c3cb9(0xf7))[_0x9c3cb9(0x134)]='',document['getElementById'](_0x9c3cb9(0xff))[_0x9c3cb9(0xf6)]['remove'](_0x9c3cb9(0x133)),document['getElementById'](_0x9c3cb9(0x16f))[_0x9c3cb9(0xf6)]['remove']('is-valid'),document[_0x9c3cb9(0x109)](_0x9c3cb9(0x145))[_0x9c3cb9(0xf6)][_0x9c3cb9(0x169)](_0x9c3cb9(0x133)),document['getElementById'](_0x9c3cb9(0xf7))['classList'][_0x9c3cb9(0x169)](_0x9c3cb9(0x133)),console[_0x9c3cb9(0x164)](distributedLoads);}function collectMomentData(){const _0xbd0484=_0x561081,_0x230e7d=document['getElementById'](_0xbd0484(0xe9))[_0xbd0484(0x134)][_0xbd0484(0x106)]();if(_0x230e7d==''||isNaN(_0x230e7d)||parseFloat(_0x230e7d)<0x0||parseFloat(_0x230e7d)>beamLength)return document[_0xbd0484(0x109)](_0xbd0484(0xe9))[_0xbd0484(0xf6)]['add']('is-invalid'),addErrorElement(),-0x1;else document[_0xbd0484(0x109)](_0xbd0484(0xe9))[_0xbd0484(0xf6)]['remove'](_0xbd0484(0x11a)),document[_0xbd0484(0x109)](_0xbd0484(0xe9))[_0xbd0484(0xf6)][_0xbd0484(0x125)](_0xbd0484(0x133)),document['querySelector'](_0xbd0484(0xf3))!=null&&document['querySelector'](_0xbd0484(0xf3))[_0xbd0484(0x169)]();const _0x46bd3a=document[_0xbd0484(0x109)](_0xbd0484(0x16a))[_0xbd0484(0x134)]['trim']();if(_0x46bd3a==''||isNaN(_0x46bd3a))return document[_0xbd0484(0x109)](_0xbd0484(0x16a))[_0xbd0484(0xf6)][_0xbd0484(0x125)]('is-invalid'),addErrorElement(),-0x1;else document[_0xbd0484(0x109)](_0xbd0484(0x16a))[_0xbd0484(0xf6)][_0xbd0484(0x169)](_0xbd0484(0x11a)),document[_0xbd0484(0x109)](_0xbd0484(0x16a))[_0xbd0484(0xf6)][_0xbd0484(0x125)](_0xbd0484(0x133)),document[_0xbd0484(0x177)]('.add-on\x20>\x20p')!=null&&document['querySelector'](_0xbd0484(0xf3))['remove']();const _0x26ba9d={'position':parseFloat(_0x230e7d),'magnitude':parseFloat(_0x46bd3a)};moments[moments[_0xbd0484(0x12f)]]=_0x26ba9d,document[_0xbd0484(0x109)]('mNo')[_0xbd0484(0x16c)]=moments['length']+0x1,document[_0xbd0484(0x109)](_0xbd0484(0xe9))['value']='',document['getElementById'](_0xbd0484(0x16a))['value']='',document[_0xbd0484(0x109)](_0xbd0484(0xe9))[_0xbd0484(0xf6)][_0xbd0484(0x169)](_0xbd0484(0x133)),document[_0xbd0484(0x109)](_0xbd0484(0x16a))[_0xbd0484(0xf6)]['remove'](_0xbd0484(0x133)),console[_0xbd0484(0x164)](moments);}function unDisableButtons(_0x98fb5a){const _0x522380=_0x561081;_0x98fb5a==_0x522380(0x166)&&(document['getElementById'](_0x522380(0x130))[_0x522380(0x10b)](_0x522380(0x173)),document['getElementById'](_0x522380(0x12e))[_0x522380(0x10b)](_0x522380(0x173)),document[_0x522380(0x109)]('dl-button')[_0x522380(0x10b)](_0x522380(0x173)),document[_0x522380(0x109)](_0x522380(0x13c))['removeAttribute'](_0x522380(0x173)));}function disableButtons(_0x49ee1c){const _0x1e8ba9=_0x561081;_0x49ee1c==_0x1e8ba9(0x166)&&(document[_0x1e8ba9(0x109)](_0x1e8ba9(0x130))['setAttribute']('disabled',''),document[_0x1e8ba9(0x109)](_0x1e8ba9(0x12e))[_0x1e8ba9(0x176)](_0x1e8ba9(0x173),''),document[_0x1e8ba9(0x109)](_0x1e8ba9(0x121))[_0x1e8ba9(0x176)](_0x1e8ba9(0x173),''),document[_0x1e8ba9(0x109)](_0x1e8ba9(0x13c))[_0x1e8ba9(0x176)]('disabled',''));}function addErrorElement(){const _0x54478d=_0x561081;if(document[_0x54478d(0x177)](_0x54478d(0xf3))==null){const _0x33a46d=document[_0x54478d(0x135)]('p');_0x33a46d[_0x54478d(0x16c)]=_0x54478d(0x128),_0x33a46d[_0x54478d(0xf6)][_0x54478d(0x125)](_0x54478d(0x142)),_0x33a46d[_0x54478d(0xf6)]['add']('error-text');const _0x584903=document[_0x54478d(0x177)]('.add-on');_0x584903['insertBefore'](_0x33a46d,_0x584903[_0x54478d(0x162)]);}}function calculateNoOfSpans(){const _0x2728d1=_0x561081;let _0x580288=0x0;return supports['sort'](function(_0x30c261,_0x3fcd4e){const _0x25b66c=_0xfc49;return _0x30c261['location']-_0x3fcd4e[_0x25b66c(0x111)];}),_0x580288=supports[0x0]['location']==0x0?_0x580288:_0x580288+0x1,_0x580288=supports[supports[_0x2728d1(0x12f)]-0x1]['location']==beamLength?_0x580288:_0x580288+0x1,_0x580288=_0x580288+supports[_0x2728d1(0x12f)]-0x1,console[_0x2728d1(0x164)](_0x580288),_0x580288;}function exportParameters(){const _0x18322c=_0x561081;_0x2e38a7[_0x18322c(0x11b)]({'beamLength':beamLength,'supports':supports,'sections':sections,'settlements':settlements,'pointLoads':pointLoads,'distributedLoads':distributedLoads,'moments':moments,'noOfSpans':noOfSpans});}function visualizeParameters(){const _0x170f65=_0x561081,_0x56fe80=document['querySelector'](_0x170f65(0x156));while(_0x56fe80[_0x170f65(0x162)]){_0x56fe80[_0x170f65(0x10a)](_0x56fe80[_0x170f65(0x162)]);}let _0x551e88=_0x170f65(0x117)+beamLength+'m';_0x551e88+=_0x170f65(0x14a),_0x551e88+=_0x170f65(0xfe),_0x551e88+=_0x170f65(0x14a),supports[_0x170f65(0x170)](function(_0x37a7f1,_0x30c2c4){const _0x2e4276=_0x170f65;return _0x37a7f1[_0x2e4276(0x111)]-_0x30c2c4[_0x2e4276(0x111)];});for(let _0x1c69c8=0x0;_0x1c69c8<supports[_0x170f65(0x12f)];_0x1c69c8++){_0x551e88+='Support\x20'+(_0x1c69c8+0x1)+':\x20'+supports[_0x1c69c8][_0x170f65(0x178)]+_0x170f65(0x165)+supports[_0x1c69c8]['location']+'m',_0x551e88+=_0x170f65(0x14a);}_0x551e88+=_0x170f65(0x122),_0x551e88+=_0x170f65(0x14a);for(let _0x9a4e17=0x0;_0x9a4e17<sections[_0x170f65(0x12f)];_0x9a4e17++){_0x551e88+='Section\x20'+(_0x9a4e17+0x1)+_0x170f65(0x10d)+sections[_0x9a4e17][_0x170f65(0x116)]+_0x170f65(0x13e)+sections[_0x9a4e17][_0x170f65(0x153)]+_0x170f65(0x16d)+sections[_0x9a4e17][_0x170f65(0xe8)],_0x551e88+='<br>';}_0x551e88+=_0x170f65(0x14f),_0x551e88+=_0x170f65(0x14a);for(let _0x59230f=0x0;_0x59230f<settlements[_0x170f65(0x12f)];_0x59230f++){_0x551e88+=_0x170f65(0x160)+(_0x59230f+0x1)+':\x20'+settlements[_0x59230f]+'mm',_0x551e88+=_0x170f65(0x14a);}_0x551e88+=_0x170f65(0x136),_0x551e88+=_0x170f65(0x14a);for(let _0x6711d5=0x0;_0x6711d5<pointLoads[_0x170f65(0x12f)];_0x6711d5++){_0x551e88+='Point\x20Load\x20'+(_0x6711d5+0x1)+':\x20'+pointLoads[_0x6711d5]['magnitude']+_0x170f65(0x13f)+pointLoads[_0x6711d5][_0x170f65(0x111)]+'m',_0x551e88+='<br>';}_0x551e88+='<br>>>\x20<b\x20class=\x22fs-4\x22>Distributed\x20Loads:</b>\x20',_0x551e88+=_0x170f65(0x14a);for(let _0x16c8b5=0x0;_0x16c8b5<distributedLoads['length'];_0x16c8b5++){_0x551e88+=_0x170f65(0x163)+(_0x16c8b5+0x1)+':\x20'+distributedLoads[_0x16c8b5][_0x170f65(0x11d)]+_0x170f65(0x107)+distributedLoads[_0x16c8b5]['endMag']+_0x170f65(0xef)+distributedLoads[_0x16c8b5]['start']+_0x170f65(0xeb)+distributedLoads[_0x16c8b5]['end']+'m',_0x551e88+=_0x170f65(0x14a);}_0x551e88+=_0x170f65(0xee),_0x551e88+=_0x170f65(0x14a);for(let _0x26a5fe=0x0;_0x26a5fe<moments[_0x170f65(0x12f)];_0x26a5fe++){_0x551e88+=_0x170f65(0x168)+(_0x26a5fe+0x1)+':\x20'+moments[_0x26a5fe][_0x170f65(0xfc)]+'KNm\x20at\x20'+moments[_0x26a5fe][_0x170f65(0xf2)]+'m',_0x551e88+=_0x170f65(0x14a);}const _0x6b0700=document['createElement']('p');_0x6b0700[_0x170f65(0x16c)]=_0x551e88,_0x56fe80[_0x170f65(0x15f)](_0x6b0700);}
+// AUTHOR: KADIRI VICTOR
+
+// This module contains the functions that will be used to collect and validate the data from the input fields
+
+// import the calculations module
+import * as calculationsModule from './calculations.js';
+
+// Global variables
+let beamLength;
+let supports = []; // array of objects
+let sections = []; // array of objects
+let settlements = []; // array of numbers
+let pointLoads = []; // array of objects
+let distributedLoads = []; // array of objects
+let moments = []; // array of objects
+let noOfSpans; // integer
+
+// Getting the menu buttons
+
+// menu buttons
+const beamButton = document.getElementById("beam-button");
+const supportButton = document.getElementById("support-button");
+const sectionButton = document.getElementById("section-button");
+const settlementButton = document.getElementById("settlement-button");
+const plButton = document.getElementById("pl-button");
+const dlButton = document.getElementById("dl-button");
+const mButton = document.getElementById("m-button");
+// back button
+const backButton = document.getElementById("back-button");
+// add button
+const addButton = document.getElementById("add-button");
+// takeback button
+const takebackButton = document.getElementById("takeback-button");
+
+
+// E V E N T   L I S T E N E R S
+// Adding event listeners to the buttons
+
+// menu buttons
+beamButton.addEventListener("click", function () {
+    document.querySelector(".menu-buttons").classList.add("d-none");
+    document.querySelector(".menu-inputs").classList.remove("d-none");
+    document.querySelector("[element-type='Beam']").classList.remove("d-none");
+    // add d-none to the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.add("d-none");
+});
+
+supportButton.addEventListener("click", function () {
+    document.querySelector(".menu-buttons").classList.add("d-none");
+    document.querySelector(".menu-inputs").classList.remove("d-none");
+    document.querySelector("[element-type='Support']").classList.remove("d-none");
+    // add d-none to the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.add("d-none");
+});
+
+sectionButton.addEventListener("click", function () {
+    document.querySelector(".menu-buttons").classList.add("d-none");
+    document.querySelector(".menu-inputs").classList.remove("d-none");
+    document.querySelector("[element-type='Section']").classList.remove("d-none");
+    // remove d-none from the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.remove("d-none");
+});
+
+settlementButton.addEventListener("click", function () {
+    document.querySelector(".menu-buttons").classList.add("d-none");
+    document.querySelector(".menu-inputs").classList.remove("d-none");
+    document.querySelector("[element-type='Settlement']").classList.remove("d-none");
+    // remove d-none from the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.remove("d-none");
+});
+
+plButton.addEventListener("click", function () {
+    document.querySelector(".menu-buttons").classList.add("d-none");
+    document.querySelector(".menu-inputs").classList.remove("d-none");
+    document.querySelector("[element-type='Point Load']").classList.remove("d-none");
+    // remove d-none from the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.remove("d-none");
+});
+
+dlButton.addEventListener("click", function () {
+    document.querySelector(".menu-buttons").classList.add("d-none");
+    document.querySelector(".menu-inputs").classList.remove("d-none");
+    document.querySelector("[element-type='Distributed Load']").classList.remove("d-none");
+    // remove d-none from the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.remove("d-none");
+});
+
+mButton.addEventListener("click", function () {
+    document.querySelector(".menu-buttons").classList.add("d-none");
+    document.querySelector(".menu-inputs").classList.remove("d-none");
+    document.querySelector("[element-type='Moments']").classList.remove("d-none");
+    // remove d-none from the takeback button id takeback-button
+    document.getElementById("takeback-button").classList.remove("d-none");
+});
+
+// back button
+// add an event listener to the back button that will add the d-none class to either of the element-type classes without the d-none class and remove the d-none class from the menu-buttons class
+backButton.addEventListener("click", function () {
+    document.querySelector(".menu-buttons").classList.remove("d-none");
+    document.querySelector(".menu-inputs").classList.add("d-none");
+    document.querySelector(".menu-input-inputs > div:not(.d-none)").classList.add("d-none");
+});
+
+// add event listeners to the buttons with ids roller hinge and fixed, when clicked the class active is added to the button clicked and removed from the other buttons
+const rollerButton = document.getElementById("roller");
+const hingeButton = document.getElementById("hinge");
+const fixedButton = document.getElementById("fixed");
+
+rollerButton.addEventListener("click", function () {
+    rollerButton.classList.add("active");
+    hingeButton.classList.remove("active");
+    fixedButton.classList.remove("active");
+    // remove the error element added in the collectSupportData function
+    if (document.querySelector("#support-input > p") != null) {
+        document.querySelector("#support-input > p").remove();
+    }
+}
+);
+
+hingeButton.addEventListener("click", function () {
+    rollerButton.classList.remove("active");
+    hingeButton.classList.add("active");
+    fixedButton.classList.remove("active");
+    // remove the error element added in the collectSupportData function
+    if (document.querySelector("#support-input > p") != null) {
+        document.querySelector("#support-input > p").remove();
+    }
+}
+);
+
+fixedButton.addEventListener("click", function () {
+    rollerButton.classList.remove("active");
+    hingeButton.classList.remove("active");
+    fixedButton.classList.add("active");
+    // remove the error element added in the collectSupportData function
+    if (document.querySelector("#support-input > p") != null) {
+        document.querySelector("#support-input > p").remove();
+    }
+}
+);
+
+// add event listeners to the buttons with ids l-support, m-support and r-support, when clicked the class active is added to the button clicked and removed from the other buttons
+const lSupportButton = document.getElementById("l-support");
+const mSupportButton = document.getElementById("m-support");
+const rSupportButton = document.getElementById("r-support");
+
+lSupportButton.addEventListener("click", function () {
+    lSupportButton.classList.add("active");
+    mSupportButton.classList.remove("active");
+    rSupportButton.classList.remove("active");
+    // get the element with id support-location-form and change the value of the input field with id support-location-input to 0
+    document.getElementById("support-location-form").value = 0;
+
+    // remove the error element added in the collectSupportData function, but only if the p element is the last child of the div with the id support-input
+    if (document.querySelector("#support-input > p:last-child") != null) {
+        document.querySelector("#support-input > p:last-child").remove();
+    }
+});
+
+mSupportButton.addEventListener("click", function () {
+    lSupportButton.classList.remove("active");
+    mSupportButton.classList.add("active");
+    rSupportButton.classList.remove("active");
+
+    // get the element with id support-location-form and change the value of the input field with id support-location-input to beamLength/2
+    document.getElementById("support-location-form").value = beamLength / 2;
+
+    if (document.querySelector("#support-input > p:last-child") != null) {
+        document.querySelector("#support-input > p:last-child").remove();
+    }
+
+});
+
+rSupportButton.addEventListener("click", function () {
+    lSupportButton.classList.remove("active");
+    mSupportButton.classList.remove("active");
+    rSupportButton.classList.add("active");
+
+    // get the element with id support-location-form and change the value of the input field with id support-location-input to beamLength
+    document.getElementById("support-location-form").value = beamLength;
+
+    if (document.querySelector("#support-input > p:last-child") != null) {
+        document.querySelector("#support-input > p:last-child").remove();
+    }
+
+});
+
+// add event listeners to the buttons with ids pl-l, pl-m and pl-r, when clicked the class active is added to the button clicked and removed from the other buttons
+const plLButton = document.getElementById("pl-l");
+const plMButton = document.getElementById("pl-m");
+const plRButton = document.getElementById("pl-r");
+
+plLButton.addEventListener("click", function () {
+    plLButton.classList.add("active");
+    plMButton.classList.remove("active");
+    plRButton.classList.remove("active");
+    // get the element with id pl-location-form and change the value of the input field with id pl-location-input to 0
+    document.getElementById("pl-location-form").value = 0;
+});
+
+plMButton.addEventListener("click", function () {
+    plLButton.classList.remove("active");
+    plMButton.classList.add("active");
+    plRButton.classList.remove("active");
+
+    // get the element with id pl-location-form and change the value of the input field with id pl-location-input to beamLength/2
+    document.getElementById("pl-location-form").value = beamLength / 2;
+});
+
+plRButton.addEventListener("click", function () {
+    plLButton.classList.remove("active");
+    plMButton.classList.remove("active");
+    plRButton.classList.add("active");
+
+    // get the element with id pl-location-form and change the value of the input field with id pl-location-input to beamLength
+    document.getElementById("pl-location-form").value = beamLength;
+});
+
+// add event listeners to the buttons with ids dl-l and dl-r, when the button dl-l is clicked, fill the input field with id dlStart with 0 and when the button dl-r is clicked, fill the input field with id dlEnd with the value of the input field with id beamLength
+const dlLButton = document.getElementById("dl-l");
+const dlRButton = document.getElementById("dl-r");
+
+
+dlLButton.addEventListener("click", function () {
+    document.getElementById("dlStart").value = 0;
+});
+
+dlRButton.addEventListener("click", function () {
+    document.getElementById("dlEnd").value = beamLength;
+});
+
+// add event listeners to the buttons with ids m-l, m-m and m-r, when clicked the class active is added to the button clicked and removed from the other buttons
+const mLButton = document.getElementById("m-l");
+const mMButton = document.getElementById("m-m");
+const mRButton = document.getElementById("m-r");
+
+mLButton.addEventListener("click", function () {
+    mLButton.classList.add("active");
+    mMButton.classList.remove("active");
+    mRButton.classList.remove("active");
+    // get the element with id m-position-form and change the value of the input field with id m-location-input to 0
+    document.getElementById("m-position-form").value = 0;
+});
+
+mMButton.addEventListener("click", function () {
+    mLButton.classList.remove("active");
+    mMButton.classList.add("active");
+
+    mRButton.classList.remove("active");
+    // get the element with id m-position-form and change the value of the input field with id m-location-input to beamLength/2
+    document.getElementById("m-position-form").value = beamLength / 2;
+});
+
+mRButton.addEventListener("click", function () {
+    mLButton.classList.remove("active");
+    mMButton.classList.remove("active");
+    mRButton.classList.add("active");
+
+    // get the element with id m-position-form and change the value of the input field with id m-location-input to beamLength
+    document.getElementById("m-position-form").value = beamLength;
+});
+
+// add event listeners to the solve button id solve, when clicked, call the exportParameters function 
+const solveButton = document.getElementById("solve");
+
+solveButton.addEventListener("click", function () {
+    document.querySelector(".visualizer").classList.add("d-none");
+    // disable the solve button
+    solveButton.setAttribute("disabled", "");
+    // remove the disabled attribute from the buttons with ids move-left and move-right
+    document.getElementById("move-left").removeAttribute("disabled");
+    // change the innerhtml of the span with id mode to "Mode: solutions"
+    document.getElementById("mode").innerHTML = "Mode: solutions";
+
+    // call and catch an errors that may occur in the exportParameters function, by adding a p element with the text "an Error Occurred! Please try again" as the last child of the div with the class display
+    try {
+        exportParameters();
+    } catch (error) {
+        console.log(error);
+        const errorElement = document.createElement("p");
+        errorElement.innerHTML = "an Error Occurred! Please Hit reset and try again";
+        errorElement.classList.add('fw-bold');
+        errorElement.classList.add('fs-6');
+        errorElement.classList.add('mt-3');
+        document.querySelector(".display").appendChild(errorElement);
+    }
+});
+
+// add event listeners to the buttons with ids move-left and move-right,
+// when the button move-left is clicked, remove the disabled attribute from the move-right button and add the disabled attribute to the move-left button. add the d-none class to the divs with the classes fixed-end-moments, member-end-moment-equations, eliminated-known-variables, equations, rotations, member-end-moments
+const moveLeftButton = document.getElementById("move-left");
+const moveRightButton = document.getElementById("move-right");
+
+moveLeftButton.addEventListener("click", function () {
+    moveRightButton.removeAttribute("disabled");
+    moveLeftButton.setAttribute("disabled", "");
+    document.querySelector(".fixed-end-moments").classList.add("d-none");
+    document.querySelector(".member-end-moment-equations").classList.add("d-none");
+    document.querySelector(".eliminated-known-variables").classList.add("d-none");
+    document.querySelector(".equations").classList.add("d-none");
+    document.querySelector(".rotations").classList.add("d-none");
+    document.querySelector(".member-end-moments").classList.add("d-none");
+    // remove the d-none class from the div with the class visualizer
+    document.querySelector(".visualizer").classList.remove("d-none");
+
+    document.getElementById("mode").innerHTML = "Mode: parameters";
+});
+
+// when the button move-right is clicked, remove the disabled attribute from the move-left button and add the disabled attribute to the move-right button. remove the d-none class from the divs with the classes fixed-end-moments, member-end-moment-equations, eliminated-known-variables, equations, rotations, member-end-moments
+moveRightButton.addEventListener("click", function () {
+    moveLeftButton.removeAttribute("disabled");
+    moveRightButton.setAttribute("disabled", "");
+    document.querySelector(".fixed-end-moments").classList.remove("d-none");
+    document.querySelector(".member-end-moment-equations").classList.remove("d-none");
+    document.querySelector(".eliminated-known-variables").classList.remove("d-none");
+    document.querySelector(".equations").classList.remove("d-none");
+    document.querySelector(".rotations").classList.remove("d-none");
+    document.querySelector(".member-end-moments").classList.remove("d-none");
+    // add the d-none class to the div with the class visualizer
+    document.querySelector(".visualizer").classList.add("d-none");
+
+    document.getElementById("mode").innerHTML = "Mode: solutions";
+});
+
+// add event listeners to the button with id reset, when clicked, reload the page
+const resetButton = document.getElementById("reset");
+
+resetButton.addEventListener("click", function () {
+    location.reload();
+});
+
+// button "takeback" to take back any action done by the add button or the enter key
+// the takeback button functions similarly to the add button and the enter key, but instead of adding the data to the arrays, it removes the last element added to the arrays and updates the visualizer with the new data
+// for the section, it removes the last section and updates the visualizer. also changes the value of the innerHTML of the span with id spanNo to the length of the sections array + 1
+// for the settlement, it removes the last settlement and updates the visualizer. also changes the value of the innerHTML of the span with id supportNo to the length of the settlements array + 1
+// for the point load, it removes the last point load and updates the visualizer. also changes the value of the innerHTML of the span with id plNo to the length of the pointLoads array + 1
+// for the distributed load, it removes the last distributed load and updates the visualizer. also changes the value of the innerHTML of the span with id dlNo to the length of the distributedLoads array + 1
+// for the moments, it removes the last moment and updates the visualizer. also changes the value of the innerHTML of the span with id mNo to the length of the moments array + 1
+
+takebackButton.addEventListener("click", function () {
+    if (document.querySelector(".menu-input-inputs > div:not(.d-none)") != null) {
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Section") {
+            sections.pop();
+            visualizeParameters();
+            document.getElementById("spanNo").innerHTML = sections.length + 1;
+            // remove the disabled attribute and the is-valid class of the Moi and YoungMod input field if the value of the innerHTML of the span with id spanNo equals 1
+            if (sections.length < 1) {
+                document.getElementById("MoiInput").removeAttribute("disabled");
+                document.getElementById("YoungModInput").removeAttribute("disabled");
+                document.getElementById("MoiInput").classList.remove("is-valid");
+                document.getElementById("YoungModInput").classList.remove("is-valid");
+            }
+            // also remove the is-valid class of the FlexRig input field if it has it
+            document.getElementById("FlexRigInput").classList.remove("is-valid");
+            // remove the value of the input field with the id FlexRigInput
+            document.getElementById("FlexRigInput").value = "";
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Settlement") {
+            settlements.pop();
+            visualizeParameters();
+            document.getElementById("supportNo").innerHTML = settlements.length + 1;
+            // remove the is-valid class of the settlement input field
+            document.getElementById("settlementInput").classList.remove("is-valid");
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Point Load") {
+            pointLoads.pop();
+            visualizeParameters();
+            document.getElementById("plNo").innerHTML = pointLoads.length + 1;
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Distributed Load") {
+            distributedLoads.pop();
+            visualizeParameters();
+            document.getElementById("dlNo").innerHTML = distributedLoads.length + 1;
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Moments") {
+            moments.pop();
+            visualizeParameters();
+            document.getElementById("mNo").innerHTML = moments.length + 1;
+        }
+    }
+});
+
+// Adding event listeners to the add button and the enter key check the element-type class without the d-none class and call the collectData function for the element-type class without the d-none class
+addButton.addEventListener("click", function () {
+    if (document.querySelector(".menu-input-inputs > div:not(.d-none)") != null) {
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Beam") {
+            beamLength = collectBeamData();
+            visualizeParameters();
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Support") {
+            const support = collectSupportData();
+            // check the supports array if a support exists with the same location and if it does, add an error element similar to the one in the collectData function but with text "a support already exists at this location!" and it should be added as the last child of the div with the id support-input else add the support to the supports array
+            if (support == -1) {
+                return;
+            }
+            if (supports != null) {
+                for (let i = 0; i < supports.length; i++) {
+                    if (supports[i].location == support.location) {
+                        if (document.querySelector("#support-input > p:last-child") == null) {
+                            const error = document.createElement("p");
+                            error.innerHTML = "a support already exists at this location!";
+                            error.classList.add("error-text");
+                            const addDiv = document.querySelector("#support-input");
+                            addDiv.appendChild(error);
+                        }
+                        return;
+                    }
+                }
+            }
+            supports[supports.length] = support;
+            visualizeParameters();
+            // change the value of the innerHTML of the span with id supportSupportNo to the length of the supports array + 1
+            document.getElementById("supportSupportNo").innerHTML = supports.length + 1;
+            // check if the lsupport, msupport and rsupport buttons have the class active and if any is, remove the class active from the button
+            if (document.getElementById("l-support").classList.contains("active")) {
+                document.getElementById("l-support").classList.remove("active");
+            }
+            if (document.getElementById("m-support").classList.contains("active")) {
+                document.getElementById("m-support").classList.remove("active");
+            }
+            if (document.getElementById("r-support").classList.contains("active")) {
+                document.getElementById("r-support").classList.remove("active");
+            }
+            // clear the input field with the id support-location-form
+            document.getElementById("support-location-form").value = "";
+            // check if the no of supports is greater than or equal to 2 and if it is, check if at least one support is a fixed support if there is, remove the disabled attribute from the section and settlement buttons
+            if (supports.length > 1) {
+                if (supports[0].type == "Fixed" || supports[supports.length - 1].type == "Fixed") {
+                    document.getElementById("section-button").removeAttribute("disabled");
+                    document.getElementById("settlement-button").removeAttribute("disabled");
+                    noOfSpans = calculateNoOfSpans();
+                }
+            }
+            console.log(settlements);
+            console.log(supports);
+            console.log(supports.length);
+        }
+
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Section") {
+            collectSectionData();
+            visualizeParameters();
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Settlement") {
+            collectSettlementData();
+            visualizeParameters();
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Point Load") {
+            collectPointLoadData();
+            visualizeParameters();
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Distributed Load") {
+            collectDistributedLoadData();
+            visualizeParameters();
+        }
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Moments") {
+            collectMomentData();
+            visualizeParameters();
+        }
+    }
+});
+
+// add an event listener to the enter key
+document.addEventListener("keydown", function (event) {
+    if (event.key == "Enter") {
+        if (document.querySelector(".menu-input-inputs > div:not(.d-none)") != null) {
+            if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Beam") {
+                beamLength = collectBeamData();
+                visualizeParameters();
+            }
+            if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Support") {
+                const support = collectSupportData();
+                // check the supports array if a support exists with the same location and if it does, add an error element similar to the one in the collectData function but with text "a support already exists at this location!" and it should be added as the last child of the div with the id support-input else add the support to the supports array
+                if (support == -1) {
+                    return;
+                }
+                if (supports != null) {
+                    for (let i = 0; i < supports.length; i++) {
+                        if (supports[i].location == support.location) {
+                            if (document.querySelector("#support-input > p:last-child") == null) {
+                                const error = document.createElement("p");
+                                error.innerHTML = "a support already exists at this location!";
+                                error.classList.add("error-text");
+                                const addDiv = document.querySelector("#support-input");
+                                addDiv.appendChild(error);
+                            }
+                            return;
+                        }
+                    }
+                }
+                supports[supports.length] = support;
+                visualizeParameters();
+                // change the value of the innerHTML of the span with id supportSupportNo to the length of the supports array + 1
+                document.getElementById("supportSupportNo").innerHTML = supports.length + 1;
+                // check if the lsupport, msupport and rsupport buttons have the class active and if any is, remove the class active from the button
+                if (document.getElementById("l-support").classList.contains("active")) {
+                    document.getElementById("l-support").classList.remove("active");
+                }
+                if (document.getElementById("m-support").classList.contains("active")) {
+                    document.getElementById("m-support").classList.remove("active");
+                }
+                if (document.getElementById("r-support").classList.contains("active")) {
+                    document.getElementById("r-support").classList.remove("active");
+                }
+                // clear the input field with the id support-location-form
+                document.getElementById("support-location-form").value = "";
+                // check if the no of supports is greater than 2 and if it is, check if at least one support is a fixed support if there is, remove the disabled attribute from the section and settlement buttons
+                
+                if (supports.length > 1) {
+                    if (supports[0].type == "Fixed" || supports[supports.length - 1].type == "Fixed") {
+
+                        document.getElementById("section-button").removeAttribute("disabled");
+                        document.getElementById("settlement-button").removeAttribute("disabled");
+                        noOfSpans = calculateNoOfSpans();
+                    }
+                }
+                console.log(settlements);
+                console.log(supports);
+                console.log(supports.length);
+            }
+
+            if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Section") {
+                collectSectionData();
+                visualizeParameters();
+            }
+            if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Settlement") {
+                collectSettlementData();
+                visualizeParameters();
+            }
+            if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Point Load") {
+                collectPointLoadData();
+                visualizeParameters();
+            }
+            if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Distributed Load") {
+                collectDistributedLoadData();
+                visualizeParameters();
+            }
+            if (document.querySelector(".menu-input-inputs > div:not(.d-none)").getAttribute("element-type") == "Moments") {
+                collectMomentData();
+                visualizeParameters();
+            }
+        }
+    }
+});
+
+
+
+// D A T A   C O L L E C T I O N  A N D   V A L I D A T I O N
+
+// beam data collection and validation
+function collectBeamData() {
+    // getting the value from the input field with id beamLengthInput and removing the white spaces
+    const beamLen = document.getElementById("beamLengthInput").value.trim();
+    // validate if it's an integer or float and if it's greater than 0
+    if (beamLen == "" || isNaN(beamLen) || beamLen <= 0) {
+        // make the input field red
+        document.getElementById("beamLengthInput").classList.add("is-invalid");
+        // create a p element containing the text "verify the highlighted input fields!" and add it to the div with the class 'add-on' as first child
+        addErrorElement();
+        disableButtons('beam');
+        return -1;
+    } else {
+        // make the input field green
+        document.getElementById("beamLengthInput").classList.remove("is-invalid");
+        document.getElementById("beamLengthInput").classList.add("is-valid");
+        // disable the input field
+        document.getElementById("beamLengthInput").setAttribute("disabled", "");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+        console.log(parseFloat(beamLen));
+        unDisableButtons('beam');
+        return parseFloat(beamLen);
+    }
+}
+
+// support data collection and validation
+function collectSupportData() {
+    let supportType = null;
+    let supportLocation = null;
+    // check the button in the div with id support-type with the class active and get the value of the button from the element-value attribute and if no button is active, add an error element similar to the one in the collectBeamData function but with text "select a support type!" and it should be added as the third child of the div with the id support-input
+    if (document.querySelector("#support-type > button.active") != null) {
+        supportType = document.querySelector("#support-type > button.active").getAttribute("element-value");
+        console.log(supportType);
+    } else {
+        if (document.querySelector("#support-input > p") == null) {
+            const error = document.createElement("p");
+            error.innerHTML = "select a support type!";
+            // add class inline-block to the error element
+            error.classList.add("error-text");
+            const addDiv = document.querySelector("#support-input");
+            addDiv.insertBefore(error, addDiv.childNodes[2]);
+        }
+    }
+    // check the element with id support-location-form for it's value, trim it and if its not a number or greater than the beam Length, add an error element similar to the one in the collectBeamData function but with text "select a valid support position!" and it should be added as the last child of the div with the id support-input, note that the error should be added even if the error element with the text "select a support type!" is present
+    if (document.getElementById("support-location-form").value.trim() != "" && !isNaN(document.getElementById("support-location-form").value.trim()) && document.getElementById("support-location-form").value.trim() <= beamLength) {
+        supportLocation = document.getElementById("support-location-form").value.trim();
+        // remove the error element added in the collectSupportData function
+        if (document.querySelector("#support-input > p:last-child") != null) {
+            document.querySelector("#support-input > p:last-child").remove();
+        }
+    } else {
+        if (document.querySelector("#support-input > p:last-child") == null) {
+            const error = document.createElement("p");
+            error.innerHTML = "select a valid support position!";
+            // add class inline-block to the error element
+            error.classList.add("error-text");
+            const addDiv = document.querySelector("#support-input");
+            addDiv.appendChild(error);
+        }
+    }
+    // if the support type and support location are valid, create an object with the properties type and location and return the object
+    if (supportType != null && supportLocation != null) {
+        const support = {
+            supportNo: supports.length + 1,
+            type: supportType,
+            location: parseFloat(supportLocation)
+        }
+        return support;
+    } else {
+        return -1;
+    }
+}
+
+// section data collection and validation
+function collectSectionData() {
+    let section;
+    if (sections.length < noOfSpans) {
+        console.log('debug');
+        // get the value from the input field with id MoiInput, if it is not a number or less than 0, call the addErrorElement function and return -1. if the input field is empty it is valid
+        const Moi = document.getElementById("MoiInput").value.trim();
+        if (Moi != "" && (isNaN(Moi) || Moi < 0)) {
+            document.getElementById("MoiInput").classList.add("is-invalid");
+            addErrorElement();
+            return -1;
+        } else {
+            document.getElementById("MoiInput").classList.remove("is-invalid");
+            document.getElementById("MoiInput").classList.add("is-valid");
+            // remove the error element
+            if (document.querySelector(".add-on > p") != null) {
+                document.querySelector(".add-on > p").remove();
+            }
+        }
+        //  get the value from the input field with id YoungModInput, if it is not a number or less than 0, call the addErrorElement function and return -1. if the input field is empty it is valid
+        const YoungMod = document.getElementById("YoungModInput").value.trim();
+        if (YoungMod != "" && (isNaN(YoungMod) || YoungMod < 0)) {
+            document.getElementById("YoungModInput").classList.add("is-invalid");
+            addErrorElement();
+            return -1;
+        } else {
+            document.getElementById("YoungModInput").classList.remove("is-invalid");
+            document.getElementById("YoungModInput").classList.add("is-valid");
+            // remove the error element
+            if (document.querySelector(".add-on > p") != null) {
+                document.querySelector(".add-on > p").remove();
+            }
+        }
+        //  get the value from the input field with id FlexRigInput, if it is empty or it is not a number or less than 0, call the addErrorElement function and return -1. it must not be empty
+        const FlexRig = document.getElementById("FlexRigInput").value.trim();
+        if (FlexRig == "" || isNaN(FlexRig) || FlexRig < 0) {
+            document.getElementById("FlexRigInput").classList.add("is-invalid");
+            addErrorElement();
+            return -1;
+        } else {
+            document.getElementById("FlexRigInput").classList.remove("is-invalid");
+            document.getElementById("FlexRigInput").classList.add("is-valid");
+            // remove the error element
+            if (document.querySelector(".add-on > p") != null) {
+                document.querySelector(".add-on > p").remove();
+            }
+        }
+        // first check if the sections array is empty and if it isn't, the current section will inherit the Moi and YoungMod values of the last section in the sections array
+        // if the input fields are valid, create an object with the properties Moi, YoungMod and FlexRig and add it to the sections array. if either the Moi or YoungMod input fields are empty, add the value 0 to the sections array
+        if (sections.length == 0) {
+            section = {
+                Moi: Moi == "" ? null : parseFloat(Moi),
+                YoungMod: YoungMod == "" ? null : parseFloat(YoungMod),
+                Coefficient: parseFloat(FlexRig)
+            }
+            // add the disabled attribute the Moi and YoungMod input fields
+            document.getElementById("MoiInput").setAttribute("disabled", "");
+            document.getElementById("YoungModInput").setAttribute("disabled", "");
+        } else {
+            section = {
+                Moi: sections[sections.length - 1].Moi,
+                YoungMod: sections[sections.length - 1].YoungMod,
+                Coefficient: parseFloat(FlexRig)
+            }
+        }
+        sections[sections.length] = section;
+        // change the value of the innerHTML of the span with id spanNo to the length of the sections array + 1 only if sections.length is less than noOfSpans
+        if (sections.length < noOfSpans) {
+            document.getElementById("spanNo").innerHTML = sections.length + 1;
+            // clear the input field with the id FlexRigInput
+            document.getElementById("FlexRigInput").value = "";
+            // remove the valid class from the input field with the id FlexRigInput
+            document.getElementById("FlexRigInput").classList.remove("is-valid");
+        }
+        console.log(sections);
+
+    }
+}
+
+// settlement data collection and validation
+function collectSettlementData() {
+    if (settlements.length < supports.length) {
+        console.log('debug');
+        // get the value from the input field with id settlementInput, if it is either empty or not a number or less than zero, call the addErrorElement function and return -1
+        const settlement = document.getElementById("settlementInput").value.trim();
+        if (settlement == "" || isNaN(settlement) || parseFloat(settlement) < 0) {
+            document.getElementById("settlementInput").classList.add("is-invalid");
+            addErrorElement();
+            return -1;
+        } else {
+            document.getElementById("settlementInput").classList.remove("is-invalid");
+            document.getElementById("settlementInput").classList.add("is-valid");
+            // remove the error element
+            if (document.querySelector(".add-on > p") != null) {
+                document.querySelector(".add-on > p").remove();
+            }
+        }
+        // if the input field is valid, add the value to the settlements array
+        settlements[settlements.length] = parseFloat(settlement);
+        // change the value of the innerHTML of the span with id supportNo to the length of the settlements array + 1
+        if (settlements.length < supports.length) {
+            document.getElementById("supportNo").innerHTML = settlements.length + 1;
+            // clear the input field with the id settlementInput
+            document.getElementById("settlementInput").value = "";
+            // remove the valid class from the input field with the id settlementInput
+            document.getElementById("settlementInput").classList.remove("is-valid");
+        }
+        console.log(settlements);
+    }
+}
+
+// function to collect the point load data
+function collectPointLoadData() {
+    // get the value from the input field with id pl-location-form, if it is not a number or less than 0 or greater than the beam length, call the addErrorElement function and return -1
+    const plLocation = document.getElementById("pl-location-form").value.trim();
+    if (plLocation == "" || isNaN(plLocation) || parseFloat(plLocation) < 0 || parseFloat(plLocation) > beamLength) {
+        document.getElementById("pl-location-form").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("pl-location-form").classList.remove("is-invalid");
+        document.getElementById("pl-location-form").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+    // get the value from the input field with id pl-magnitude-form, if it is not a number, call the addErrorElement function and return -1
+    const plMagnitude = document.getElementById("pl-magnitude-form").value.trim();
+    if (plMagnitude == "" || isNaN(plMagnitude) || parseFloat(plMagnitude) < 0) {
+        document.getElementById("pl-magnitude-form").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("pl-magnitude-form").classList.remove("is-invalid");
+        document.getElementById("pl-magnitude-form").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+    // if the input fields are valid, create an object with the properties location and magnitude and add it to the pointLoads array
+    const pointLoad = {
+        location: parseFloat(plLocation),
+        magnitude: parseFloat(plMagnitude)
+    }
+    pointLoads[pointLoads.length] = pointLoad;
+    // change the value of the innerHTML of the span with id plNo to the length of the pointLoads array + 1
+    document.getElementById("plNo").innerHTML = pointLoads.length + 1;
+    // clear the input fields with the id pl-location-form and pl-magnitude-form
+
+    document.getElementById("pl-location-form").value = "";
+    document.getElementById("pl-magnitude-form").value = "";
+    // remove the valid class from the input fields with the id pl-location-form and pl-magnitude-form
+    document.getElementById("pl-location-form").classList.remove("is-valid");
+    document.getElementById("pl-magnitude-form").classList.remove("is-valid");
+    console.log(pointLoads);
+}
+
+// function to collect the distributed load data
+function collectDistributedLoadData() {
+    // get the value from the input fields with dlStart, dlEnd, dlStartMag and dlEndMag, if any of the input fields are empty or not a number, call the addErrorElement function and return -1. For the input fields with ids dlStart and dlEnd, if the value is less than 0 or greater than the beam length, call the addErrorElement function and return -1
+    const dlStart = document.getElementById("dlStart").value.trim();
+    const dlEnd = document.getElementById("dlEnd").value.trim();
+    const dlStartMag = document.getElementById("dlStartMag").value.trim();
+    const dlEndMag = document.getElementById("dlEndMag").value.trim();
+
+    // check if dlStart is less than dlEnd and if it is not, call the addErrorElement function and return -1. compare the values as numbers
+    if (parseFloat(dlStart) > parseFloat(dlEnd)) {
+        document.getElementById("dlStart").classList.add("is-invalid");
+        document.getElementById("dlEnd").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("dlStart").classList.remove("is-invalid");
+        document.getElementById("dlStart").classList.add("is-valid");
+        document.getElementById("dlEnd").classList.remove("is-invalid");
+        document.getElementById("dlEnd").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+
+    if (dlStart == "" || isNaN(dlStart) || parseFloat(dlStart) < 0 || parseFloat(dlStart) > beamLength) {
+        document.getElementById("dlStart").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("dlStart").classList.remove("is-invalid");
+        document.getElementById("dlStart").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+
+    if (dlEnd == "" || isNaN(dlEnd) || parseFloat(dlEnd) < 0 || parseFloat(dlEnd) > beamLength) {
+        document.getElementById("dlEnd").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("dlEnd").classList.remove("is-invalid");
+        document.getElementById("dlEnd").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+
+    if (dlStartMag == "" || isNaN(dlStartMag) || parseFloat(dlStartMag) < 0) {
+        document.getElementById("dlStartMag").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("dlStartMag").classList.remove("is-invalid");
+        document.getElementById("dlStartMag").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+
+    if (dlEndMag == "" || isNaN(dlEndMag) || parseFloat(dlEndMag) < 0) {
+        document.getElementById("dlEndMag").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("dlEndMag").classList.remove("is-invalid");
+        document.getElementById("dlEndMag").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+    // if the input fields are valid, create an object with the properties start, end, startMag and endMag and add it to the distributedLoads array
+    const distributedLoad = {
+        start: parseFloat(dlStart),
+        end: parseFloat(dlEnd),
+        startMag: parseFloat(dlStartMag),
+        endMag: parseFloat(dlEndMag)
+    }
+    distributedLoads[distributedLoads.length] = distributedLoad;
+    // change the value of the innerHTML of the span with id dlNo to the length of the distributedLoads array + 1
+    document.getElementById("dlNo").innerHTML = distributedLoads.length + 1;
+    // clear the input fields with the id dlStart, dlEnd, dlStartMag and dlEndMag
+    document.getElementById("dlStart").value = "";
+    document.getElementById("dlEnd").value = "";
+    document.getElementById("dlStartMag").value = "";
+    document.getElementById("dlEndMag").value = "";
+    // remove the valid class from the input fields with the id dlStart, dlEnd, dlStartMag and dlEndMag
+    document.getElementById("dlStart").classList.remove("is-valid");
+    document.getElementById("dlEnd").classList.remove("is-valid");
+    document.getElementById("dlStartMag").classList.remove("is-valid");
+    document.getElementById("dlEndMag").classList.remove("is-valid");
+    console.log(distributedLoads);
+}
+
+// function to collect the moment data
+function collectMomentData() {
+    // get the value from the input field with id m-position-form, if it is not a number or less than 0 or greater than the beam length, call the addErrorElement function and return -1
+    const mPosition = document.getElementById("m-position-form").value.trim();
+    if (mPosition == "" || isNaN(mPosition) || parseFloat(mPosition) < 0 || parseFloat(mPosition) > beamLength) {
+        document.getElementById("m-position-form").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("m-position-form").classList.remove("is-invalid");
+        document.getElementById("m-position-form").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+    // get the value from the input field with id m-magnitude-form, if it is not a number, call the addErrorElement function and return -1
+    const mMagnitude = document.getElementById("m-magnitude-form").value.trim();
+    if (mMagnitude == "" || isNaN(mMagnitude)) {
+        document.getElementById("m-magnitude-form").classList.add("is-invalid");
+        addErrorElement();
+        return -1;
+    } else {
+        document.getElementById("m-magnitude-form").classList.remove("is-invalid");
+        document.getElementById("m-magnitude-form").classList.add("is-valid");
+        // remove the error element
+        if (document.querySelector(".add-on > p") != null) {
+            document.querySelector(".add-on > p").remove();
+        }
+    }
+    // if the input fields are valid, create an object with the properties position and magnitude and add it to the moments array
+    const moment = {
+        position: parseFloat(mPosition),
+        magnitude: parseFloat(mMagnitude)
+    }
+    moments[moments.length] = moment;
+    // change the value of the innerHTML of the span with id mNo to the length of the moments array + 1
+    document.getElementById("mNo").innerHTML = moments.length + 1;
+    // clear the input fields with the id m-position-form and m-magnitude-form
+    document.getElementById("m-position-form").value = "";
+    document.getElementById("m-magnitude-form").value = "";
+    // remove the valid class from the input fields with the id m-position-form and m-magnitude-form
+    document.getElementById("m-position-form").classList.remove("is-valid");
+    document.getElementById("m-magnitude-form").classList.remove("is-valid");
+    console.log(moments);
+}
+// M I S C E L L A N E O U S  F U N C T I O N S
+
+// function to remove the disabled attribute from the buttons
+function unDisableButtons(elementType) {
+    if (elementType == 'beam') {
+        document.getElementById("support-button").removeAttribute("disabled");
+        document.getElementById("pl-button").removeAttribute("disabled");
+        document.getElementById("dl-button").removeAttribute("disabled");
+        document.getElementById("m-button").removeAttribute("disabled");
+    }
+}
+
+// function to add the disabled attribute to the buttons
+function disableButtons(elementType) {
+    if (elementType == 'beam') {
+        document.getElementById("support-button").setAttribute("disabled", "");
+        document.getElementById("pl-button").setAttribute("disabled", "");
+        document.getElementById("dl-button").setAttribute("disabled", "");
+        document.getElementById("m-button").setAttribute("disabled", "");
+    }
+}
+
+// function to add the error element to the div with the class 'add-on' as done in the collectData function
+function addErrorElement() {
+    if (document.querySelector(".add-on > p") == null) {
+        const error = document.createElement("p");
+        error.innerHTML = "verify the highlighted input fields!";
+        // add class inline-block to the error element
+        error.classList.add("d-inline-block");
+        error.classList.add("error-text");
+        const addDiv = document.querySelector(".add-on");
+        addDiv.insertBefore(error, addDiv.firstChild);
+    }
+}
+
+// function to calculate the no of spans, accounting for the fact that a span might have only one support if there are no supports at the ends of the beam
+function calculateNoOfSpans() {
+    let noOfSpans = 0;
+    // sort the supports array in ascending order of location
+    supports.sort(function (a, b) {
+        return a.location - b.location;
+    });
+    // calculate the no of spans and store in the variable noOfSpans
+    noOfSpans = supports[0].location == 0 ? noOfSpans : noOfSpans + 1;
+    noOfSpans = supports[supports.length - 1].location == beamLength ? noOfSpans : noOfSpans + 1;
+    noOfSpans = noOfSpans + supports.length - 1;
+    console.log(noOfSpans);
+    return noOfSpans;
+}
+
+// function to export the global variables to another file
+function exportParameters() {
+    calculationsModule.setParameters({
+        beamLength,
+        supports,
+        sections,
+        settlements,
+        pointLoads,
+        distributedLoads,
+        moments,
+        noOfSpans,
+    });
+}
+
+// V I S U A L I Z A T I O N   F U N C T I O N S
+
+// function to converts the global variables to a string to be inserted into a p element and added to the div with the class visualizer, first remove all the children of the div with the class visualizer if any, then create a p element and add the string to the p element and add the p element to the div with the class visualizer
+function visualizeParameters() {
+    const visualizer = document.querySelector(".visualizer");
+    while (visualizer.firstChild) {
+        visualizer.removeChild(visualizer.firstChild);
+    }
+    let parameters = `>> <b class="fs-4">Beam Length:</b> ${beamLength}m`;
+    parameters += "<br>";
+    parameters += `<br>>> <b class="fs-4">Supports:</b> `;
+    parameters += "<br>";
+    // sort the supports array in ascending order of location
+    supports.sort(function (a, b) {
+        return a.location - b.location;
+    });
+    for (let i = 0; i < supports.length; i++) {
+        parameters += `Support ${i + 1}: ${supports[i].type} at ${supports[i].location}m`;
+        parameters += "<br>";
+    }
+    
+    parameters += `<br>>> <b class="fs-4">Sections:</b> `;
+    parameters += "<br>";
+    for (let i = 0; i < sections.length; i++) {
+        parameters += `Section ${i + 1}: Moi: ${sections[i].Moi}mm<sup>4</sup>, Young Modulus: ${sections[i].YoungMod}MPa, Coefficient: ${sections[i].Coefficient}`;
+        parameters += "<br>";
+    }
+    parameters += `<br>>> <b class="fs-4">Settlements:</b> `;
+    parameters += "<br>";
+    for (let i = 0; i < settlements.length; i++) {
+        parameters += `Settlement at Support${i + 1}: ${settlements[i]}mm`;
+        parameters += "<br>";
+    }
+    parameters += `<br>>> <b class="fs-4">Point Loads:</b> `;
+    parameters += "<br>";
+    for (let i = 0; i < pointLoads.length; i++) {
+        parameters += `Point Load ${i + 1}: ${pointLoads[i].magnitude}KN at ${pointLoads[i].location}m`;
+        parameters += "<br>";
+    }
+    parameters += `<br>>> <b class="fs-4">Distributed Loads:</b> `;
+    parameters += "<br>";
+    for (let i = 0; i < distributedLoads.length; i++) {
+        parameters += `Distributed Load ${i + 1}: ${distributedLoads[i].startMag}KN to ${distributedLoads[i].endMag}KN from ${distributedLoads[i].start}m to ${distributedLoads[i].end}m`;
+        parameters += "<br>";
+    }
+    parameters += `<br>>> <b class="fs-4">Moments:</b> `;
+    parameters += "<br>";
+    for (let i = 0; i < moments.length; i++) {
+        parameters += `Moment ${i + 1}: ${moments[i].magnitude}KNm at ${moments[i].position}m`;
+        parameters += "<br>";
+    }
+    const p = document.createElement("p");
+    p.innerHTML = parameters;
+    visualizer.appendChild(p);
+}
