@@ -265,9 +265,6 @@ const solveButton = document.getElementById("solve");
 
 solveButton.addEventListener("click", function () {
     document.querySelector(".visualizer").classList.add("d-none");
-
-
-
     // disable the solve button
     solveButton.setAttribute("disabled", "");
     // remove the disabled attribute from the buttons with ids move-left and move-right
@@ -279,6 +276,7 @@ solveButton.addEventListener("click", function () {
     try {
         exportParameters();
     } catch (error) {
+        console.log(error);
         const errorElement = document.createElement("p");
         errorElement.innerHTML = "an Error Occurred! Please Hit reset and try again";
         errorElement.classList.add('fw-bold');
@@ -425,11 +423,13 @@ addButton.addEventListener("click", function () {
             }
             // clear the input field with the id support-location-form
             document.getElementById("support-location-form").value = "";
-            // check if the no of supports is greater than 2 and if it is, check if at least one support is a fixed support if there is, remove the disabled attribute from the section and settlement buttons
-            if (supports.length > 2) {
-                document.getElementById("section-button").removeAttribute("disabled");
-                document.getElementById("settlement-button").removeAttribute("disabled");
-                noOfSpans = calculateNoOfSpans();
+            // check if the no of supports is greater than or equal to 2 and if it is, check if at least one support is a fixed support if there is, remove the disabled attribute from the section and settlement buttons
+            if (supports.length > 1) {
+                if (supports[0].type == "Fixed" || supports[supports.length - 1].type == "Fixed") {
+                    document.getElementById("section-button").removeAttribute("disabled");
+                    document.getElementById("settlement-button").removeAttribute("disabled");
+                    noOfSpans = calculateNoOfSpans();
+                }
             }
             console.log(settlements);
             console.log(supports);
@@ -504,10 +504,14 @@ document.addEventListener("keydown", function (event) {
                 // clear the input field with the id support-location-form
                 document.getElementById("support-location-form").value = "";
                 // check if the no of supports is greater than 2 and if it is, check if at least one support is a fixed support if there is, remove the disabled attribute from the section and settlement buttons
-                if (supports.length > 2) {
-                    document.getElementById("section-button").removeAttribute("disabled");
-                    document.getElementById("settlement-button").removeAttribute("disabled");
-                    noOfSpans = calculateNoOfSpans();
+                
+                if (supports.length > 1) {
+                    if (supports[0].type == "Fixed" || supports[supports.length - 1].type == "Fixed") {
+
+                        document.getElementById("section-button").removeAttribute("disabled");
+                        document.getElementById("settlement-button").removeAttribute("disabled");
+                        noOfSpans = calculateNoOfSpans();
+                    }
                 }
                 console.log(settlements);
                 console.log(supports);

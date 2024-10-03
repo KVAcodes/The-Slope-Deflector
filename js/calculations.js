@@ -127,6 +127,7 @@ function splitBeamIntoSpans() {
   // sort the supports array in ascending order of location
   supports.sort((a, b) => a.location - b.location);
   console.log("Sorted supports:", supports);
+  console.log(noOfSpans);
 
   for (let i = 0; i < noOfSpans; i++) {
     let span = {};
@@ -450,7 +451,7 @@ function calculateFixedEndMomentsForRightFreeEndSpans(span) {
 
 // function to calculate the fixed end moments for the spans with no free end supports at both ends, in this case the fixed end moments are calculated for the following loading conditions for every load in the span
 // 1.) point Loads - is done by the formula to be provided later
-// 2.) distributed loads - is done by integrating each elemental load of the distributed load diagram to find the fixed end moment, integration to be done using the math.js library
+// 2.) distributed loads - is done by integrating each elemental load of the distributed load diagram to find the fixed end moment, integration to be done using the nerdamer.js library
 // 3.) moments - the fixed end moment is given by a formula to be provided later
 
 function calculateFixedEndMomentsForFixedEndSpans(span) {
