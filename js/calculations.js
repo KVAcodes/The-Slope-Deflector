@@ -524,7 +524,7 @@ function calculateFixedEndMomentsForFixedEndSpans(span) {
           const l = span.length;
           const p1 = load.startMag;
           const p2 = load.endMag;
-          const expression = `((${p2} - ${p1})*(x - ${a})/(${b} - ${a})) + ${p1}`;
+          const expression = `(((${p2} - ${p1})*(x - ${a})/(${b} - ${a})) + ${p1})`;
           console.log(expression);
           const integralforleftFEM = parseFloat(nerdamer(`defint((${expression} * x * (${l} - x)^2)/${l}^2, ${a}, ${b})`).text());
           fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
@@ -565,7 +565,7 @@ function calculateFixedEndMomentsForFixedEndSpans(span) {
           const l = span.length;
           const p1 = load.endMag;
           const p2 = load.startMag;
-          const expression = `((${p2} - ${p1})*(${b}-x)/(${b}-${a})) + ${p1}`;
+          const expression = `(((${p2} - ${p1})*(${b}-x)/(${b}-${a})) + ${p1})`;
           console.log(expression);
           const integralforleftFEM = parseFloat(nerdamer(`defint((${expression} * x * (${l} - x)^2)/${l}^2, ${a}, ${b})`).text());
           fem[`FEM${span.supports[0].supportNo}${span.supports[1].supportNo}`] += integralforleftFEM;
